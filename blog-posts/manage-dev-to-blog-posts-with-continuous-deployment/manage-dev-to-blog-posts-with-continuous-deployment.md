@@ -1,14 +1,16 @@
 ---
-published: false
+published: true
 title: "Manage your dev.to blog posts from a GIT repo and use continuous deployment to auto publish/update them"
 cover_image: "https://raw.githubusercontent.com/maxime1992/my-dev.to/master/blog-posts/manage-dev-to-blog-posts-with-continuous-deployment/assets/github-travis-dev-to.png"
 description:
-tags: devto, publication, blogpost, continuousdeployment, github, travis
+tags: devto, publication, blogpost, continuousdeployment
 series:
 canonical_url:
 ---
 
-Have you ever wished that you had a monorepo containing all of your dev.to posts on Github and that when you merge an update into the master branch they would just automatically be updated on dev.to? (or multiple repositories, it doesn't matter :smiley:)
+Have you ever wished that you had a monorepo (_\*1_ ) containing all of your dev.to posts on Github and once you merge an update into the master branch they would just automatically be updated on dev.to?
+
+_1) or multiple repositories, it doesn't matter :smiley:_
 
 Then you'll be pleased with what's coming, otherwise I'll let you know why you might want that within the next section.
 
@@ -79,7 +81,7 @@ Once that's done you should be able to find your project and you'll need to clic
 
 You can now click on "settings".
 
-We now need to pass your dev.to token to Travis. Within the "environment variables" section, define a new one called "DEV_TO_GIT_TOKEN". Go back to the dev.to tab where you've generated the token, copy it and paste it into the "value" input.
+We now need to pass the dev.to token to Travis. Within the "environment variables" section, define a new one called `DEV_TO_GIT_TOKEN`. Go back to the dev.to tab where you've generated the token, copy it and paste it into the "value" input.
 
 ![Pass the dev to token to Travis](./assets/travis-ci-set-token.png 'Pass the dev to token to Travis')
 
@@ -104,9 +106,9 @@ Example:
 ]
 ```
 
-There's no easy path to manage the creation of an article but it's a quick/one time thing. Go to https://dev.to and click at the top on the "write a post" button. Write a title (that can be updated later) and just press the "save draft" button. This way the article is not published yet and only available to you.
+There's no easy way to manage the creation of an article but it's a quick / one time thing. Go to https://dev.to and click at the top on the "write a post" button. Write a title (that can be updated later) and just press the "save draft" button. This way the article is not published yet and only available to you.
 
-As dev.to doesn't display the ID of a blog post on the page itself, I've made a small query to find it into the page so open your browser console on the dev.to page of your article and paste the following:
+As dev.to doesn't display the ID of a blog post on the page itself, I've made a small query to find it into the page. Open your browser console on the dev.to page of your article and paste the following:
 
 ```js
 +$('div[data-article-id]').getAttribute('data-article-id');
@@ -142,7 +144,7 @@ I work at [CloudNC](https://cloudnc.com) in central London and we are [recruitin
 
 ![CloudNC is recruiting](./assets/join-cloudnc.jpg 'CloudNC is recruiting')
 
-We have a hackday every first friday of the month and it's during the last one that I decided to work on that project. I've open source an npm module called [dev-to-git](https://github.com/maxime1992/dev-to-git) that handles most of the heavy work to read and publish on dev.to.
+We have a hackday every first Friday of the month and it's during the last one that I decided to work on that project. I've open sourced an npm module called [dev-to-git](https://github.com/maxime1992/dev-to-git) that handles most of the heavy work to read and publish on dev.to (which is used by the template repository).
 
 # Found a typo?
 
