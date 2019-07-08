@@ -12,27 +12,27 @@ Have you ever wished that you had a monorepo (_\*1_ ) containing all of your dev
 
 _1) or multiple repositories, it doesn't matter :smiley:_
 
-Then you'll be pleased with what's coming, otherwise I'll let you know why you might want that within the next section.
+Then you'll be pleased with what's coming, otherwise I'll let you know why you might want that in the next section.
 
 ## Why would I want to put all my blog posts on a git repo?
 
-- Don't be afraid to mess up with one of your articles while editing it
+- Don't be afraid of messing up one of your articles while editing it
 - Same good practices as when you're developing (format, make commits, have a history of your changes, compare when editing, etc)
-- Use prettier to format the markdown and all the code
+- Use [prettier](https://prettier.io/) to format the markdown and all the code snippets
 - Let people contribute to your article by creating a PR against it (tired of comments going sideways because of some typos? Just let people know they can make a PR at the end of your blog post)
 - Create code examples close to your blog post and make sure they're correct thanks to [Embedme](https://github.com/zakhenry/embedme) (_\*1_)
 
 _\*1: Embedme allows you to write code in actual files rather than into a Markdown file and then will inject the code for you where needed._
 
-If you prefer not to use Prettier or Embed me, you can do so by simply removing them but I think it's a nice thing to have!
+If you prefer not to use Prettier or Embedme, you can do so by simply removing them but I think it's a nice thing to have!
 
 # Is it long to setup?
 
-No more than a few minutes. Probably 3 to 5mn top, from scratch to automatically deploying an update on one of your blog post on dev.to using that new setup :fire:!
+No more than a few minutes. Probably 3 to 5 minutes top, from scratch to automatically deploying an update on one of your blog posts on dev.to using this new setup :fire:!
 
 # Show me how to set it up!
 
-You can choose whether you want to integrate that workflow into an existing repository or using a **template** I've made to simplify the process of starting from scratch.
+You can choose whether you want to integrate this workflow into an existing repository or using a **template** I've made to simplify the process of starting from scratch.
 
 In this blog post we will focus on getting started using the template but reading this you'll realise how easy it would be to integrate in your own worklow.
 
@@ -40,7 +40,7 @@ Main steps:
 
 - 1. Copy the template
 - 2. Create a dev.to token
-- 3. Pass that token to travis
+- 3. Pass that token to Travis CI
 - 4. Put your blog post(s) into your new repository
 
 ## 1. Copy the template
@@ -65,9 +65,9 @@ Go to https://dev.to/settings/account and give a name to the token so you can re
 
 ![Generate a dev to token](./assets/dev-to-generate-token.png 'Generate a dev to token')
 
-Keep the page opened for now.
+Keep the page open for now.
 
-## 3. Pass that token to travis
+## 3. Pass that token to Travis
 
 Go to https://travis-ci.org/account/repositories
 
@@ -89,7 +89,7 @@ Once ready, click on the "add" button.
 
 ## 4. Put your blog post(s) into your new repository
 
-First thing that you need to do is make sure that your package.json defines a property `repository.url`. It should look like this one: https://github.com/maxime1992/my-dev.to.git with your own username/repository name. It will be used to retrieve your images from there.
+First thing that you need to do is make sure that your package.json defines a property `repository.url`. It should look like this one: https://github.com/maxime1992/my-dev.to.git with your own username/repository name. It will be used to retrieve your article images from there.
 
 Then, notice that there's a `dev-to-git.json` at the root of the project. This is where we will be managing the blog posts we want to publish.
 
@@ -106,7 +106,7 @@ Example:
 ]
 ```
 
-There's no easy way to manage the creation of an article but it's a quick / one time thing. Go to https://dev.to and click at the top on the "write a post" button. Write a title (that can be updated later) and just press the "save draft" button. This way the article is not published yet and only available to you.
+There's no easy way to manage the creation of an article (yet?) but it's a quick / one time thing. Go to https://dev.to and click at the top on the "write a post" button. Write a title (that can be updated later) and press the "save draft" button. This way the article is not published yet and only available to you.
 
 As dev.to doesn't display the ID of a blog post on the page itself, I've made a small query to find it into the page. Open your browser console on the dev.to page of your article and paste the following:
 
@@ -136,7 +136,7 @@ Finally, all the local images links are rewritten to become remote ones that poi
 
 # Thanks for reading
 
-Don't be shy, let me know what you think of this project in the comments :relaxed:. Do you like it? Do you consider using it? If not, I'd love to know what's missing to make it work better for you, with your own workflow.
+Don't be shy, let me know what you think of this project in the comments :relaxed:. Do you like it? Will you consider using it? If not, I'd love to know what's missing to make it work better for you, with your workflow.
 
 <hr>
 
@@ -144,7 +144,7 @@ I work at [CloudNC](https://cloudnc.com) in central London and we are [recruitin
 
 ![CloudNC is recruiting](./assets/join-cloudnc.jpg 'CloudNC is recruiting')
 
-We have a hackday every first Friday of the month and it's during the last one that I decided to work on that project. I've open sourced an npm module called [dev-to-git](https://github.com/maxime1992/dev-to-git) that handles most of the heavy work to read and publish on dev.to (which is used by the template repository).
+We have a hackday every first Friday of the month and it's during the last one that I decided to work on this project. I've open sourced an npm module called [dev-to-git](https://github.com/maxime1992/dev-to-git) that handles most of the heavy work to read and publish on dev.to (which is used by the template repository).
 
 # Found a typo?
 
