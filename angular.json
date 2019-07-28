@@ -117,6 +117,37 @@
           }
         }
       }
+    },
+    "enigma-machine": {
+      "projectType": "library",
+      "root": "libs/enigma-machine",
+      "sourceRoot": "libs/enigma-machine/src",
+      "prefix": "enigma",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/enigma-machine/tsconfig.lib.json",
+              "libs/enigma-machine/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/enigma-machine/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/enigma-machine/jest.config.js",
+            "tsConfig": "libs/enigma-machine/tsconfig.spec.json",
+            "setupFile": "libs/enigma-machine/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "styleext": "scss"
+        }
+      }
     }
   },
   "cli": {
