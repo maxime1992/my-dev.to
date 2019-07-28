@@ -75,7 +75,10 @@ export class EnigmaMachineService {
   }
 
   public encryptMessage(message: string): string {
+    this.currentStateRotorsToInitialState();
+
     return message
+      .toLowerCase()
       .split('')
       .map(letter =>
         // enigma only deals with the letters from the alphabet
@@ -86,7 +89,7 @@ export class EnigmaMachineService {
       .join('');
   }
 
-  public encryptLetter(letter: Letter): Letter {
+  private encryptLetter(letter: Letter): Letter {
     if (!isValidAlphabetLetter(letter)) {
       throw new InvalidLetter(letter);
     }
@@ -114,6 +117,23 @@ export class EnigmaMachineService {
     );
   }
 
+  private currentStateRotorsToInitialState(): void {
+    const state: EnigmaMachineState = this.state$.getValue();
+
+    const newStateRotors: RotorsConfiguration = [
+      ...state.config.rotors
+    ] as RotorsConfiguration;
+
+    this.state$.next({
+      ...state,
+      currentStateRotors: newStateRotors
+    });
+
+    this.enigmaRotorServices.forEach((rotorService, index) =>
+      rotorService.setCurrentRingPosition(newStateRotors[index])
+    );
+  }
+
   private goToNextRotorCombination(): void {
     const state: EnigmaMachineState = this.state$.getValue();
     const [letterRotor1, letterRotor2, letterRotor3] = state.currentStateRotors;
@@ -130,7 +150,7 @@ export class EnigmaMachineService {
     });
 
     this.enigmaRotorServices.forEach((rotorService, index) =>
-      rotorService.setCurrentRingPosition(state.currentStateRotors[index])
+      rotorService.setCurrentRingPosition(newStateRotors[index])
     );
   }
 

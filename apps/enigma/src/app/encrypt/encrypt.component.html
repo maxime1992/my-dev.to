@@ -1,0 +1,38 @@
+<div class="container">
+  <div class="encrypt">
+    <mat-card>
+      <mat-card-title>Clear text</mat-card-title>
+
+      <mat-card-content>
+        <mat-form-field>
+          <textarea
+            matInput
+            [formControl]="clearTextControl"
+            data-encrypt-input
+          ></textarea>
+        </mat-form-field>
+
+        <mat-error *ngIf="clearTextControl.hasError('invalidMessage')">
+          Please only use a-z letters
+        </mat-error>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div class="encrypted">
+    <mat-card>
+      <mat-card-title>Encrypted</mat-card-title>
+
+      <mat-card-content>
+        <mat-form-field>
+          <textarea
+            matInput
+            disabled
+            [value]="encryptedText$ | async"
+            data-encrypted-input
+          ></textarea>
+        </mat-form-field>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

@@ -24,7 +24,10 @@
             "tsConfig": "apps/enigma/tsconfig.app.json",
             "aot": false,
             "assets": ["apps/enigma/src/favicon.ico", "apps/enigma/src/assets"],
-            "styles": ["apps/enigma/src/styles.scss"],
+            "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
+              "apps/enigma/src/styles.scss"
+            ],
             "scripts": []
           },
           "configurations": {
