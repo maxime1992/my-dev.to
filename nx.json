@@ -7,5 +7,12 @@
     "tslint.json": "*",
     "nx.json": "*"
   },
-  "projects": {}
+  "projects": {
+    "enigma-e2e": {
+      "tags": []
+    },
+    "enigma": {
+      "tags": []
+    }
+  }
 }
