@@ -1,7 +1,10 @@
 {
-  "name": "enigma",
+  "name": "my-dev.to",
   "version": "0.0.0",
-  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/maxime1992/my-dev.to.git"
+  },
   "scripts": {
     "ng": "ng",
     "nx": "nx",
