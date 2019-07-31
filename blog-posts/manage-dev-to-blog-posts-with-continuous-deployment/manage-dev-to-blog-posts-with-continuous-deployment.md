@@ -8,7 +8,7 @@ series:
 canonical_url:
 ---
 
-Have you ever wished that you had a monorepo (_\*1_ ) containing all of your dev.to posts on Github and once you merge an update into the master branch they would just automatically be updated on dev.to?
+Have you ever wished that you had a monorepo (_\*1_ ) containing all of your dev.to posts on GitHub and once you merge an update into the master branch they would just automatically be updated on dev.to?
 
 _1) or multiple repositories, it doesn't matter :smiley:_
 
@@ -71,7 +71,7 @@ Keep the page open for now.
 
 Go to https://travis-ci.org/account/repositories
 
-As the Github repository has just been created, Travis may not see the repo yet. If that's the case, click on the left on the "Sync account" button to force the refresh of your repositories.
+As the GitHub repository has just been created, Travis may not see the repo yet. If that's the case, click on the left on the "Sync account" button to force the refresh of your repositories.
 
 ![Travis sync account and repositories](./assets/travis-ci-sync-account.png 'Travis sync account and repositories')
 
@@ -132,7 +132,7 @@ canonical_url:
 
 This means that you can manage all of those attributes directly from your blog post written in Markdown. How cool is that?
 
-Finally, all the local images links are rewritten to become remote ones that points to the files on Github. Yes, even your images can be part of your versioning process :raised_hands:!
+Finally, all the local images links are rewritten to become remote ones that points to the files on GitHub. Yes, even your images can be part of your versioning process :raised_hands:!
 
 # Thanks for reading
 
