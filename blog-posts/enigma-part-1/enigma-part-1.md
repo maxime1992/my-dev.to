@@ -10,18 +10,36 @@ canonical_url:
 
 This blog post is the first of a serie of 3, called **"Enigma: Understand it, implement it, crack it"**:
 
-1. Enigma machine, how does the famous encryption device work? _[this blog post]_
+1. **Enigma machine, how does the famous encryption device work? _[this blog post]_**
 
 2. My take at implementing Enigma using Typescript _[coming soon]_
 
 3. Let's crack messages encrypted with Enigma... From our browser! _[coming soon]_
+
+# Table of contents
+
+- [Intro](#intro)
+- [Understanding the machine](#understanding-the-machine)
+  - [High level principles](#high-level-principles)
+  - [How does a rotor work](#how-does-a-rotor-work)
+    - [Show me inside!](#show-me-inside)
+    - [Alphabet and index](#alphabet-and-index)
+    - [How do they interact with each others?](#how-do-they-interact-with-each-others)
+    - [How and when do the rotors spin?](#how-and-when-do-the-rotors-spin)
+    - [How does the spin impact the path of a letter?](#how-does-the-spin-impact-the-path-of-a-letter)
+  - [What's a reflector?](#whats-a-reflector)
+  - [Complete path](#complete-path)
+- [Conclusion](#conclusion)
+- [Challenge: Implement your own Enigma!](#challenge-implement-your-own-enigma)
+
+If you find any typo please just make the edit yourself here: https://github.com/maxime1992/my-dev.to/blob/master/blog-posts/enigma-part-1/enigma-part-1.md and submit a pull request :ok_hand:
 
 # Intro
 
 Have you ever heard of **Enigma**?  
 Maybe if I mention the movie "[The Imitation Game](https://www.imdb.com/title/tt2084970/)", does it ring any bells?
 
-Enigma is a an encryption device built in 1918, right after World War I. During World War II, the Germans started to use wireless communication systems (using radios and morse) on the battlefield because wires were fragile, could be cut and were hard to move. It also gives an important strategic advance as you could communicate from the land with a boat for example. There's only one catch: Whoever tunes in can listen to the broadcast. It's not what you really want to keep the advantage over your ennemy...
+Enigma is an encryption device built in 1918, right after World War I. During World War II, the Germans started to use wireless communication systems (using radios and morse) on the battlefield because wires were fragile, could be cut and were hard to move. It also gives an important strategic advance as you could communicate from the land with a boat for example. There's only one catch: Whoever tunes in can listen to the broadcast. It's not what you really want to keep the advantage over your ennemy...
 
 Instead of broadcasting plain messages, they decided to send encrypted ones, using Enigma.
 
@@ -61,7 +79,7 @@ _Image credit https://www.flickr.com/photos/timg_vancouver/200625463_
 _Image credit https://web.stanford.edu/class/cs106j/handouts/36-TheEnigmaMachine.pdf_
 
 - A battery is placed inside the machine
-- An electric circuit is going from the battery, through the 3 rotors, then through a reflector, coming back through the 3 rotors again, to finally light up one of the output letters _(don't worry, that's the though part and we will come back to all of that)_
+- An electric circuit is going from the battery, through the 3 rotors, then through a reflector, coming back through the 3 rotors again, to finally light up one of the output letters _(don't worry, that's the tough part and we will come back to all of that)_
 - Typing a letter from the input (keyboard), will trigger a rotation on the rotor(s) and change the electric circuit, hence changing the path leading to a different output for same input letter
 
 ## How does a rotor work
@@ -170,7 +188,7 @@ In the above, 2 important things to notice:
 - The first rotor can now be represented as starting with a B and ending up with an A
 - The D letter from the keyboard is now in front of the E letter on the first rotor
 
-### What's a reflector?
+## What's a reflector?
 
 At the beginning of the _"High level principles"_, I mentionned briefly that the machine has a **reflector**.
 
@@ -182,13 +200,19 @@ The particularities of a reflector are:
 
 - It doesn't spin like the rotors
 - It only has **one side**, which means that you can **never connect a letter to itself**, it has to be connected to a different one
-- It will redirect a letter to another one, and then it will go all the way back through the 3 rotors
+- All its letters are connected to another one, otherwise the electrical circuit wouldn't be complete
+- When the reflector outputs a letter, it will go all the way back through the 3 rotors
 
 **Note:** The second point is a really important characteristic of the machine. When typing a letter as an input on Enigma, it is impossible to get the same letter as the ouput.
 
-### Complete path
+## Complete path
 
-If we take the previous image were the first rotor had already ticked once and assuming that the reflector is mapping the letters `T <==> Z`, here's what the full path would look like when we type the letter D as the input:
+If we:
+
+- Take the previous image were the first rotor had already ticked once
+- Assume that the reflector is mapping the letters `T <==> Z` (+ all the others but only keeping the ones we need here)
+
+The full path would look like the following when we type the letter D as the input:
 
 ![Complete path with reflector](./assets/complete-path-with-reflector.jpg 'Complete path with reflector')
 
@@ -197,6 +221,12 @@ If we take the previous image were the first rotor had already ticked once and a
 The core principles of Enigma are not so much complicated, but the machine was considered as a secure device (and unbreakable) for a long time due to all the possibilities, settings and "randomness" where you could type the same letter multiple times and get different outputs.
 
 I hope you enjoyed learning about Enigma in this blog post. Please let me know in the comments if anything is unclear as the next part of the serie will be to see how we can simulate the behavior of the machine with Typescript.
+
+# Challenge: Implement your own Enigma!
+
+Can you come up with the above specs to **your own implementation of Enigma** before reading the part II of the serie? ;)
+
+It doesn't matter the language, it doesn't matter the platform (web with a UI, command line, Android/iOS app, etc). If you manage to build it, share your code on an open source repository and let me know in the comments. I will add your solution to a list so that we can all easy find and compare different approaches! Spread the word :octopus: ...
 
 # Found a typo?
 
