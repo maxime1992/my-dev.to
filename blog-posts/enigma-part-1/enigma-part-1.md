@@ -1,5 +1,5 @@
 ---
-published: false
+published: true
 title: "Enigma machine, how does the famous encryption device work?"
 cover_image: "https://raw.githubusercontent.com/maxime1992/my-dev.to/master/blog-posts/enigma-part-1/assets/enigma-cover.jpg"
 description: "[Part 1] - Understand the machine"
@@ -37,7 +37,7 @@ If you find any typo please just make the edit yourself here: https://github.com
 # Intro
 
 Have you ever heard of **Enigma**?  
-Maybe if I mention the movie "[The Imitation Game](https://www.imdb.com/title/tt2084970/)", does it ring any bells?
+Maybe if I mention the movie "[The Imitation Game](https://www.imdb.com/title/tt2084970/)", does it ring any bells :bell:?
 
 Enigma is an encryption device built in 1918, right after World War I. During World War II, the Germans started to use wireless communication systems (using radios and morse) on the battlefield because wires were fragile, could be cut and were hard to move. It also gives an important strategic advance as you could communicate from the land with a boat for example. There's only one catch: Whoever tunes in can listen to the broadcast. It's not what you really want to keep the advantage over your ennemy...
 
