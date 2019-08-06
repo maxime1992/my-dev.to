@@ -47,7 +47,7 @@ describe(`EncryptComponent`, () => {
     dataEncryptInput.nativeElement.value = 'Hello this is a top secret message';
     dataEncryptInput.nativeElement.dispatchEvent(new Event('input'));
 
-    tick(300);
+    tick(10);
     fixture.detectChanges();
 
     expect(dataEncryptedInput.nativeElement.value).toEqual(

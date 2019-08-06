@@ -1,0 +1,4 @@
+<app-rotors-form
+  *ngIf="(rotorsConfiguration$ | async) as rotorsConfiguration"
+  [rotors]="rotorsConfiguration"
+></app-rotors-form>

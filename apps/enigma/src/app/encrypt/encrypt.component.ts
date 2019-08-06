@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
-import { EnigmaMachineService } from '@enigma/enigma-machine';
+import {
+  EnigmaMachineService,
+  RotorsConfiguration
+} from '@enigma/enigma-machine';
 import { FormControl, AbstractControl } from '@angular/forms';
 import { map, sampleTime, distinctUntilChanged, filter } from 'rxjs/operators';
 import {
@@ -10,6 +13,7 @@ import {
   ShowOnDirtyErrorStateMatcher,
   ErrorStateMatcher
 } from '@angular/material/core';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-encrypt',
@@ -28,7 +32,7 @@ export class EncryptComponent {
   );
 
   public encryptedText$ = this.clearTextControl.valueChanges.pipe(
-    sampleTime(300),
+    sampleTime(10),
     distinctUntilChanged(),
     filter(() => this.clearTextControl.valid),
     map((text: string) => this.enigmaMachineService.encryptMessage(text))

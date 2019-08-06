@@ -1,38 +1,58 @@
 <div class="container">
-  <div class="encrypt">
-    <mat-card>
-      <mat-card-title>Clear text</mat-card-title>
+  <div class="rotors">
+    <div class="rotor initial-config">
+      <h1 class="title">
+        Initial config
+      </h1>
 
-      <mat-card-content>
-        <mat-form-field>
-          <textarea
-            matInput
-            [formControl]="clearTextControl"
-            data-encrypt-input
-          ></textarea>
-        </mat-form-field>
+      <app-rotors-initial-config></app-rotors-initial-config>
+    </div>
 
-        <mat-error *ngIf="clearTextControl.hasError('invalidMessage')">
-          Please only use a-z letters
-        </mat-error>
-      </mat-card-content>
-    </mat-card>
+    <div class="rotor current-state">
+      <h1 class="title">
+        Current state
+      </h1>
+
+      <app-rotors-current-state></app-rotors-current-state>
+    </div>
   </div>
 
-  <div class="encrypted">
-    <mat-card>
-      <mat-card-title>Encrypted</mat-card-title>
+  <div class="messages">
+    <div class="encrypt">
+      <mat-card>
+        <mat-card-title>Clear text</mat-card-title>
 
-      <mat-card-content>
-        <mat-form-field>
-          <textarea
-            matInput
-            disabled
-            [value]="encryptedText$ | async"
-            data-encrypted-input
-          ></textarea>
-        </mat-form-field>
-      </mat-card-content>
-    </mat-card>
+        <mat-card-content>
+          <mat-form-field>
+            <textarea
+              matInput
+              [formControl]="clearTextControl"
+              data-encrypt-input
+            ></textarea>
+          </mat-form-field>
+
+          <mat-error *ngIf="clearTextControl.hasError('invalidMessage')">
+            Please only use a-z letters
+          </mat-error>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div class="encrypted">
+      <mat-card>
+        <mat-card-title>Encrypted</mat-card-title>
+
+        <mat-card-content>
+          <mat-form-field>
+            <textarea
+              matInput
+              disabled
+              [value]="encryptedText$ | async"
+              data-encrypted-input
+            ></textarea>
+          </mat-form-field>
+        </mat-card-content>
+      </mat-card>
+    </div>
   </div>
 </div>

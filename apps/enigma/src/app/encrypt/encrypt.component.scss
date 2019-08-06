@@ -1,21 +1,42 @@
 .container {
   max-width: 1200px;
   margin: auto;
-  display: flex;
 
-  .encrypt,
-  .encrypted {
+  .rotors {
     padding: 16px;
-    width: 100%;
+    display: flex;
+
+    .rotor {
+      margin-right: 16px;
+
+      .title {
+        margin-right: 16px;
+      }
+
+      app-rotors-initial-config,
+      app-rotors-current-state {
+        display: inline-block;
+      }
+    }
   }
 
-  mat-card-content,
-  mat-form-field {
-    width: 100%;
-  }
+  .messages {
+    display: flex;
 
-  textarea {
-    min-width: 100%;
-    min-height: 400px;
+    .encrypt,
+    .encrypted {
+      padding: 16px;
+      width: 100%;
+    }
+
+    mat-card-content,
+    mat-form-field {
+      width: 100%;
+    }
+
+    textarea {
+      min-width: 100%;
+      min-height: 400px;
+    }
   }
 }
