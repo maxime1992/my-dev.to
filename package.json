@@ -50,6 +50,7 @@
     "embedme": "1.16.0",
     "hammerjs": "^2.0.8",
     "lodash": "4.17.15",
+    "ngx-sub-form": "2.11.2",
     "rxjs": "~6.4.0",
     "zone.js": "^0.9.1"
   },

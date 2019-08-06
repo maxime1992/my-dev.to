@@ -5812,6 +5812,11 @@ locate-path@^3.0.0:
     p-locate "^3.0.0"
     path-exists "^3.0.0"
 
+lodash-es@^4.17.0:
+  version "4.17.15"
+  resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.15.tgz#21bd96839354412f23d7a10340e5eac6ee455d78"
+  integrity sha512-rlrc3yU3+JNOpZ9zj5pQtxnx2THmvRykwL4Xlxoa8I9lHBlVbbyPhgyPMioxVZ4NqyxaVVtaJnzsyOidQIhyyQ==
+
 lodash.clonedeep@^4.5.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.clonedeep/-/lodash.clonedeep-4.5.0.tgz#e23f3f9c4f8fbdde872529c1071857a086e5ccef"
@@ -6315,6 +6320,14 @@ neo-async@^2.5.0, neo-async@^2.6.0:
   version "2.6.1"
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.1.tgz#ac27ada66167fa8849a6addd837f6b189ad2081c"
   integrity sha512-iyam8fBuCUpWeKPGpaNMetEocMt364qkCsfL9JuhjXX6dRnguRVOfk2GZaDpPjcOKiiXCPINZC1GczQ7iTq3Zw==
+
+ngx-sub-form@2.11.2:
+  version "2.11.2"
+  resolved "https://registry.yarnpkg.com/ngx-sub-form/-/ngx-sub-form-2.11.2.tgz#0015092a2c7414e94da6ef671e8bf93b6ea93d94"
+  integrity sha512-QPiAU1BQoBg23tmiYa8ldcJVWKhJy7eG3QpgvyZ1grgOLy/0t+Kwm2zkOVTuGXdRDBmoeij2iuCAyQMevemgTA==
+  dependencies:
+    lodash-es "^4.17.0"
+    tslib "^1.9.0"
 
 nice-try@^1.0.4:
   version "1.0.5"

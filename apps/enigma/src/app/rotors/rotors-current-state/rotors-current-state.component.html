@@ -1,0 +1,8 @@
+<!-- the `[disabled]="true"` is not working but it's an issue -->
+<!-- with ngx-sub-form https://github.com/cloudnc/ngx-sub-form/issues/84 -->
+
+<app-rotors-form
+  *ngIf="(currentStateRotors$ | async) as currentStateRotors"
+  [rotors]="currentStateRotors"
+  [disabled]="true"
+></app-rotors-form>
