@@ -5,10 +5,8 @@ import {
 } from '@enigma/enigma-machine';
 import { FormControl, AbstractControl } from '@angular/forms';
 import { map, sampleTime, distinctUntilChanged, filter } from 'rxjs/operators';
-import {
-  DEFAULT_ENIGMA_MACHINE_PROVIDERS,
-  isValidAlphabetLetter
-} from '@enigma/enigma-machine';
+import { DEFAULT_ENIGMA_MACHINE_PROVIDERS } from '@enigma/enigma-machine';
+import { isValidAlphabetLetter } from '@enigma/enigma-utility';
 import {
   ShowOnDirtyErrorStateMatcher,
   ErrorStateMatcher

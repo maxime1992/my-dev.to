@@ -1,7 +1,6 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Letter } from '@enigma/enigma-machine';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Letter } from '@enigma/enigma-utility';
 import {
-  NgxSubFormRemapComponent,
   NgxFormWithArrayControls,
   Controls,
   ArrayPropertyKey,

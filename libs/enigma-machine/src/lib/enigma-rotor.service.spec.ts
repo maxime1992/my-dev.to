@@ -1,6 +1,10 @@
 import { TestBed } from '@angular/core/testing';
 import { EnigmaRotorService } from './enigma-rotor.service';
-import { stringToAlphabet, InvalidAlphabet, Letter } from './alphabet';
+import {
+  stringToAlphabet,
+  InvalidAlphabet,
+  Letter
+} from '@enigma/enigma-utility';
 
 describe('EnigmaRotorService', () => {
   let enigmaRotorService: EnigmaRotorService;

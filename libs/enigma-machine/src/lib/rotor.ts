@@ -5,9 +5,9 @@ import {
   InvalidAlphabet,
   getLetterIndexInAlphabet,
   ALPHABET,
-  getNextLetter
-} from './alphabet';
-import { Nil } from './utils/common-types';
+  getNextLetter,
+  Nil
+} from '@enigma/enigma-utility';
 
 export class InvalidRingPosition extends Error {
   constructor(position: Letter | Nil) {

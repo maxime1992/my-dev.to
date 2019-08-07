@@ -1,7 +1,7 @@
 import { EnigmaMachineService } from './enigma-machine.service';
 import { TestBed } from '@angular/core/testing';
 import { EnigmaRotorService } from './enigma-rotor.service';
-import { ALPHABET, Letter } from './alphabet';
+import { ALPHABET, Letter } from '@enigma/enigma-utility';
 import { ReflectorRequiresValidAlphabet } from './reflector';
 import {
   EnigmaMachineRequires3Rotors,

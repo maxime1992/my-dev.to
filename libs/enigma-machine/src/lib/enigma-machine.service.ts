@@ -1,6 +1,8 @@
 import { Injectable, Inject } from '@angular/core';
 import { flow } from 'lodash/fp';
 import { EnigmaRotorService } from './enigma-rotor.service';
+import { REFLECTOR, ReflectorRequiresValidAlphabet } from './reflector';
+import { BehaviorSubject, Observable } from 'rxjs';
 import {
   Alphabet,
   isValidAlphabetLetter,
@@ -8,11 +10,9 @@ import {
   InvalidLetter,
   isAlphabetValid,
   getLetterIndexInAlphabet,
-  ALPHABET
-} from './alphabet';
-import { REFLECTOR, ReflectorRequiresValidAlphabet } from './reflector';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { select } from './utils/rxjs-operators';
+  ALPHABET,
+  select
+} from '@enigma/enigma-utility';
 import {
   RotorLeftLetterMappedToRightIndex,
   goToNextRotorCombination,

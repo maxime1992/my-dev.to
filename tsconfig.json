@@ -17,7 +17,9 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@enigma/enigma-machine": ["libs/enigma-machine/src/index.ts"]
+      "@enigma/enigma-machine": ["libs/enigma-machine/src/index.ts"],
+      "@enigma/enigma-bombe": ["libs/enigma-bombe/src/index.ts"],
+      "@enigma/enigma-utility": ["libs/enigma-utility/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

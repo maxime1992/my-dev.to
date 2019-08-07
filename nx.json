@@ -16,6 +16,12 @@
     },
     "enigma-machine": {
       "tags": []
+    },
+    "enigma-bombe": {
+      "tags": []
+    },
+    "enigma-utility": {
+      "tags": []
     }
   }
 }

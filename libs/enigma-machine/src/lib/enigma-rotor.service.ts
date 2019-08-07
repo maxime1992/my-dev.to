@@ -5,7 +5,7 @@ import {
   isValidAlphabetLetter,
   getLetterIndexInAlphabet,
   getLetterPlusXAlphabetLoop
-} from './alphabet';
+} from '@enigma/enigma-utility';
 import {
   InvalidRingPosition,
   AlphabetLeftAndRightMap,

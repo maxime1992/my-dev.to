@@ -1,6 +1,6 @@
 import { InjectionToken, StaticProvider } from '@angular/core';
 import { EnigmaRotorService } from './enigma-rotor.service';
-import { Letter, stringToAlphabet, Alphabet } from './alphabet';
+import { Letter, stringToAlphabet, Alphabet } from '@enigma/enigma-utility';
 import { REFLECTOR } from './reflector';
 import { mapScrambledAlphabetToRotorIndexOutput } from './rotor';
 

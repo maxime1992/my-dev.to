@@ -151,6 +151,68 @@
           "styleext": "scss"
         }
       }
+    },
+    "enigma-bombe": {
+      "projectType": "library",
+      "root": "libs/enigma-bombe",
+      "sourceRoot": "libs/enigma-bombe/src",
+      "prefix": "enigma",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/enigma-bombe/tsconfig.lib.json",
+              "libs/enigma-bombe/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/enigma-bombe/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/enigma-bombe/jest.config.js",
+            "tsConfig": "libs/enigma-bombe/tsconfig.spec.json",
+            "setupFile": "libs/enigma-bombe/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "styleext": "scss"
+        }
+      }
+    },
+    "enigma-utility": {
+      "projectType": "library",
+      "root": "libs/enigma-utility",
+      "sourceRoot": "libs/enigma-utility/src",
+      "prefix": "enigma",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/enigma-utility/tsconfig.lib.json",
+              "libs/enigma-utility/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/enigma-utility/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/enigma-utility/jest.config.js",
+            "tsConfig": "libs/enigma-utility/tsconfig.spec.json",
+            "setupFile": "libs/enigma-utility/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "styleext": "scss"
+        }
+      }
     }
   },
   "cli": {

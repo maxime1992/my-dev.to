@@ -1,4 +1,8 @@
-import { Letter, getLetterIndexInAlphabet, getNextLetter } from './alphabet';
+import {
+  Letter,
+  getLetterIndexInAlphabet,
+  getNextLetter
+} from '@enigma/enigma-utility';
 import {
   relativeDistanceBetweenCurrentRottorRingPositionAndOutputIndex,
   goToNextRotorCombination
