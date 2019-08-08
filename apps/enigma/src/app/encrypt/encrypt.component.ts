@@ -11,7 +11,7 @@ import {
   ShowOnDirtyErrorStateMatcher,
   ErrorStateMatcher
 } from '@angular/material/core';
-import { Observable } from 'rxjs';
+import { Observable, combineLatest } from 'rxjs';
 
 @Component({
   selector: 'app-encrypt',
@@ -24,17 +24,25 @@ import { Observable } from 'rxjs';
   ]
 })
 export class EncryptComponent {
+  private rotorsConfiguration$: Observable<RotorsConfiguration> = this
+    .enigmaMachineService.rotorsConfiguration$;
+
   public clearTextControl: FormControl = new FormControl(
     null,
     this.isValidMessage
   );
 
-  public encryptedText$ = this.clearTextControl.valueChanges.pipe(
-    sampleTime(10),
-    distinctUntilChanged(),
-    filter(() => this.clearTextControl.valid),
-    map((text: string) => this.enigmaMachineService.encryptMessage(text))
-  );
+  private readonly clearTextValue$: Observable<string> = this.clearTextControl
+    .valueChanges;
+
+  public encryptedText$ = combineLatest(
+    this.clearTextValue$.pipe(
+      sampleTime(10),
+      distinctUntilChanged(),
+      filter(() => this.clearTextControl.valid)
+    ),
+    this.rotorsConfiguration$
+  ).pipe(map(([text]) => this.enigmaMachineService.encryptMessage(text)));
 
   constructor(private enigmaMachineService: EnigmaMachineService) {}
 

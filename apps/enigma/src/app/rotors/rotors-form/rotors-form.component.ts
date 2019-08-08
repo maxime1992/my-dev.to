@@ -6,12 +6,14 @@ import {
   ArrayPropertyKey,
   ArrayPropertyValue,
   NgxAutomaticRootFormComponent,
-  DataInput
+  DataInput,
+  FormGroupOptions
 } from 'ngx-sub-form';
 import { FormArray, FormControl, Validators } from '@angular/forms';
+import { RotorsConfiguration } from '@enigma/enigma-machine';
 
 interface RotorsForm {
-  rotors: Letter[];
+  rotors: RotorsConfiguration;
 }
 
 @Component({
@@ -20,7 +22,7 @@ interface RotorsForm {
   styleUrls: ['./rotors-form.component.scss']
 })
 export class RotorsFormComponent
-  extends NgxAutomaticRootFormComponent<Letter[], RotorsForm>
+  extends NgxAutomaticRootFormComponent<RotorsConfiguration, RotorsForm>
   implements NgxFormWithArrayControls<RotorsForm> {
   // @todo the DataInput has a type error
   // and the error is coming from ngx-sub-form
@@ -28,10 +30,13 @@ export class RotorsFormComponent
   @((DataInput as any)())
   // tslint:disable-next-line:no-input-rename
   @Input('rotors')
-  dataInput: Letter[] | null | undefined;
+  dataInput: RotorsConfiguration | null | undefined;
 
-  @Output()
-  dataOutput: EventEmitter<Letter[]> = new EventEmitter();
+  // tslint:disable-next-line:no-output-rename
+  @Output('rotorsUpdate')
+  dataOutput: EventEmitter<RotorsConfiguration> = new EventEmitter();
+
+  protected emitInitialValueOnInit = false;
 
   protected getFormControls(): Controls<RotorsForm> {
     return {
@@ -39,14 +44,38 @@ export class RotorsFormComponent
     };
   }
 
-  protected transformToFormGroup(letters: Letter[] | null): RotorsForm {
+  protected transformToFormGroup(
+    letters: RotorsConfiguration | null
+  ): RotorsForm {
     return {
-      rotors: letters ? letters : []
+      rotors: letters ? letters : [Letter.A, Letter.A, Letter.A]
     };
   }
 
-  protected transformFromFormGroup(formValue: RotorsForm): Letter[] | null {
+  protected transformFromFormGroup(
+    formValue: RotorsForm
+  ): RotorsConfiguration | null {
     return formValue.rotors;
+  }
+
+  protected getFormGroupControlOptions(): FormGroupOptions<RotorsForm> {
+    return {
+      validators: [
+        formGroup => {
+          if (
+            !formGroup.value.rotors ||
+            !Array.isArray(formGroup.value.rotors) ||
+            formGroup.value.rotors.length !== 3
+          ) {
+            return {
+              rotorsError: true
+            };
+          }
+
+          return null;
+        }
+      ]
+    };
   }
 
   public createFormArrayControl(

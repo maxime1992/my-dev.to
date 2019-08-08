@@ -182,4 +182,10 @@ export class EnigmaMachineService {
     return (relativeInputIndex: number) =>
       this.reflector[ALPHABET[relativeInputIndex]];
   }
+
+  public setInitialRotorConfig(initialRotorConfig: RotorsConfiguration): void {
+    const state: EnigmaMachineState = this.state$.getValue();
+
+    this.state$.next({ ...state, config: { rotors: initialRotorConfig } });
+  }
 }
