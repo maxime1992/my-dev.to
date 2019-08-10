@@ -10,6 +10,7 @@
     "experimentalDecorators": true,
     "importHelpers": true,
     "target": "es2015",
+    "downlevelIteration": true,
     "module": "esnext",
     "typeRoots": ["node_modules/@types"],
     "lib": ["es2017", "dom"],
@@ -17,9 +18,14 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@enigma/enigma-machine": ["libs/enigma-machine/src/index.ts"],
-      "@enigma/enigma-bombe": ["libs/enigma-bombe/src/index.ts"],
-      "@enigma/enigma-utility": ["libs/enigma-utility/src/index.ts"]
+      "@enigma/enigma-machine": ["libs/enigma/enigma-machine/src/index.ts"],
+      "@enigma/enigma-bombe": ["libs/enigma/enigma-bombe/src/index.ts"],
+      "@enigma/enigma-utility": ["libs/enigma/enigma-utility/src/index.ts"],
+      "@common/rxjs-utility": ["libs/common/rxjs-utility/src/index.ts"],
+      "@common/string-utility": ["libs/common/string-utility/src/index.ts"],
+      "@common/object-utility": ["libs/common/object-utility/src/index.ts"],
+      "@common/jest-utility": ["libs/common/jest-utility/src/index.ts"],
+      "@common/type-utility": ["libs/common/type-utility/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

@@ -22,13 +22,14 @@
             "main": "apps/enigma/src/main.ts",
             "polyfills": "apps/enigma/src/polyfills.ts",
             "tsConfig": "apps/enigma/tsconfig.app.json",
-            "aot": false,
+            "aot": true,
             "assets": ["apps/enigma/src/favicon.ico", "apps/enigma/src/assets"],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
               "apps/enigma/src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "webWorkerTsConfig": "apps/enigma/tsconfig.worker.json"
           },
           "configurations": {
             "production": {
@@ -79,7 +80,8 @@
           "options": {
             "tsConfig": [
               "apps/enigma/tsconfig.app.json",
-              "apps/enigma/tsconfig.spec.json"
+              "apps/enigma/tsconfig.spec.json",
+              "apps/enigma/tsconfig.worker.json"
             ],
             "exclude": ["**/node_modules/**", "!apps/enigma/**"]
           }
@@ -123,26 +125,26 @@
     },
     "enigma-machine": {
       "projectType": "library",
-      "root": "libs/enigma-machine",
-      "sourceRoot": "libs/enigma-machine/src",
+      "root": "libs/enigma/enigma-machine",
+      "sourceRoot": "libs/enigma/enigma-machine/src",
       "prefix": "enigma",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "libs/enigma-machine/tsconfig.lib.json",
-              "libs/enigma-machine/tsconfig.spec.json"
+              "libs/enigma/enigma-machine/tsconfig.lib.json",
+              "libs/enigma/enigma-machine/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/enigma-machine/**"]
+            "exclude": ["**/node_modules/**", "!libs/enigma/enigma-machine/**"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/enigma-machine/jest.config.js",
-            "tsConfig": "libs/enigma-machine/tsconfig.spec.json",
-            "setupFile": "libs/enigma-machine/src/test-setup.ts"
+            "jestConfig": "libs/enigma/enigma-machine/jest.config.js",
+            "tsConfig": "libs/enigma/enigma-machine/tsconfig.spec.json",
+            "setupFile": "libs/enigma/enigma-machine/src/test-setup.ts"
           }
         }
       },
@@ -154,26 +156,26 @@
     },
     "enigma-bombe": {
       "projectType": "library",
-      "root": "libs/enigma-bombe",
-      "sourceRoot": "libs/enigma-bombe/src",
+      "root": "libs/enigma/enigma-bombe",
+      "sourceRoot": "libs/enigma/enigma-bombe/src",
       "prefix": "enigma",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "libs/enigma-bombe/tsconfig.lib.json",
-              "libs/enigma-bombe/tsconfig.spec.json"
+              "libs/enigma/enigma-bombe/tsconfig.lib.json",
+              "libs/enigma/enigma-bombe/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/enigma-bombe/**"]
+            "exclude": ["**/node_modules/**", "!libs/enigma/enigma-bombe/**"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/enigma-bombe/jest.config.js",
-            "tsConfig": "libs/enigma-bombe/tsconfig.spec.json",
-            "setupFile": "libs/enigma-bombe/src/test-setup.ts"
+            "jestConfig": "libs/enigma/enigma-bombe/jest.config.js",
+            "tsConfig": "libs/enigma/enigma-bombe/tsconfig.spec.json",
+            "setupFile": "libs/enigma/enigma-bombe/src/test-setup.ts"
           }
         }
       },
@@ -185,26 +187,181 @@
     },
     "enigma-utility": {
       "projectType": "library",
-      "root": "libs/enigma-utility",
-      "sourceRoot": "libs/enigma-utility/src",
+      "root": "libs/enigma/enigma-utility",
+      "sourceRoot": "libs/enigma/enigma-utility/src",
       "prefix": "enigma",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "libs/enigma-utility/tsconfig.lib.json",
-              "libs/enigma-utility/tsconfig.spec.json"
+              "libs/enigma/enigma-utility/tsconfig.lib.json",
+              "libs/enigma/enigma-utility/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/enigma-utility/**"]
+            "exclude": ["**/node_modules/**", "!libs/enigma/enigma-utility/**"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/enigma-utility/jest.config.js",
-            "tsConfig": "libs/enigma-utility/tsconfig.spec.json",
-            "setupFile": "libs/enigma-utility/src/test-setup.ts"
+            "jestConfig": "libs/enigma/enigma-utility/jest.config.js",
+            "tsConfig": "libs/enigma/enigma-utility/tsconfig.spec.json",
+            "setupFile": "libs/enigma/enigma-utility/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "styleext": "scss"
+        }
+      }
+    },
+    "common-rxjs-utility": {
+      "projectType": "library",
+      "root": "libs/common/rxjs-utility",
+      "sourceRoot": "libs/common/rxjs-utility/src",
+      "prefix": "maxime1992",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/common/rxjs-utility/tsconfig.lib.json",
+              "libs/common/rxjs-utility/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/common/rxjs-utility/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/common/rxjs-utility/jest.config.js",
+            "tsConfig": "libs/common/rxjs-utility/tsconfig.spec.json",
+            "setupFile": "libs/common/rxjs-utility/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "styleext": "scss"
+        }
+      }
+    },
+    "common-string-utility": {
+      "projectType": "library",
+      "root": "libs/common/string-utility",
+      "sourceRoot": "libs/common/string-utility/src",
+      "prefix": "maxime1992",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/common/string-utility/tsconfig.lib.json",
+              "libs/common/string-utility/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/common/string-utility/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/common/string-utility/jest.config.js",
+            "tsConfig": "libs/common/string-utility/tsconfig.spec.json",
+            "setupFile": "libs/common/string-utility/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "styleext": "scss"
+        }
+      }
+    },
+    "common-object-utility": {
+      "projectType": "library",
+      "root": "libs/common/object-utility",
+      "sourceRoot": "libs/common/object-utility/src",
+      "prefix": "maxime1992",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/common/object-utility/tsconfig.lib.json",
+              "libs/common/object-utility/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/common/object-utility/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/common/object-utility/jest.config.js",
+            "tsConfig": "libs/common/object-utility/tsconfig.spec.json",
+            "setupFile": "libs/common/object-utility/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "styleext": "scss"
+        }
+      }
+    },
+    "common-jest-utility": {
+      "projectType": "library",
+      "root": "libs/common/jest-utility",
+      "sourceRoot": "libs/common/jest-utility/src",
+      "prefix": "maxime1992",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/common/jest-utility/tsconfig.lib.json",
+              "libs/common/jest-utility/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/common/jest-utility/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/common/jest-utility/jest.config.js",
+            "tsConfig": "libs/common/jest-utility/tsconfig.spec.json",
+            "setupFile": "libs/common/jest-utility/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "styleext": "scss"
+        }
+      }
+    },
+    "common-type-utility": {
+      "projectType": "library",
+      "root": "libs/common/type-utility",
+      "sourceRoot": "libs/common/type-utility/src",
+      "prefix": "maxime1992",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/common/type-utility/tsconfig.lib.json",
+              "libs/common/type-utility/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/common/type-utility/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/common/type-utility/jest.config.js",
+            "tsConfig": "libs/common/type-utility/tsconfig.spec.json",
+            "setupFile": "libs/common/type-utility/src/test-setup.ts"
           }
         }
       },

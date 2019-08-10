@@ -1,5 +1,5 @@
 {
-  "npmScope": "enigma",
+  "npmScope": "maxime1992",
   "implicitDependencies": {
     "angular.json": "*",
     "package.json": "*",
@@ -21,6 +21,21 @@
       "tags": []
     },
     "enigma-utility": {
+      "tags": []
+    },
+    "common-rxjs-utility": {
+      "tags": []
+    },
+    "common-string-utility": {
+      "tags": []
+    },
+    "common-object-utility": {
+      "tags": []
+    },
+    "common-jest-utility": {
+      "tags": []
+    },
+    "common-type-utility": {
       "tags": []
     }
   }

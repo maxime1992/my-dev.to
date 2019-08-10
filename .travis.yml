@@ -10,8 +10,10 @@ node_js:
   - '11'
 
 script:
-  - yarn run lint
-  - yarn run format:check
+  - yarn run affected:lint --all
+  - yarn run format:check --all
+  - yarn run affected:test --all
+  - yarn run affected:build --all --prod --base-href  https://maxime1992.github.io/my-dev-to/
 
 after_success:
   - if [ "$TRAVIS_BRANCH" = "master" -a "$TRAVIS_PULL_REQUEST" = "false" ]; then DEV_TO_GIT_TOKEN=$DEV_TO_GIT_TOKEN yarn run dev-to-git; fi
@@ -19,3 +21,11 @@ after_success:
 branches:
   except:
     - /^v\d+\.\d+\.\d+$/
+
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN
+  local_dir: dist/apps/
+  on:
+    branch: master

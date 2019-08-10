@@ -1,5 +1,5 @@
 <app-rotors-form
-  *ngIf="(rotorsConfiguration$ | async) as rotorsConfiguration"
-  [rotors]="rotorsConfiguration"
+  *ngIf="(initialStateRotors$ | async) as initialStateRotors"
+  [rotors]="initialStateRotors"
   (rotorsUpdate)="rotorsUpdate($event)"
 ></app-rotors-form>

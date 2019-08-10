@@ -1,0 +1,63 @@
+<div class="container">
+  <div class="messages">
+    <div class="encrypted">
+      <mat-card>
+        <mat-card-title>Encrypted text</mat-card-title>
+
+        <mat-card-subtitle>Paste your encrypted text here</mat-card-subtitle>
+
+        <mat-card-content>
+          <mat-form-field>
+            <textarea
+              matInput
+              [formControl]="encryptedTextControl"
+              data-encrypted-input
+            ></textarea>
+          </mat-form-field>
+
+          <mat-error *ngIf="encryptedTextControl.hasError('invalidMessage')">
+            Please only use a-z letters
+          </mat-error>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div
+      class="decrypted"
+      *ngIf="{
+        decryptedText: decryptedText$ | async,
+        combinationsTried: combinationsTried$ | async
+      } as data"
+    >
+      <mat-card>
+        <mat-card-title>Decrypted text</mat-card-title>
+
+        <mat-card-subtitle>
+          <ng-container *ngIf="!data.combinationsTried; else combinationsTried"
+            >The decrypted text will be displayed here</ng-container
+          >
+          <ng-template #combinationsTried>
+            {{ data.combinationsTried }}/17576 combinations tried in
+            {{ elapsedTime$ | async }}ms
+
+            <mat-progress-bar
+              mode="determinate"
+              [value]="(data.combinationsTried / 17576) * 100"
+            ></mat-progress-bar>
+          </ng-template>
+        </mat-card-subtitle>
+
+        <mat-card-content>
+          <mat-form-field>
+            <textarea
+              matInput
+              disabled
+              [value]="data.decryptedText"
+              data-decrypted-input
+            ></textarea>
+          </mat-form-field>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

@@ -1,40 +1,45 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { Letter } from '@enigma/enigma-utility';
 import {
-  NgxFormWithArrayControls,
-  Controls,
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output
+} from '@angular/core';
+import { FormArray, FormControl, Validators } from '@angular/forms';
+import { RotorsState } from '@enigma/enigma-machine';
+import { Letter, NB_ROTORS_REQUIRED } from '@enigma/enigma-utility';
+import {
   ArrayPropertyKey,
   ArrayPropertyValue,
-  NgxAutomaticRootFormComponent,
+  Controls,
   DataInput,
-  FormGroupOptions
+  FormGroupOptions,
+  NgxAutomaticRootFormComponent,
+  NgxFormWithArrayControls
 } from 'ngx-sub-form';
-import { FormArray, FormControl, Validators } from '@angular/forms';
-import { RotorsConfiguration } from '@enigma/enigma-machine';
+import { containsOnlyAlphabetLetters } from '../../common/validators';
 
 interface RotorsForm {
-  rotors: RotorsConfiguration;
+  rotors: RotorsState;
 }
 
 @Component({
   selector: 'app-rotors-form',
   templateUrl: './rotors-form.component.html',
-  styleUrls: ['./rotors-form.component.scss']
+  styleUrls: ['./rotors-form.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RotorsFormComponent
-  extends NgxAutomaticRootFormComponent<RotorsConfiguration, RotorsForm>
+  extends NgxAutomaticRootFormComponent<RotorsState, RotorsForm>
   implements NgxFormWithArrayControls<RotorsForm> {
-  // @todo the DataInput has a type error
-  // and the error is coming from ngx-sub-form
-  // https://github.com/cloudnc/ngx-sub-form/issues/83
-  @((DataInput as any)())
+  @DataInput()
   // tslint:disable-next-line:no-input-rename
   @Input('rotors')
-  dataInput: RotorsConfiguration | null | undefined;
+  public dataInput: RotorsState | null | undefined;
 
   // tslint:disable-next-line:no-output-rename
   @Output('rotorsUpdate')
-  dataOutput: EventEmitter<RotorsConfiguration> = new EventEmitter();
+  public dataOutput: EventEmitter<RotorsState> = new EventEmitter();
 
   protected emitInitialValueOnInit = false;
 
@@ -44,17 +49,13 @@ export class RotorsFormComponent
     };
   }
 
-  protected transformToFormGroup(
-    letters: RotorsConfiguration | null
-  ): RotorsForm {
+  protected transformToFormGroup(letters: RotorsState | null): RotorsForm {
     return {
       rotors: letters ? letters : [Letter.A, Letter.A, Letter.A]
     };
   }
 
-  protected transformFromFormGroup(
-    formValue: RotorsForm
-  ): RotorsConfiguration | null {
+  protected transformFromFormGroup(formValue: RotorsForm): RotorsState | null {
     return formValue.rotors;
   }
 
@@ -65,7 +66,7 @@ export class RotorsFormComponent
           if (
             !formGroup.value.rotors ||
             !Array.isArray(formGroup.value.rotors) ||
-            formGroup.value.rotors.length !== 3
+            formGroup.value.rotors.length !== NB_ROTORS_REQUIRED
           ) {
             return {
               rotorsError: true
@@ -84,7 +85,10 @@ export class RotorsFormComponent
   ): FormControl {
     switch (key) {
       case 'rotors':
-        return new FormControl(value, [Validators.required]);
+        return new FormControl(value, [
+          Validators.required,
+          containsOnlyAlphabetLetters({ acceptSpace: false })
+        ]);
       default:
         return new FormControl(value);
     }
