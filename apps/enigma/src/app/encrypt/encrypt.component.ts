@@ -1,15 +1,14 @@
-import { Component } from '@angular/core';
-import { EnigmaMachineService } from '@enigma/enigma-machine';
-import { FormControl, AbstractControl } from '@angular/forms';
-import { map, sampleTime, distinctUntilChanged, filter } from 'rxjs/operators';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import {
-  DEFAULT_ENIGMA_MACHINE_PROVIDERS,
-  isValidAlphabetLetter
-} from '@enigma/enigma-machine';
-import {
-  ShowOnDirtyErrorStateMatcher,
-  ErrorStateMatcher
+  ErrorStateMatcher,
+  ShowOnDirtyErrorStateMatcher
 } from '@angular/material/core';
+import { EnigmaMachineService, RotorsState } from '@enigma/enigma-machine';
+import { combineLatest, Observable } from 'rxjs';
+import { distinctUntilChanged, filter, map, sampleTime } from 'rxjs/operators';
+import { DEFAULT_ENIGMA_MACHINE_PROVIDERS } from '../common/enigma-machine';
+import { containsOnlyAlphabetLetters } from '../common/validators';
 
 @Component({
   selector: 'app-encrypt',
@@ -17,43 +16,31 @@ import {
   styleUrls: ['./encrypt.component.scss'],
   providers: [
     ...DEFAULT_ENIGMA_MACHINE_PROVIDERS,
-    EnigmaMachineService,
     { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher }
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EncryptComponent {
+  private initialStateRotors$: Observable<RotorsState> = this
+    .enigmaMachineService.initialStateRotors$;
+
   public clearTextControl: FormControl = new FormControl(
-    null,
-    this.isValidMessage
+    '',
+    containsOnlyAlphabetLetters({ acceptSpace: true })
   );
 
-  public encryptedText$ = this.clearTextControl.valueChanges.pipe(
-    sampleTime(300),
-    distinctUntilChanged(),
-    filter(() => this.clearTextControl.valid),
-    map((text: string) => this.enigmaMachineService.encryptMessage(text))
-  );
+  private readonly clearTextValue$: Observable<string> = this.clearTextControl
+    .valueChanges;
+
+  public encryptedText$ = combineLatest([
+    this.clearTextValue$.pipe(
+      // tslint:disable-next-line: no-magic-numbers
+      sampleTime(10),
+      distinctUntilChanged(),
+      filter(() => this.clearTextControl.valid)
+    ),
+    this.initialStateRotors$
+  ]).pipe(map(([text]) => this.enigmaMachineService.encryptMessage(text)));
 
   constructor(private enigmaMachineService: EnigmaMachineService) {}
-
-  private isValidMessage(
-    control: AbstractControl
-  ): null | { invalidMessage: true } {
-    if (!control.value) {
-      return null;
-    }
-
-    const validMessage: boolean = (control.value as string)
-      .toLowerCase()
-      .split('')
-      .every(
-        (letter: string) => letter === ' ' || isValidAlphabetLetter(letter)
-      );
-
-    if (!validMessage) {
-      return { invalidMessage: true };
-    }
-
-    return null;
-  }
 }

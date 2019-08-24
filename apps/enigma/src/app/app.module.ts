@@ -1,8 +1,8 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { AppComponent } from './app.component';
-import { RouterModule, Routes } from '@angular/router';
+import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterModule, Routes } from '@angular/router';
+import { AppComponent } from './app.component';
 import { CommonModule } from './common/common.module';
 
 const routes: Routes = [
@@ -10,6 +10,11 @@ const routes: Routes = [
     path: 'encrypt',
     loadChildren: () =>
       import('./encrypt/encrypt.module').then(m => m.EncryptModule)
+  },
+  {
+    path: 'decrypt',
+    loadChildren: () =>
+      import('./decrypt/decrypt.module').then(m => m.DecryptModule)
   }
 ];
 

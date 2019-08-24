@@ -1,0 +1,16 @@
+<div [formGroup]="formGroup">
+  <ng-container [formArrayName]="formControlNames.rotors">
+    <span
+      *ngFor="let rotor of formGroupControls.rotors.controls; let index = index"
+    >
+      <mat-form-field>
+        <input
+          matInput
+          [placeholder]="'Rotor ' + (index + 1)"
+          [formControl]="rotor"
+          maxlength="1"
+        />
+      </mat-form-field>
+    </span>
+  </ng-container>
+</div>

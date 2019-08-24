@@ -1,15 +1,16 @@
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import {
   async,
   ComponentFixture,
-  TestBed,
+  discardPeriodicTasks,
   fakeAsync,
-  tick,
-  discardPeriodicTasks
+  TestBed,
+  tick
 } from '@angular/core/testing';
-import { EncryptComponent } from './encrypt.component';
-import { CommonModule } from '../common/common.module';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { CommonModule } from '../common/common.module';
+import { EncryptComponent } from './encrypt.component';
 
 describe(`EncryptComponent`, () => {
   let component: EncryptComponent;
@@ -18,7 +19,13 @@ describe(`EncryptComponent`, () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [CommonModule, NoopAnimationsModule],
-      declarations: [EncryptComponent]
+      declarations: [EncryptComponent],
+      // can't import the rotors as they use ngx-sub-form which has
+      // a dependency on lodash-es and is not happy with Jest here
+      // without further setup
+      // as we want to test only the encryption part here
+      // let's skip the rotors
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
   }));
 
@@ -47,7 +54,8 @@ describe(`EncryptComponent`, () => {
     dataEncryptInput.nativeElement.value = 'Hello this is a top secret message';
     dataEncryptInput.nativeElement.dispatchEvent(new Event('input'));
 
-    tick(300);
+    // tslint:disable-next-line: no-magic-numbers
+    tick(10);
     fixture.detectChanges();
 
     expect(dataEncryptedInput.nativeElement.value).toEqual(

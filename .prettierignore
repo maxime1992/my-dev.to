@@ -1,1 +1,2 @@
-# Add files here to ignore them from prettier formatting
+./libs/enigma-bombe/src/lib/words.json
+./libs/enigma-bombe/src/lib/words.ts
