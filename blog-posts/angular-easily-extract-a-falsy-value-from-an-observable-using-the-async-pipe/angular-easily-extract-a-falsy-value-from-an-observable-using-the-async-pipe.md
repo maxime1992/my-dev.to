@@ -30,7 +30,7 @@ As Angular plays really nicely with RxJs, you can take advantage of the `ngIf` d
 ```
 
 **But what happens when you want to extract a value from an observable using the `async` pipe if that value is falsy?**  
-For example a boolean that's `false`, an empty string, a `null` or `undefined` value, etc.
+For example a boolean that's `false`, `0` (the number), an empty string, a `null` or `undefined` value, etc.
 
 The value wouldn't be displayed as the `ngIf` condition will be evaluated as falsy.
 
