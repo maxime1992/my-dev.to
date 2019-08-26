@@ -13,5 +13,7 @@ Any issues not related to one of my blog post should be reported to the the temp
 
 - [Manage your dev.to blog posts from a GIT repo and use continuous deployment to auto publish/update them](https://dev.to/maxime1992/manage-your-dev-to-blog-posts-from-a-git-repo-and-use-continuous-deployment-to-auto-publish-update-them-143j)
 
-- Enigma: Understand it, implement it, crack it
+- [Angular: Easily extract a falsy value from an observable using the async pipe ?](https://dev.to/maxime1992/angular-easily-extract-a-falsy-value-from-an-observable-using-the-async-pipe-112g)
+
+* Enigma: Understand it, implement it, crack it
   - [Part I: Enigma machine, how does the famous encryption device work?](https://dev.to/maxime1992/enigma-machine-how-does-the-famous-encryption-device-work-5aon)
