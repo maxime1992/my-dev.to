@@ -9,11 +9,8 @@ export const ROTORS: InjectionToken<EnigmaRotorService[]> = new InjectionToken<
   EnigmaRotorService[]
 >('EnigmaRotorServices');
 
-export const getReflectorService = () => {
-  return new ReflectorService(
-    // by default we use the first reflector, also called "Wide B"
-    ReflectorService.REFLECTOR_1
-  );
+export const getReflectorService = (reflector: string) => {
+  return () => new ReflectorService(reflector);
 };
 
 export const getRotorService = (rotor: string) => {
@@ -47,7 +44,7 @@ export const DEFAULT_ENIGMA_MACHINE_PROVIDERS: (
   },
   {
     provide: ReflectorService,
-    useFactory: getReflectorService
+    useFactory: getReflectorService(ReflectorService.REFLECTOR_1)
   },
   {
     provide: EnigmaMachineService,
