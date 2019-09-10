@@ -12,7 +12,7 @@ import { Observable, of } from 'rxjs';
 
 // all the following is part of a web worker so we're not into
 // an Angular context anymore and we don't have any DI here
-// we need to manually instanciate the required classes
+// we need to manually instantiate the required classes
 
 @ObservableWorker()
 export class EnigmaBombeWorker
