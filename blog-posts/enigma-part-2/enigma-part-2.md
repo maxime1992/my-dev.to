@@ -1,6 +1,6 @@
 ---
 published: true
-title: "Building an Enigma machine with only TypeScript and then use Angular DI system to properly instanciate it"
+title: "Building an Enigma machine with only TypeScript and then use Angular DI system to properly instantiate it"
 cover_image: "https://raw.githubusercontent.com/maxime1992/my-dev.to/master/blog-posts/enigma-part-2/assets/enigma-2-cover-image.png"
 description: "[Part 2] - Building Enigma with TypeScript and Angular"
 tags: cryptography, enigma, angular
@@ -8,11 +8,11 @@ series: "Enigma: Understand it, implement it, crack it"
 canonical_url:
 ---
 
-This blog post is the second of a serie of 3, called **"Enigma: Understand it, implement it, crack it"**:
+This blog post is the second of a series of 3, called **"Enigma: Understand it, implement it, crack it"**:
 
 - 1 - [Enigma machine, how does the famous encryption device work?](https://dev.to/maxime1992/enigma-machine-how-does-the-famous-encryption-device-work-5aon)
 
-- **2 - Building an Enigma machine with only TypeScript and then use Angular DI system to properly instanciate it _[this blog post]_**
+- **2 - Building an Enigma machine with only TypeScript and then use Angular DI system to properly instantiate it _[this blog post]_**
 
 - 3 - Let's crack messages encrypted with Enigma... From our browser! _[coming soon]_
 
@@ -39,12 +39,12 @@ If you find any typo please just make the edit yourself here: https://github.com
 
 # Intro
 
-In the [first blog post of this serie](https://dev.to/maxime1992/enigma-machine-how-does-the-famous-encryption-device-work-5aon), we've seen the internal mechanism of Enigma. In this one, I'll explain how I decided to implement it.
+In the [first blog post of this series](https://dev.to/maxime1992/enigma-machine-how-does-the-famous-encryption-device-work-5aon), we've seen the internal mechanism of Enigma. In this one, I'll explain how I decided to implement it.
 
 The Enigma library I've built has nothing to do with Angular, it's just **pure TypeScript**. The reasons behind that are:
 
 - It shouldn't in the first place because it could be used as a separate package with vanilla JS or any other framework
-- [:warning: Spoiler alert :warning:] To crack Enigma in the next blog post of the serie, we will use a [webworker](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API) and importing anything from Angular within the worker context would break it as it's not aware of the DOM at all
+- [:warning: Spoiler alert :warning:] To crack Enigma in the next blog post of the series, we will use a [webworker](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API) and importing anything from Angular within the worker context would break it as it's not aware of the DOM at all
 
 BUT. For Angular lovers, worry no more. We will use Angular and especially its dependency injection API to build the UI that'll consume Enigma library.
 
@@ -90,7 +90,7 @@ export class ReflectorService {
 }
 ```
 
-Now that we've remaped the string to an array that lets us find the output index for a given input, we need to expose a method so that the machine itself will be able to go through the rotor for a given index:
+Now that we've remapped the string to an array that lets us find the output index for a given input, we need to expose a method so that the machine itself will be able to go through the rotor for a given index:
 
 ```ts
 public goThroughFromRelativeIndex(index: number): number {
@@ -295,9 +295,9 @@ export class EnigmaMachineService {
 
 Few things to note from the code above:
 
-All the properties that we expose as observables are driven from our store (the only source of truth). Everytime the current state changes, we set the rotors positions accordingly. We also keep track or the initial state and current state of the rotors in 2 different ways: One is `internal`, the other is not. For us, it's easier to deal with indexes instead of letters (internal) but when we expose them (to display in the UI for e.g.) we don't want the consumer to figure out that `18` stands for `s`, we just return `s`.
+All the properties that we expose as observables are driven from our store (the only source of truth). Every time the current state changes, we set the rotors positions accordingly. We also keep track or the initial state and current state of the rotors in 2 different ways: One is `internal`, the other is not. For us, it's easier to deal with indexes instead of letters (internal) but when we expose them (to display in the UI for e.g.) we don't want the consumer to figure out that `18` stands for `s`, we just return `s`.
 
-The other interesting part in the code above is the usage of `shareReplay` with the arugment `{ bufferSize: 1, refCount: true }`. It'll allow us to share our observables instead of re-subscribing to them multiple times :+1:. Using `shareReplay(1)` would work but would be quite dangerous as if no one is listening anymore to the observable it wouldn't unsubscribe. That is why we need to pass `refCount` as `true`.
+The other interesting part in the code above is the usage of `shareReplay` with the argument `{ bufferSize: 1, refCount: true }`. It'll allow us to share our observables instead of re-subscribing to them multiple times :+1:. Using `shareReplay(1)` would work but would be quite dangerous as if no one is listening anymore to the observable it wouldn't unsubscribe. That is why we need to pass `refCount` as `true`.
 
 Now that we've seen how we share the state of our Enigma machine with the rest of the app, let see how the main part of the app works: Encoding a letter through the machine:
 
@@ -595,7 +595,7 @@ Now that we're able to display the rotors state, let's get started with the most
 
 In order to keep things as minimal as possible with the examples, I've decided to remove everything from Angular Material in the following code and keep only what's important to understand the logic.
 
-To get something that looks like the previous screenshot, we want to display for the rotors, the initial config, the current state, a text area for the text that will go through Enigma and another text area (disabled) that will show the ouput from Enigma.
+To get something that looks like the previous screenshot, we want to display for the rotors, the initial config, the current state, a text area for the text that will go through Enigma and another text area (disabled) that will show the output from Enigma.
 
 Here's our template:
 
@@ -660,7 +660,7 @@ Bind the observable containing the initial state of the rotors:
 private initialStateRotors$: Observable<RotorsState> = this.enigmaMachineService.initialStateRotors$;
 ```
 
-Create a `FormControl` to bind the value into the view and use a custom validator to make sure the letters used are valid. This will prevent us to pass invalid caracters to Enigma:
+Create a `FormControl` to bind the value into the view and use a custom validator to make sure the letters used are valid. This will prevent us to pass invalid characters to Enigma:
 
 ```ts
 public clearTextControl: FormControl = new FormControl(
@@ -689,7 +689,7 @@ So we use the `combineLatest` operator to make sure that when any of the stream 
 
 ### B2 - Create an Enigma machine using dependency injection
 
-I mentionned at the beginning of the article that we would use the dependency injection mechanism provided by Angular. I also mentionned in the previous part that we'd come back to the line defined on the component:
+I mentioned at the beginning of the article that we would use the dependency injection mechanism provided by Angular. I also mentioned in the previous part that we'd come back to the line defined on the component:
 
 ```ts
 providers: [...DEFAULT_ENIGMA_MACHINE_PROVIDERS];
@@ -723,7 +723,7 @@ const enigmaMachineService: EnigmaMachineService = new EnigmaMachineService(
 
 But...
 
-- Should that responsability belong to the `EncryptComponent`?
+- Should that responsibility belong to the `EncryptComponent`?
 - How would we be able to later test the `EncryptComponent` with mocked data for example?
 - What if we want to be able to customize the rotors and reflector on a component basis?
 - What if we want to be able to add or remove rotors on a component basis?
@@ -829,7 +829,7 @@ export const getEnigmaMachineService = (
 };
 ```
 
-The reason we will need factories is because all the classes we will be creating require arguments and because we're not using the `@Injectable` decorator on those classes. So Angular cannot instanciate them magically for us, we need to do it ourselves.
+The reason we will need factories is because all the classes we will be creating require arguments and because we're not using the `@Injectable` decorator on those classes. So Angular cannot instantiate them magically for us, we need to do it ourselves.
 
 After that, we create an array that will be used by the `providers` property of the component and it'll contain the services. Let's start with the creation of the 3 rotors:
 
@@ -894,7 +894,7 @@ Within this blog post we've seen one possible implementation with TypeScript of 
 I've had a lot of fun building the Enigma library and the Angular app and I hope had some too while reading this blog post! :smile:  
 I'd be delighted to see another implementation of Enigma so if you manage to build your own version let me know in the comments section :point_down:.
 
-Next and final article of the serie will be about **cracking an encrypted message from Enigma without knowing the initial rotors position FROM THE BROWSER**.
+Next and final article of the series will be about **cracking an encrypted message from Enigma without knowing the initial rotors position FROM THE BROWSER**.
 
 Stay tuned and thanks for reading!
 
