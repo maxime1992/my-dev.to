@@ -1,5 +1,5 @@
 ---
-published: false
+published: true
 title: "Building an Enigma machine with only TypeScript and then use Angular DI system to properly instanciate it"
 cover_image: "https://raw.githubusercontent.com/maxime1992/my-dev.to/master/blog-posts/enigma-part-2/assets/enigma-2-cover-image.png"
 description: "[Part 2] - Building Enigma with TypeScript and Angular"
@@ -21,15 +21,15 @@ This blog post is the second of a serie of 3, called **"Enigma: Understand it, i
 <!-- toc -->
 
 - [Intro](#intro)
-- [1 - Enigma library](#1---enigma-library)
-  - [A - Reflector](#a---reflector)
-  - [B - Rotor](#b---rotor)
-  - [C - Machine](#c---machine)
-- [2 - Enigma app](#2---enigma-app)
-  - [A - Display the initial config rotors and current ones](#a---display-the-initial-config-rotors-and-current-ones)
-  - [B - Encrypt a message from the app](#b---encrypt-a-message-from-the-app)
-    - [B1 - Logic and template](#b1---logic-and-template)
-    - [B2 - Create an Enigma machine using dependency injection](#b2---create-an-enigma-machine-using-dependency-injection)
+- [1 - Enigma library](#1-enigma-library)
+  - [A - Reflector](#a-reflector)
+  - [B - Rotor](#b-rotor)
+  - [C - Machine](#c-machine)
+- [2 - Enigma app](#2-enigma-app)
+  - [A - Display the initial config rotors and current ones](#a-display-the-initial-config-rotors-and-current-ones)
+  - [B - Encrypt a message from the app](#b-encrypt-a-message-from-the-app)
+    - [B1 - Logic and template](#b1-logic-and-template)
+    - [B2 - Create an Enigma machine using dependency injection](#b2-create-an-enigma-machine-using-dependency-injection)
 - [Conclusion](#conclusion)
 - [Found a typo?](#found-a-typo)
 
