@@ -8,6 +8,10 @@
     "relativePathToArticle": "./blog-posts/enigma-part-1/enigma-part-1.md"
   },
   {
+    "id": 164254,
+    "relativePathToArticle": "./blog-posts/enigma-part-2/enigma-part-2.md"
+  },
+  {
     "id": 161221,
     "relativePathToArticle": "./blog-posts/angular-easily-extract-a-falsy-value-from-an-observable-using-the-async-pipe/angular-easily-extract-a-falsy-value-from-an-observable-using-the-async-pipe.md"
   }

@@ -2,9 +2,6 @@ import { select, takeUntilDestroyed } from '@common/rxjs-utility';
 import {
   getLetterFromIndexInAlphabet,
   getLetterIndexInAlphabet,
-  INDEX_ROTOR_0,
-  INDEX_ROTOR_1,
-  INDEX_ROTOR_2,
   InvalidLetter,
   isValidAlphabetLetter,
   Letter,
@@ -53,17 +50,9 @@ export class EnigmaMachineService {
     // the input is always emitting the signal of a letter
     // at the same position so this one is absolute
     getLetterIndexInAlphabet,
-
-    this.getRelativeIndexOutputFromLeftRelativeIndexInputRotor(INDEX_ROTOR_0),
-    this.getRelativeIndexOutputFromLeftRelativeIndexInputRotor(INDEX_ROTOR_1),
-    this.getRelativeIndexOutputFromLeftRelativeIndexInputRotor(INDEX_ROTOR_2),
-
-    this.getRelativeIndexOutputFromReflector(),
-
-    this.getRelativeIndexOutputFromRightRelativeIndexInputRotor(INDEX_ROTOR_2),
-    this.getRelativeIndexOutputFromRightRelativeIndexInputRotor(INDEX_ROTOR_1),
-    this.getRelativeIndexOutputFromRightRelativeIndexInputRotor(INDEX_ROTOR_0),
-
+    this.goThroughRotorsLeftToRight,
+    this.goThroughReflector,
+    this.goThroughRotorsRightToLeft,
     getLetterFromIndexInAlphabet
   );
 
@@ -180,29 +169,24 @@ export class EnigmaMachineService {
     });
   }
 
-  private getRelativeIndexOutputFromLeftRelativeIndexInputRotor(
-    rotorIndex: number
-  ): (relativeInputIndex: number) => number {
-    return (relativeInputIndex: number) =>
-      this.enigmaRotorServices[rotorIndex].goThroughRotorLeftToRight(
-        relativeInputIndex
-      );
+  private goThroughRotorsLeftToRight(relativeInputIndex: number): number {
+    return this.enigmaRotorServices.reduce(
+      (relativeInputIndexTmp, rotorService) =>
+        rotorService.goThroughRotorLeftToRight(relativeInputIndexTmp),
+      relativeInputIndex
+    );
   }
 
-  private getRelativeIndexOutputFromRightRelativeIndexInputRotor(
-    rotorIndex: number
-  ): (relativeInputIndex: number) => number {
-    return (relativeInputIndex: number) =>
-      this.enigmaRotorServices[rotorIndex].goThroughRotorRightToLeft(
-        relativeInputIndex
-      );
+  private goThroughRotorsRightToLeft(relativeInputIndex: number): number {
+    return this.enigmaRotorServices.reduceRight(
+      (relativeInputIndexTmp, rotorService) =>
+        rotorService.goThroughRotorRightToLeft(relativeInputIndexTmp),
+      relativeInputIndex
+    );
   }
 
-  private getRelativeIndexOutputFromReflector(): (
-    relativeInputIndex: number
-  ) => number {
-    return (relativeInputIndex: number) =>
-      this.reflectorService.goThroughFromRelativeIndex(relativeInputIndex);
+  private goThroughReflector(relativeInputIndex: number): number {
+    return this.reflectorService.goThroughFromRelativeIndex(relativeInputIndex);
   }
 
   public setInitialRotorConfig(initialStateRotors: RotorsState): void {

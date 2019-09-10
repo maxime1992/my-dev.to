@@ -37,7 +37,7 @@ export class ReflectorService {
       throw new InvalidAlphabet();
     }
 
-    this.reflectorConfig = this.mapLetterIndexInAlphabetToDifferentOne(
+    this.reflectorConfig = this.mapLetterToAbsoluteIndexInAlphabet(
       reflectorConfigSplit
     );
 
@@ -52,7 +52,7 @@ export class ReflectorService {
     }
   }
 
-  private mapLetterIndexInAlphabetToDifferentOne(alphabet: Alphabet): number[] {
+  private mapLetterToAbsoluteIndexInAlphabet(alphabet: Alphabet): number[] {
     return alphabet.reduce((map: number[], letter: Letter, index: number) => {
       map[index] = getLetterIndexInAlphabet(letter);
 
