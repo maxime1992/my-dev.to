@@ -3,7 +3,7 @@ import {
   getLetterIndexInAlphabet,
   InvalidAlphabet,
   isStringCompleteUnorderedAlphabet,
-  Letter
+  Letter,
 } from '@enigma/enigma-utility';
 
 export class ReflectorRequiresValidAlphabet extends Error {
@@ -37,15 +37,11 @@ export class ReflectorService {
       throw new InvalidAlphabet();
     }
 
-    this.reflectorConfig = this.mapLetterToAbsoluteIndexInAlphabet(
-      reflectorConfigSplit
-    );
+    this.reflectorConfig = this.mapLetterToAbsoluteIndexInAlphabet(reflectorConfigSplit);
 
     // as the reflector can't map an index to the same index
     // we verify it's the case and throw an error otherwise
-    const isReflectorIncorrect: boolean = this.reflectorConfig.some(
-      (value, index) => index === value
-    );
+    const isReflectorIncorrect: boolean = this.reflectorConfig.some((value, index) => index === value);
 
     if (isReflectorIncorrect) {
       throw new ReflectorMapIndexToSameIndex();

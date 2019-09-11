@@ -17,13 +17,13 @@ const MATERIAL_MODULES = [
   MatCardModule,
   MatInputModule,
   MatFormFieldModule,
-  MatProgressBarModule
+  MatProgressBarModule,
 ];
 
 const SHARED_IMPORTS_EXPORTS = [...MATERIAL_MODULES, ReactiveFormsModule];
 
 @NgModule({
   imports: [...SHARED_IMPORTS_EXPORTS],
-  exports: [...SHARED_IMPORTS_EXPORTS]
+  exports: [...SHARED_IMPORTS_EXPORTS],
 })
 export class CommonModule {}

@@ -24,7 +24,7 @@ export enum Letter {
   W = 'w',
   X = 'x',
   Y = 'y',
-  Z = 'z'
+  Z = 'z',
 }
 
 export enum LetterIndex {
@@ -53,24 +53,20 @@ export enum LetterIndex {
   W = 22,
   X = 23,
   Y = 24,
-  Z = 25
+  Z = 25,
 }
 
 // can be used to check if a char is valid letter
 // ex !!validLettersMap['a'] --> true
 // ex !!validLettersMap['$'] --> false
-const validLettersMap: { [letter in Letter]: true } = Object.values(
-  Letter
-).reduce((letters, letter) => {
+const validLettersMap: { [letter in Letter]: true } = Object.values(Letter).reduce((letters, letter) => {
   letters[letter] = true;
   return letters;
 }, {});
 
 export type Alphabet = Letter[];
 
-export const ALPHABET: Alphabet = Object.values(Letter).sort(
-  (l1: Letter, l2: Letter) => l1.localeCompare(l2)
-);
+export const ALPHABET: Alphabet = Object.values(Letter).sort((l1: Letter, l2: Letter) => l1.localeCompare(l2));
 
 export class InvalidAlphabet extends Error {
   public message = `The alphabet is not valid, please use letters a-z only`;
@@ -96,9 +92,7 @@ export class InvalidLetter extends Error {
   }
 }
 
-export const isStringCompleteUnorderedAlphabet = (
-  str: string[]
-): str is Alphabet => {
+export const isStringCompleteUnorderedAlphabet = (str: string[]): str is Alphabet => {
   const alphabetSet: Set<string> = new Set(str);
 
   if (ALPHABET.length !== alphabetSet.size) {

@@ -8,14 +8,12 @@ import { CommonModule } from './common/common.module';
 const routes: Routes = [
   {
     path: 'encrypt',
-    loadChildren: () =>
-      import('./encrypt/encrypt.module').then(m => m.EncryptModule)
+    loadChildren: () => import('./encrypt/encrypt.module').then(m => m.EncryptModule),
   },
   {
     path: 'decrypt',
-    loadChildren: () =>
-      import('./decrypt/decrypt.module').then(m => m.DecryptModule)
-  }
+    loadChildren: () => import('./decrypt/decrypt.module').then(m => m.DecryptModule),
+  },
 ];
 
 @NgModule({
@@ -24,8 +22,8 @@ const routes: Routes = [
     BrowserModule,
     RouterModule.forRoot(routes, { initialNavigation: 'enabled' }),
     BrowserAnimationsModule,
-    CommonModule
+    CommonModule,
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

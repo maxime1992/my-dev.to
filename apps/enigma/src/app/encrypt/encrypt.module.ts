@@ -6,6 +6,6 @@ import { EncryptComponent } from './encrypt.component';
 
 @NgModule({
   imports: [CommonModule, EncryptRoutingModule, RotorsModule],
-  declarations: [EncryptComponent]
+  declarations: [EncryptComponent],
 })
 export class EncryptModule {}

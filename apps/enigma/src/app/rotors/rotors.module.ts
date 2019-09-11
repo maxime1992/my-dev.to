@@ -6,11 +6,7 @@ import { RotorsInitialConfigComponent } from './rotors-initial-config/rotors-ini
 
 @NgModule({
   imports: [CommonModule],
-  declarations: [
-    RotorsFormComponent,
-    RotorsInitialConfigComponent,
-    RotorsCurrentStateComponent
-  ],
-  exports: [RotorsInitialConfigComponent, RotorsCurrentStateComponent]
+  declarations: [RotorsFormComponent, RotorsInitialConfigComponent, RotorsCurrentStateComponent],
+  exports: [RotorsInitialConfigComponent, RotorsCurrentStateComponent],
 })
 export class RotorsModule {}

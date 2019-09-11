@@ -6,11 +6,10 @@ import { Observable } from 'rxjs';
   selector: 'app-rotors-current-state',
   templateUrl: './rotors-current-state.component.html',
   styleUrls: ['./rotors-current-state.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RotorsCurrentStateComponent {
   constructor(private enigmaMachineService: EnigmaMachineService) {}
 
-  public currentStateRotors$: Observable<RotorsState> = this
-    .enigmaMachineService.currentStateRotors$;
+  public currentStateRotors$: Observable<RotorsState> = this.enigmaMachineService.currentStateRotors$;
 }

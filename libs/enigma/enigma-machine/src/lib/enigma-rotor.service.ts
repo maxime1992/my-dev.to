@@ -1,9 +1,4 @@
-import {
-  ALPHABET,
-  InvalidAlphabet,
-  isStringCompleteUnorderedAlphabet,
-  LetterIndex
-} from '@enigma/enigma-utility';
+import { ALPHABET, InvalidAlphabet, isStringCompleteUnorderedAlphabet, LetterIndex } from '@enigma/enigma-utility';
 import { BiMap, createBiMapFromAlphabet, InvalidRingPosition } from './rotor';
 
 // in this file we cannot use anything related to angular
@@ -18,10 +13,7 @@ export class EnigmaRotorService {
   private rotor: BiMap;
   private currentRingPosition = 0;
 
-  constructor(
-    rotorConfig: string,
-    currentRingPosition: number = LetterIndex.A
-  ) {
+  constructor(rotorConfig: string, currentRingPosition: number = LetterIndex.A) {
     const rotorConfigSplit: string[] = rotorConfig.split('');
 
     if (!isStringCompleteUnorderedAlphabet(rotorConfigSplit)) {
@@ -45,13 +37,10 @@ export class EnigmaRotorService {
     return this.currentRingPosition;
   }
 
-  private goThroughRotor(
-    from: 'left' | 'right',
-    relativeIndexInput: number
-  ): number {
-    const currentRelativeIndexOutput = this.rotor[
-      from === 'left' ? 'leftToRight' : 'rightToLeft'
-    ][(this.currentRingPosition + relativeIndexInput) % ALPHABET.length];
+  private goThroughRotor(from: 'left' | 'right', relativeIndexInput: number): number {
+    const currentRelativeIndexOutput = this.rotor[from === 'left' ? 'leftToRight' : 'rightToLeft'][
+      (this.currentRingPosition + relativeIndexInput) % ALPHABET.length
+    ];
 
     return (relativeIndexInput + currentRelativeIndexOutput) % ALPHABET.length;
   }

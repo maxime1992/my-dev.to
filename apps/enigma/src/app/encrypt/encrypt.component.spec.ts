@@ -1,12 +1,5 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import {
-  async,
-  ComponentFixture,
-  discardPeriodicTasks,
-  fakeAsync,
-  TestBed,
-  tick
-} from '@angular/core/testing';
+import { async, ComponentFixture, discardPeriodicTasks, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '../common/common.module';
@@ -25,7 +18,7 @@ describe(`EncryptComponent`, () => {
       // without further setup
       // as we want to test only the encryption part here
       // let's skip the rotors
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
   }));
 
@@ -43,13 +36,9 @@ describe(`EncryptComponent`, () => {
   it(`should encrypt a message and display the encrypted result`, fakeAsync(() => {
     setup();
 
-    const dataEncryptInput = fixture.debugElement.query(
-      By.css('*[data-encrypt-input]')
-    );
+    const dataEncryptInput = fixture.debugElement.query(By.css('*[data-encrypt-input]'));
 
-    const dataEncryptedInput = fixture.debugElement.query(
-      By.css('*[data-encrypted-input]')
-    );
+    const dataEncryptedInput = fixture.debugElement.query(By.css('*[data-encrypted-input]'));
 
     dataEncryptInput.nativeElement.value = 'Hello this is a top secret message';
     dataEncryptInput.nativeElement.dispatchEvent(new Event('input'));
@@ -58,9 +47,7 @@ describe(`EncryptComponent`, () => {
     tick(10);
     fixture.detectChanges();
 
-    expect(dataEncryptedInput.nativeElement.value).toEqual(
-      'coxsd amhr mi i drf qshxkx ibmvhjo'
-    );
+    expect(dataEncryptedInput.nativeElement.value).toEqual('coxsd amhr mi i drf qshxkx ibmvhjo');
 
     discardPeriodicTasks();
   }));

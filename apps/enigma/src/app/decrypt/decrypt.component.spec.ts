@@ -10,7 +10,7 @@ describe('DecryptComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [CommonModule, NoopAnimationsModule],
-      declarations: [DecryptComponent]
+      declarations: [DecryptComponent],
     }).compileComponents();
   }));
 

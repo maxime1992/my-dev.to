@@ -274916,5 +274916,5 @@ export const WORDS: Set<string> = new Set([
   'zyzzyva',
   'zyzzyvas',
   'zzz',
-  'zzzs'
+  'zzzs',
 ]);

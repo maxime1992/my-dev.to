@@ -1,10 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  Input,
-  Output
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormArray, FormControl, Validators } from '@angular/forms';
 import { RotorsState } from '@enigma/enigma-machine';
 import { Letter, NB_ROTORS_REQUIRED } from '@enigma/enigma-utility';
@@ -15,7 +9,7 @@ import {
   DataInput,
   FormGroupOptions,
   NgxAutomaticRootFormComponent,
-  NgxFormWithArrayControls
+  NgxFormWithArrayControls,
 } from 'ngx-sub-form';
 import { containsOnlyAlphabetLetters } from '../../common/validators';
 
@@ -27,10 +21,9 @@ interface RotorsForm {
   selector: 'app-rotors-form',
   templateUrl: './rotors-form.component.html',
   styleUrls: ['./rotors-form.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RotorsFormComponent
-  extends NgxAutomaticRootFormComponent<RotorsState, RotorsForm>
+export class RotorsFormComponent extends NgxAutomaticRootFormComponent<RotorsState, RotorsForm>
   implements NgxFormWithArrayControls<RotorsForm> {
   @DataInput()
   // tslint:disable-next-line:no-input-rename
@@ -45,13 +38,13 @@ export class RotorsFormComponent
 
   protected getFormControls(): Controls<RotorsForm> {
     return {
-      rotors: new FormArray([])
+      rotors: new FormArray([]),
     };
   }
 
   protected transformToFormGroup(letters: RotorsState | null): RotorsForm {
     return {
-      rotors: letters ? letters : [Letter.A, Letter.A, Letter.A]
+      rotors: letters ? letters : [Letter.A, Letter.A, Letter.A],
     };
   }
 
@@ -69,26 +62,23 @@ export class RotorsFormComponent
             formGroup.value.rotors.length !== NB_ROTORS_REQUIRED
           ) {
             return {
-              rotorsError: true
+              rotorsError: true,
             };
           }
 
           return null;
-        }
-      ]
+        },
+      ],
     };
   }
 
   public createFormArrayControl(
     key: ArrayPropertyKey<RotorsForm> | undefined,
-    value: ArrayPropertyValue<RotorsForm>
+    value: ArrayPropertyValue<RotorsForm>,
   ): FormControl {
     switch (key) {
       case 'rotors':
-        return new FormControl(value, [
-          Validators.required,
-          containsOnlyAlphabetLetters({ acceptSpace: false })
-        ]);
+        return new FormControl(value, [Validators.required, containsOnlyAlphabetLetters({ acceptSpace: false })]);
       default:
         return new FormControl(value);
     }

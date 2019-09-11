@@ -1,9 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import {
-  ErrorStateMatcher,
-  ShowOnDirtyErrorStateMatcher
-} from '@angular/material/core';
+import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
 import { EnigmaMachineService, RotorsState } from '@enigma/enigma-machine';
 import { combineLatest, Observable } from 'rxjs';
 import { distinctUntilChanged, filter, map, sampleTime } from 'rxjs/operators';
@@ -16,30 +13,25 @@ import { containsOnlyAlphabetLetters } from '../common/validators';
   styleUrls: ['./encrypt.component.scss'],
   providers: [
     ...DEFAULT_ENIGMA_MACHINE_PROVIDERS,
-    { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher }
+    { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher },
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EncryptComponent {
-  private initialStateRotors$: Observable<RotorsState> = this
-    .enigmaMachineService.initialStateRotors$;
+  private initialStateRotors$: Observable<RotorsState> = this.enigmaMachineService.initialStateRotors$;
 
-  public clearTextControl: FormControl = new FormControl(
-    '',
-    containsOnlyAlphabetLetters({ acceptSpace: true })
-  );
+  public clearTextControl: FormControl = new FormControl('', containsOnlyAlphabetLetters({ acceptSpace: true }));
 
-  private readonly clearTextValue$: Observable<string> = this.clearTextControl
-    .valueChanges;
+  private readonly clearTextValue$: Observable<string> = this.clearTextControl.valueChanges;
 
   public encryptedText$ = combineLatest([
     this.clearTextValue$.pipe(
       // tslint:disable-next-line: no-magic-numbers
       sampleTime(10),
       distinctUntilChanged(),
-      filter(() => this.clearTextControl.valid)
+      filter(() => this.clearTextControl.valid),
     ),
-    this.initialStateRotors$
+    this.initialStateRotors$,
   ]).pipe(map(([text]) => this.enigmaMachineService.encryptMessage(text)));
 
   constructor(private enigmaMachineService: EnigmaMachineService) {}
