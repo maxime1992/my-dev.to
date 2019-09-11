@@ -7,13 +7,12 @@ import { Observable } from 'rxjs';
   selector: 'app-rotors-initial-config',
   templateUrl: './rotors-initial-config.component.html',
   styleUrls: ['./rotors-initial-config.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RotorsInitialConfigComponent {
   constructor(private enigmaMachineService: EnigmaMachineService) {}
 
-  public initialStateRotors$: Observable<RotorsState> = this
-    .enigmaMachineService.initialStateRotors$;
+  public initialStateRotors$: Observable<RotorsState> = this.enigmaMachineService.initialStateRotors$;
 
   public rotorsUpdate(rotorsConfiguration: RotorsState): void {
     // @todo @hack this is a temporary fix for

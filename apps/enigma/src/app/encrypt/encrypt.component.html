@@ -24,11 +24,7 @@
 
         <mat-card-content>
           <mat-form-field>
-            <textarea
-              matInput
-              [formControl]="clearTextControl"
-              data-encrypt-input
-            ></textarea>
+            <textarea matInput [formControl]="clearTextControl" data-encrypt-input></textarea>
           </mat-form-field>
 
           <mat-error *ngIf="clearTextControl.hasError('invalidMessage')">
@@ -44,12 +40,7 @@
 
         <mat-card-content>
           <mat-form-field>
-            <textarea
-              matInput
-              disabled
-              [value]="encryptedText$ | async"
-              data-encrypted-input
-            ></textarea>
+            <textarea matInput disabled [value]="encryptedText$ | async" data-encrypted-input></textarea>
           </mat-form-field>
         </mat-card-content>
       </mat-card>

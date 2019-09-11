@@ -1,18 +1,12 @@
 import { Nil } from '@common/type-utility';
-import {
-  Alphabet,
-  ALPHABET,
-  getLetterIndexInAlphabet,
-  Letter,
-  LetterIndex
-} from '@enigma/enigma-utility';
+import { Alphabet, ALPHABET, getLetterIndexInAlphabet, Letter, LetterIndex } from '@enigma/enigma-utility';
 
 export class InvalidRingPosition extends Error {
   constructor(position: number | Nil) {
     super(
       !position
         ? `Rotor's position hasn't been defined`
-        : `Rotor's position "${position}" isn't valid. it should be a number between 0 (A) and 25 (Z)`
+        : `Rotor's position "${position}" isn't valid. it should be a number between 0 (A) and 25 (Z)`,
     );
   }
 }
@@ -34,8 +28,7 @@ export interface BiMap {
   rightToLeft: number[];
 }
 
-const moduloWithPositiveOrNegative = (base: number, number: number) =>
-  number > 0 ? number : base + number;
+const moduloWithPositiveOrNegative = (base: number, number: number) => (number > 0 ? number : base + number);
 
 // a rotor is described like the following:
 // ekmflgdqvzntowyhxuspaibrcj
@@ -59,18 +52,12 @@ export const createBiMapFromAlphabet = (alphabet: Alphabet): BiMap => {
   return alphabet.reduce(
     (map: BiMap, letter: Letter, index: number) => {
       const letterIndex: number = getLetterIndexInAlphabet(letter);
-      map.leftToRight[index] = moduloWithPositiveOrNegative(
-        ALPHABET.length,
-        letterIndex - index
-      );
-      map.rightToLeft[letterIndex] = moduloWithPositiveOrNegative(
-        ALPHABET.length,
-        -(letterIndex - index)
-      );
+      map.leftToRight[index] = moduloWithPositiveOrNegative(ALPHABET.length, letterIndex - index);
+      map.rightToLeft[letterIndex] = moduloWithPositiveOrNegative(ALPHABET.length, -(letterIndex - index));
 
       return map;
     },
-    { leftToRight: [], rightToLeft: [] } as BiMap
+    { leftToRight: [], rightToLeft: [] } as BiMap,
   );
 };
 
@@ -98,9 +85,7 @@ const getNextNumberBase26 = (numbers: number[]): number[] => {
 // [A, A, A] --> [B, A, A]
 // [Z, A, A] --> [A, B, A]
 // [Z, Z, Z] --> [A, A, A]
-export const goToNextRotorCombination = (
-  rotors: RotorsStateInternalApi
-): RotorsStateInternalApi => {
+export const goToNextRotorCombination = (rotors: RotorsStateInternalApi): RotorsStateInternalApi => {
   if (!rotors) {
     return [LetterIndex.A, LetterIndex.A, LetterIndex.A];
   }

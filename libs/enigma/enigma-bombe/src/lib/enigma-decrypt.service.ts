@@ -12,15 +12,10 @@ const thresholdWordsFoundToBeConsideredEnglishWord = 3;
 export class EnigmaDecryptService {
   constructor(private enigmaMachineService: EnigmaMachineService) {}
 
-  public decryptMessageFor1Combination(
-    initialRotorPosition: RotorsState,
-    encryptedMessage: string
-  ): string | null {
+  public decryptMessageFor1Combination(initialRotorPosition: RotorsState, encryptedMessage: string): string | null {
     this.enigmaMachineService.setInitialRotorConfig(initialRotorPosition);
 
-    return this.getMessageIfEnglish(
-      this.enigmaMachineService.encryptMessage(encryptedMessage)
-    );
+    return this.getMessageIfEnglish(this.enigmaMachineService.encryptMessage(encryptedMessage));
   }
 
   private getMessageIfEnglish(decryptedMessage: string): string | null {

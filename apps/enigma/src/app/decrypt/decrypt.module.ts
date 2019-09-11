@@ -5,6 +5,6 @@ import { DecryptComponent } from './decrypt.component';
 
 @NgModule({
   imports: [CommonModule, DecryptRoutingModule],
-  declarations: [DecryptComponent]
+  declarations: [DecryptComponent],
 })
 export class DecryptModule {}

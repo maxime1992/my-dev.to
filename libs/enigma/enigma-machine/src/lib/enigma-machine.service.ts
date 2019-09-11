@@ -5,18 +5,14 @@ import {
   InvalidLetter,
   isValidAlphabetLetter,
   Letter,
-  NB_ROTORS_REQUIRED
+  NB_ROTORS_REQUIRED,
 } from '@enigma/enigma-utility';
 import { flow } from 'lodash/fp';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map, shareReplay, tap } from 'rxjs/operators';
 import { EnigmaRotorService } from './enigma-rotor.service';
 import { ReflectorService } from './reflector.service';
-import {
-  goToNextRotorCombination,
-  RotorsState,
-  RotorsStateInternalApi
-} from './rotor';
+import { goToNextRotorCombination, RotorsState, RotorsStateInternalApi } from './rotor';
 
 interface EnigmaMachineState {
   initialStateRotors: RotorsStateInternalApi;
@@ -32,80 +28,69 @@ export class EnigmaMachineRequires3Rotors extends Error {
 // used in the web worker context
 
 export class EnigmaMachineService {
-  private readonly initialStateRotorsInternalApi$: Observable<
-    RotorsStateInternalApi
-  >;
-  private readonly currentStateRotorsInternalApi$: Observable<
-    RotorsStateInternalApi
-  >;
+  private readonly initialStateRotorsInternalApi$: Observable<RotorsStateInternalApi>;
+  private readonly currentStateRotorsInternalApi$: Observable<RotorsStateInternalApi>;
 
   public readonly initialStateRotors$: Observable<RotorsState>;
   public readonly currentStateRotors$: Observable<RotorsState>;
 
   private readonly state$: BehaviorSubject<EnigmaMachineState>;
 
-  private readonly encodeLetterThroughMachine: (
-    letter: Letter
-  ) => Letter = flow(
+  private readonly encodeLetterThroughMachine: (letter: Letter) => Letter = flow(
     // the input is always emitting the signal of a letter
     // at the same position so this one is absolute
     getLetterIndexInAlphabet,
     this.goThroughRotorsLeftToRight,
     this.goThroughReflector,
     this.goThroughRotorsRightToLeft,
-    getLetterFromIndexInAlphabet
+    getLetterFromIndexInAlphabet,
   );
 
-  constructor(
-    private enigmaRotorServices: EnigmaRotorService[],
-    private reflectorService: ReflectorService
-  ) {
+  constructor(private enigmaRotorServices: EnigmaRotorService[], private reflectorService: ReflectorService) {
     if (
       this.enigmaRotorServices.length !== NB_ROTORS_REQUIRED ||
-      this.enigmaRotorServices.some(
-        rotorService => !(rotorService instanceof EnigmaRotorService)
-      )
+      this.enigmaRotorServices.some(rotorService => !(rotorService instanceof EnigmaRotorService))
     ) {
       throw new EnigmaMachineRequires3Rotors();
     }
 
     // instantiating from the constructor as we need to check first
     // that the `enigmaRotorService` instances are correct
-    const initialStateRotors: RotorsStateInternalApi = this.enigmaRotorServices.map(
-      enigmaRotorService => enigmaRotorService.getCurrentRingPosition()
+    const initialStateRotors: RotorsStateInternalApi = this.enigmaRotorServices.map(enigmaRotorService =>
+      enigmaRotorService.getCurrentRingPosition(),
     ) as RotorsStateInternalApi;
 
     this.state$ = new BehaviorSubject({
       initialStateRotors,
-      currentStateRotors: initialStateRotors
+      currentStateRotors: initialStateRotors,
     });
 
     this.initialStateRotorsInternalApi$ = this.state$.pipe(
       select(state => state.initialStateRotors),
-      shareReplay({ bufferSize: 1, refCount: true })
+      shareReplay({ bufferSize: 1, refCount: true }),
     );
     this.currentStateRotorsInternalApi$ = this.state$.pipe(
       select(state => state.currentStateRotors),
-      shareReplay({ bufferSize: 1, refCount: true })
+      shareReplay({ bufferSize: 1, refCount: true }),
     );
 
     this.initialStateRotors$ = this.initialStateRotorsInternalApi$.pipe(
       map(this.mapInternalToPublic),
-      shareReplay({ bufferSize: 1, refCount: true })
+      shareReplay({ bufferSize: 1, refCount: true }),
     );
     this.currentStateRotors$ = this.currentStateRotorsInternalApi$.pipe(
       map(this.mapInternalToPublic),
-      shareReplay({ bufferSize: 1, refCount: true })
+      shareReplay({ bufferSize: 1, refCount: true }),
     );
 
     this.currentStateRotorsInternalApi$
       .pipe(
         tap(currentStateRotors =>
           this.enigmaRotorServices.forEach((rotorService, index) =>
-            rotorService.setCurrentRingPosition(currentStateRotors[index])
-          )
+            rotorService.setCurrentRingPosition(currentStateRotors[index]),
+          ),
         ),
-        takeUntilDestroyed(this)
+        takeUntilDestroyed(this),
       )
       .subscribe();
   }
@@ -117,9 +102,7 @@ export class EnigmaMachineService {
   public ngOnDestroy(): void {}
 
   private mapInternalToPublic(rotors: RotorsStateInternalApi): RotorsState {
-    return rotors.map(rotor =>
-      getLetterFromIndexInAlphabet(rotor)
-    ) as RotorsState;
+    return rotors.map(rotor => getLetterFromIndexInAlphabet(rotor)) as RotorsState;
   }
 
   public encryptMessage(message: string): string {
@@ -132,7 +115,7 @@ export class EnigmaMachineService {
         // enigma only deals with the letters from the alphabet
         // but in this demo, typing all spaces with an "X" would
         // be slightly annoying so devianting from original a bit
-        letter === ' ' ? ' ' : this.encryptLetter(letter as Letter)
+        letter === ' ' ? ' ' : this.encryptLetter(letter as Letter),
       )
       .join('');
   }
@@ -154,9 +137,7 @@ export class EnigmaMachineService {
 
     this.state$.next({
       ...state,
-      currentStateRotors: [
-        ...state.initialStateRotors
-      ] as RotorsStateInternalApi
+      currentStateRotors: [...state.initialStateRotors] as RotorsStateInternalApi,
     });
   }
 
@@ -165,23 +146,21 @@ export class EnigmaMachineService {
 
     this.state$.next({
       ...state,
-      currentStateRotors: goToNextRotorCombination(state.currentStateRotors)
+      currentStateRotors: goToNextRotorCombination(state.currentStateRotors),
     });
   }
 
   private goThroughRotorsLeftToRight(relativeInputIndex: number): number {
     return this.enigmaRotorServices.reduce(
-      (relativeInputIndexTmp, rotorService) =>
-        rotorService.goThroughRotorLeftToRight(relativeInputIndexTmp),
-      relativeInputIndex
+      (relativeInputIndexTmp, rotorService) => rotorService.goThroughRotorLeftToRight(relativeInputIndexTmp),
+      relativeInputIndex,
     );
   }
 
   private goThroughRotorsRightToLeft(relativeInputIndex: number): number {
     return this.enigmaRotorServices.reduceRight(
-      (relativeInputIndexTmp, rotorService) =>
-        rotorService.goThroughRotorRightToLeft(relativeInputIndexTmp),
-      relativeInputIndex
+      (relativeInputIndexTmp, rotorService) => rotorService.goThroughRotorRightToLeft(relativeInputIndexTmp),
+      relativeInputIndex,
     );
   }
 
@@ -195,8 +174,8 @@ export class EnigmaMachineService {
     this.state$.next({
       ...state,
       initialStateRotors: initialStateRotors.map(rotorState =>
-        getLetterIndexInAlphabet(rotorState)
-      ) as RotorsStateInternalApi
+        getLetterIndexInAlphabet(rotorState),
+      ) as RotorsStateInternalApi,
     });
   }
 }
