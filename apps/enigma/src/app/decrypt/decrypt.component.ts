@@ -5,7 +5,6 @@ import { ConfigurationToDecrypt, EnigmaBombeService } from '@enigma/enigma-bombe
 import { fromWorkerPool } from 'observable-webworker';
 import { combineLatest, merge, Observable, of } from 'rxjs';
 import { filter, map, mapTo, shareReplay, skip, startWith, switchMap, takeWhile, timestamp } from 'rxjs/operators';
-import { DEFAULT_ENIGMA_MACHINE_PROVIDERS } from '../common/enigma-machine';
 import { containsOnlyAlphabetLetters } from '../common/validators';
 
 interface DecryptedBundle {
@@ -25,11 +24,7 @@ enum Status {
   selector: 'app-decrypt',
   templateUrl: './decrypt.component.html',
   styleUrls: ['./decrypt.component.scss'],
-  providers: [
-    ...DEFAULT_ENIGMA_MACHINE_PROVIDERS,
-    { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher },
-    EnigmaBombeService,
-  ],
+  providers: [{ provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher }, EnigmaBombeService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DecryptComponent {
@@ -42,7 +37,7 @@ export class DecryptComponent {
     map(([message, status]: [string, Status]) =>
       status !== Status.VALID
         ? // if the message is not valid we want to clear
-          //  the decrypted text as it's outdated
+          // the decrypted text as it's outdated
           ''
         : message.trim(),
     ),

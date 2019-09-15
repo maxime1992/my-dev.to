@@ -97,7 +97,7 @@ export class EnigmaMachineService {
 
   // here we need the `ngOnDestroy` to satisfy `takeUntilDestroyed`
   // but we cannot have anything related to angular or it'll break the
-  // webworker context
+  // web worker context
   // tslint:disable-next-line: use-lifecycle-interface
   public ngOnDestroy(): void {}
 

@@ -12,9 +12,9 @@ This blog post is the first of a serie of 3, called **"Enigma: Understand it, im
 
 1. **Enigma machine, how does the famous encryption device work? _[this blog post]_**
 
-2. My take at implementing Enigma using Typescript _[coming soon]_
+2. [Building an Enigma machine with only TypeScript and then use Angular DI system to properly instantiate it](https://dev.to/maxime1992/building-an-enigma-machine-with-only-typescript-and-then-use-angular-di-system-to-properly-instantiate-it-2e2h)
 
-3. Let's crack messages encrypted with Enigma... From our browser! _[coming soon]_
+3. Brute-forcing an encrypted message from Enigma using the web worker API
 
 # Table of contents
 
