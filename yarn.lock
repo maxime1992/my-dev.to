@@ -3217,10 +3217,10 @@ detect-node@^2.0.4:
   resolved "https://registry.yarnpkg.com/detect-node/-/detect-node-2.0.4.tgz#014ee8f8f669c5c58023da64b8179c083a28c46c"
   integrity sha512-ZIzRpLJrOj7jjP2miAtgqIfmzbxa4ZOr5jJc601zklsfEx9oTzmmj2nVpIPRpNlRTIh8lc1kyViIY7BWSGNmKw==
 
-dev-to-git@1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/dev-to-git/-/dev-to-git-1.4.0.tgz#6a9c160ea9b3615c5335932bb76e9ef11c0cf637"
-  integrity sha512-HQOCrM1VApKD6FJQ6kybWzodo5R1JjTQM8Zs2qkDHQhEVtEPkDQ252elNZPPiQoVdUjXN73c2nEEyZjQ0+FOdQ==
+dev-to-git@1.4.1:
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/dev-to-git/-/dev-to-git-1.4.1.tgz#ed6fb79216e4c1f4475afc9c1a4d02be035e1fba"
+  integrity sha512-/SeCsWh+7gJuQXZsOVYIo4B2Tu3rz05+h8uWh99IoV07VdKC4iZWvNkL3xijvqSkfafEcT97i1uRadM8fM0LVQ==
   dependencies:
     chalk "^2.4.2"
     commander "^2.20.0"
