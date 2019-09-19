@@ -31,7 +31,6 @@ export class EnigmaBombeService {
     } while (
       rotorCombination[INDEX_ROTOR_0] !== LetterIndex.Z ||
       rotorCombination[INDEX_ROTOR_1] !== LetterIndex.Z ||
-      // tslint:disable-next-line: no-magic-numbers
       rotorCombination[INDEX_ROTOR_2] !== LetterIndex.Z
     );
   }

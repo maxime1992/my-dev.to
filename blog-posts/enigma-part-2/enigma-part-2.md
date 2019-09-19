@@ -14,7 +14,7 @@ This blog post is the second of a series of 3, called **"Enigma: Understand it, 
 
 - **2 - Building an Enigma machine with only TypeScript and then use Angular DI system to properly instantiate it _[this blog post]_**
 
-- 3 - Let's crack messages encrypted with Enigma... From our browser! _[coming soon]_
+- 3 - Brute-forcing an encrypted message from Enigma using the web worker API
 
 # Table of contents
 
@@ -44,7 +44,7 @@ In the [first blog post of this series](https://dev.to/maxime1992/enigma-machine
 The Enigma library I've built has nothing to do with Angular, it's just **pure TypeScript**. The reasons behind that are:
 
 - It shouldn't in the first place because it could be used as a separate package with vanilla JS or any other framework
-- [:warning: Spoiler alert :warning:] To crack Enigma in the next blog post of the series, we will use a [webworker](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API) and importing anything from Angular within the worker context would break it as it's not aware of the DOM at all
+- [:warning: Spoiler alert :warning:] To crack Enigma in the next blog post of the series, we will use a [web worker](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API) and importing anything from Angular within the worker context would break it as it's not aware of the DOM at all
 
 BUT. For Angular lovers, worry no more. We will use Angular and especially its dependency injection API to build the UI that'll consume Enigma library.
 
@@ -71,9 +71,7 @@ export class ReflectorService {
   private setReflectorConfig(reflectorConfig: string): void {
     // [skipped] check that the reflector config is valid
 
-    this.reflectorConfig = this.mapLetterToAbsoluteIndexInAlphabet(
-      reflectorConfigSplit
-    );
+    this.reflectorConfig = this.mapLetterToAbsoluteIndexInAlphabet(reflectorConfigSplit);
 
     // [skipped] check that every entry of the reflector maps to a different one
   }
@@ -125,10 +123,7 @@ export class EnigmaRotorService {
   private rotor: BiMap;
   private currentRingPosition = 0;
 
-  constructor(
-    rotorConfig: string,
-    currentRingPosition: number = LetterIndex.A
-  ) {
+  constructor(rotorConfig: string, currentRingPosition: number = LetterIndex.A) {
     const rotorConfigSplit: string[] = rotorConfig.split('');
 
     // [skipped] check that the string is correctly mapping to alphabet
@@ -159,18 +154,12 @@ export const createBiMapFromAlphabet = (alphabet: Alphabet): BiMap => {
   return alphabet.reduce(
     (map: BiMap, letter: Letter, index: number) => {
       const letterIndex: number = getLetterIndexInAlphabet(letter);
-      map.leftToRight[index] = moduloWithPositiveOrNegative(
-        ALPHABET.length,
-        letterIndex - index
-      );
-      map.rightToLeft[letterIndex] = moduloWithPositiveOrNegative(
-        ALPHABET.length,
-        -(letterIndex - index)
-      );
+      map.leftToRight[index] = moduloWithPositiveOrNegative(ALPHABET.length, letterIndex - index);
+      map.rightToLeft[letterIndex] = moduloWithPositiveOrNegative(ALPHABET.length, -(letterIndex - index));
 
       return map;
     },
-    { leftToRight: [], rightToLeft: [] } as BiMap
+    { leftToRight: [], rightToLeft: [] } as BiMap,
   );
 };
 ```
@@ -243,49 +232,46 @@ I usually prefer to set all the properties directly but in our case, before sett
 ```ts
 export class EnigmaMachineService {
   // ...
-  constructor(
-    private enigmaRotorServices: EnigmaRotorService[],
-    private reflectorService: ReflectorService
-  ) {
+  constructor(private enigmaRotorServices: EnigmaRotorService[], private reflectorService: ReflectorService) {
     // [skipped] check that the rotor services are correctly defined
 
     // instantiating from the constructor as we need to check first
     // that the `enigmaRotorService` instances are correct
-    const initialStateRotors: RotorsStateInternalApi = this.enigmaRotorServices.map(
-      enigmaRotorService => enigmaRotorService.getCurrentRingPosition()
+    const initialStateRotors: RotorsStateInternalApi = this.enigmaRotorServices.map(enigmaRotorService =>
+      enigmaRotorService.getCurrentRingPosition(),
     ) as RotorsStateInternalApi;
 
     this.state$ = new BehaviorSubject({
       initialStateRotors,
-      currentStateRotors: initialStateRotors
+      currentStateRotors: initialStateRotors,
     });
 
     this.initialStateRotorsInternalApi$ = this.state$.pipe(
       select(state => state.initialStateRotors),
-      shareReplay({ bufferSize: 1, refCount: true })
+      shareReplay({ bufferSize: 1, refCount: true }),
     );
     this.currentStateRotorsInternalApi$ = this.state$.pipe(
       select(state => state.currentStateRotors),
-      shareReplay({ bufferSize: 1, refCount: true })
+      shareReplay({ bufferSize: 1, refCount: true }),
     );
 
     this.initialStateRotors$ = this.initialStateRotorsInternalApi$.pipe(
       map(this.mapInternalToPublic),
-      shareReplay({ bufferSize: 1, refCount: true })
+      shareReplay({ bufferSize: 1, refCount: true }),
     );
     this.currentStateRotors$ = this.currentStateRotorsInternalApi$.pipe(
       map(this.mapInternalToPublic),
-      shareReplay({ bufferSize: 1, refCount: true })
+      shareReplay({ bufferSize: 1, refCount: true }),
     );
 
     this.currentStateRotorsInternalApi$
       .pipe(
         tap(currentStateRotors =>
           this.enigmaRotorServices.forEach((rotorService, index) =>
-            rotorService.setCurrentRingPosition(currentStateRotors[index])
-          )
+            rotorService.setCurrentRingPosition(currentStateRotors[index]),
+          ),
         ),
-        takeUntilDestroyed(this)
+        takeUntilDestroyed(this),
       )
       .subscribe();
   }
@@ -304,16 +290,14 @@ Now that we've seen how we share the state of our Enigma machine with the rest o
 ```ts
 export class EnigmaMachineService {
   // ...
-  private readonly encodeLetterThroughMachine: (
-    letter: Letter
-  ) => Letter = flow(
+  private readonly encodeLetterThroughMachine: (letter: Letter) => Letter = flow(
     // the input is always emitting the signal of a letter
     // at the same position so this one is absolute
     getLetterIndexInAlphabet,
     this.goThroughRotorsLeftToRight,
     this.goThroughReflector,
     this.goThroughRotorsRightToLeft,
-    getLetterFromIndexInAlphabet
+    getLetterFromIndexInAlphabet,
   );
   // ...
 }
@@ -349,7 +333,7 @@ export class EnigmaMachineService {
         // enigma only deals with the letters from the alphabet
         // but in this demo, typing all spaces with an "X" would
         // be slightly annoying so devianting from original a bit
-        letter === ' ' ? ' ' : this.encryptLetter(letter as Letter)
+        letter === ' ' ? ' ' : this.encryptLetter(letter as Letter),
       )
       .join('');
   }
@@ -359,9 +343,7 @@ export class EnigmaMachineService {
 
     this.state$.next({
       ...state,
-      currentStateRotors: [
-        ...state.initialStateRotors
-      ] as RotorsStateInternalApi
+      currentStateRotors: [...state.initialStateRotors] as RotorsStateInternalApi,
     });
   }
 
@@ -370,23 +352,21 @@ export class EnigmaMachineService {
 
     this.state$.next({
       ...state,
-      currentStateRotors: goToNextRotorCombination(state.currentStateRotors)
+      currentStateRotors: goToNextRotorCombination(state.currentStateRotors),
     });
   }
 
   private goThroughRotorsLeftToRight(relativeInputIndex: number): number {
     return this.enigmaRotorServices.reduce(
-      (relativeInputIndexTmp, rotorService) =>
-        rotorService.goThroughRotorLeftToRight(relativeInputIndexTmp),
-      relativeInputIndex
+      (relativeInputIndexTmp, rotorService) => rotorService.goThroughRotorLeftToRight(relativeInputIndexTmp),
+      relativeInputIndex,
     );
   }
 
   private goThroughRotorsRightToLeft(relativeInputIndex: number): number {
     return this.enigmaRotorServices.reduceRight(
-      (relativeInputIndexTmp, rotorService) =>
-        rotorService.goThroughRotorRightToLeft(relativeInputIndexTmp),
-      relativeInputIndex
+      (relativeInputIndexTmp, rotorService) => rotorService.goThroughRotorRightToLeft(relativeInputIndexTmp),
+      relativeInputIndex,
     );
   }
 
@@ -400,8 +380,8 @@ export class EnigmaMachineService {
     this.state$.next({
       ...state,
       initialStateRotors: initialStateRotors.map(rotorState =>
-        getLetterIndexInAlphabet(rotorState)
-      ) as RotorsStateInternalApi
+        getLetterIndexInAlphabet(rotorState),
+      ) as RotorsStateInternalApi,
     });
   }
 }
@@ -445,10 +425,9 @@ interface RotorsForm {
   selector: 'app-rotors-form',
   templateUrl: './rotors-form.component.html',
   styleUrls: ['./rotors-form.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RotorsFormComponent
-  extends NgxAutomaticRootFormComponent<RotorsState, RotorsForm>
+export class RotorsFormComponent extends NgxAutomaticRootFormComponent<RotorsState, RotorsForm>
   implements NgxFormWithArrayControls<RotorsForm> {
   @DataInput()
   @Input('rotors')
@@ -461,13 +440,13 @@ export class RotorsFormComponent
 
   protected getFormControls(): Controls<RotorsForm> {
     return {
-      rotors: new FormArray([])
+      rotors: new FormArray([]),
     };
   }
 
   protected transformToFormGroup(letters: RotorsState | null): RotorsForm {
     return {
-      rotors: letters ? letters : [Letter.A, Letter.A, Letter.A]
+      rotors: letters ? letters : [Letter.A, Letter.A, Letter.A],
     };
   }
 
@@ -485,26 +464,23 @@ export class RotorsFormComponent
             formGroup.value.rotors.length !== NB_ROTORS_REQUIRED
           ) {
             return {
-              rotorsError: true
+              rotorsError: true,
             };
           }
 
           return null;
-        }
-      ]
+        },
+      ],
     };
   }
 
   public createFormArrayControl(
     key: ArrayPropertyKey<RotorsForm> | undefined,
-    value: ArrayPropertyValue<RotorsForm>
+    value: ArrayPropertyValue<RotorsForm>,
   ): FormControl {
     switch (key) {
       case 'rotors':
-        return new FormControl(value, [
-          Validators.required,
-          containsOnlyAlphabetLetters({ acceptSpace: false })
-        ]);
+        return new FormControl(value, [Validators.required, containsOnlyAlphabetLetters({ acceptSpace: false })]);
       default:
         return new FormControl(value);
     }
@@ -517,16 +493,9 @@ When using `ngx-sub-form`, we are able to provide data to a parent component wit
 ```html
 <div [formGroup]="formGroup">
   <ng-container [formArrayName]="formControlNames.rotors">
-    <span
-      *ngFor="let rotor of formGroupControls.rotors.controls; let index = index"
-    >
+    <span *ngFor="let rotor of formGroupControls.rotors.controls; let index = index">
       <mat-form-field>
-        <input
-          matInput
-          [placeholder]="'Rotor ' + (index + 1)"
-          [formControl]="rotor"
-          maxlength="1"
-        />
+        <input matInput [placeholder]="'Rotor ' + (index + 1)" [formControl]="rotor" maxlength="1" />
       </mat-form-field>
     </span>
   </ng-container>
@@ -542,13 +511,12 @@ Now, on the `rotors-initial-config` we have to retrieve the initial config from 
   selector: 'app-rotors-initial-config',
   templateUrl: './rotors-initial-config.component.html',
   styleUrls: ['./rotors-initial-config.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RotorsInitialConfigComponent {
   constructor(private enigmaMachineService: EnigmaMachineService) {}
 
-  public initialStateRotors$: Observable<RotorsState> = this
-    .enigmaMachineService.initialStateRotors$;
+  public initialStateRotors$: Observable<RotorsState> = this.enigmaMachineService.initialStateRotors$;
 
   public rotorsUpdate(rotorsConfiguration: RotorsState): void {
     // [skipped] check that the config is valid
@@ -577,13 +545,12 @@ For the current state, even simpler. We just need to retrieve the current state 
   selector: 'app-rotors-current-state',
   templateUrl: './rotors-current-state.component.html',
   styleUrls: ['./rotors-current-state.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RotorsCurrentStateComponent {
   constructor(private enigmaMachineService: EnigmaMachineService) {}
 
-  public currentStateRotors$: Observable<RotorsState> = this
-    .enigmaMachineService.currentStateRotors$;
+  public currentStateRotors$: Observable<RotorsState> = this.enigmaMachineService.currentStateRotors$;
 }
 ```
 
@@ -623,27 +590,22 @@ Nothing magic or complicated in the above code but let's take a look at how we'r
   templateUrl: './encrypt.component.html',
   styleUrls: ['./encrypt.component.scss'],
   providers: [...DEFAULT_ENIGMA_MACHINE_PROVIDERS],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EncryptComponent {
-  private initialStateRotors$: Observable<RotorsState> = this
-    .enigmaMachineService.initialStateRotors$;
+  private initialStateRotors$: Observable<RotorsState> = this.enigmaMachineService.initialStateRotors$;
 
-  public clearTextControl: FormControl = new FormControl(
-    '',
-    containsOnlyAlphabetLetters({ acceptSpace: true })
-  );
+  public clearTextControl: FormControl = new FormControl('', containsOnlyAlphabetLetters({ acceptSpace: true }));
 
-  private readonly clearTextValue$: Observable<string> = this.clearTextControl
-    .valueChanges;
+  private readonly clearTextValue$: Observable<string> = this.clearTextControl.valueChanges;
 
   public encryptedText$ = combineLatest([
     this.clearTextValue$.pipe(
       sampleTime(10),
       distinctUntilChanged(),
-      filter(() => this.clearTextControl.valid)
+      filter(() => this.clearTextControl.valid),
     ),
-    this.initialStateRotors$
+    this.initialStateRotors$,
   ]).pipe(map(([text]) => this.enigmaMachineService.encryptMessage(text)));
 
   constructor(private enigmaMachineService: EnigmaMachineService) {}
@@ -717,7 +679,7 @@ const enigmaRotorService3: EnigmaRotorService = new EnigmaRotorService();
 
 const enigmaMachineService: EnigmaMachineService = new EnigmaMachineService(
   [enigmaRotorService1, enigmaRotorService2, enigmaRotorService3],
-  reflectorService
+  reflectorService,
 );
 ```
 
@@ -805,9 +767,9 @@ It's a lot to take in :scream:! Once again, let's break it down, piece by piece.
 The first thing we want to do is create an [injection token](https://angular.io/api/core/InjectionToken) that will represent the array of rotors we want to use:
 
 ```ts
-export const ROTORS: InjectionToken<EnigmaRotorService[]> = new InjectionToken<
-  EnigmaRotorService[]
->('EnigmaRotorServices');
+export const ROTORS: InjectionToken<EnigmaRotorService[]> = new InjectionToken<EnigmaRotorService[]>(
+  'EnigmaRotorServices',
+);
 ```
 
 Then, we create functions that will be used as `factories`. Which means that they will be used to create instances (in that case, instances of classes):
@@ -821,10 +783,7 @@ export const getRotorService = (rotor: string) => {
   return () => new EnigmaRotorService(rotor);
 };
 
-export const getEnigmaMachineService = (
-  rotorServices: EnigmaRotorService[],
-  reflectorService: ReflectorService
-) => {
+export const getEnigmaMachineService = (rotorServices: EnigmaRotorService[], reflectorService: ReflectorService) => {
   return new EnigmaMachineService(rotorServices, reflectorService);
 };
 ```
@@ -865,8 +824,8 @@ Then we've got the `ReflectorService` with nothing particular on that one:
   // ...
   {
     provide: ReflectorService,
-    useFactory: getReflectorService('yruhqsldpxngokmiebfzcwvjat')
-  }
+    useFactory: getReflectorService('yruhqsldpxngokmiebfzcwvjat'),
+  },
   // ...
 ];
 ```

@@ -2,7 +2,7 @@ import { EnigmaMachineService, RotorsState } from '@enigma/enigma-machine';
 // @todo this should be moved out and retrieved from an http call
 import { WORDS } from './words';
 
-// the following class is meant to be used by the webworker
+// the following class is meant to be used by the web worker
 // so it doesn't have the decorator @Injectable nor anything
 // angular related
 
