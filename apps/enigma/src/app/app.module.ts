@@ -20,7 +20,7 @@ const routes: Routes = [
   declarations: [AppComponent],
   imports: [
     BrowserModule,
-    RouterModule.forRoot(routes, { initialNavigation: 'enabled' }),
+    RouterModule.forRoot(routes, { initialNavigation: 'enabled', useHash: true }),
     BrowserAnimationsModule,
     CommonModule,
   ],
