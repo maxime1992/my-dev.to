@@ -14,6 +14,10 @@ const routes: Routes = [
     path: 'decrypt',
     loadChildren: () => import('./decrypt/decrypt.module').then(m => m.DecryptModule),
   },
+  {
+    path: '**',
+    redirectTo: 'encrypt',
+  },
 ];
 
 @NgModule({
