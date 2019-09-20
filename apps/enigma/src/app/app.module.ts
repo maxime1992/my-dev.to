@@ -14,13 +14,17 @@ const routes: Routes = [
     path: 'decrypt',
     loadChildren: () => import('./decrypt/decrypt.module').then(m => m.DecryptModule),
   },
+  {
+    path: '**',
+    redirectTo: 'encrypt',
+  },
 ];
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
-    RouterModule.forRoot(routes, { initialNavigation: 'enabled' }),
+    RouterModule.forRoot(routes, { initialNavigation: 'enabled', useHash: true }),
     BrowserAnimationsModule,
     CommonModule,
   ],
