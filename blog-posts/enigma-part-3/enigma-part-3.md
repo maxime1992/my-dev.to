@@ -1,5 +1,5 @@
 ---
-published: false
+published: true
 title: 'Brute-forcing an encrypted message from Enigma using the web worker API'
 cover_image: "https://raw.githubusercontent.com/maxime1992/my-dev.to/master/blog-posts/enigma-part-3/assets/enigma-3-cover-image.png"
 description: '[Part 3] - Brute-forcing an encrypted message from Enigma using the web worker API'
