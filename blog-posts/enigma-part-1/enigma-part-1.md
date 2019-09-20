@@ -14,7 +14,7 @@ This blog post is the first of a serie of 3, called **"Enigma: Understand it, im
 
 2. [Building an Enigma machine with only TypeScript and then use Angular DI system to properly instantiate it](https://dev.to/maxime1992/building-an-enigma-machine-with-only-typescript-and-then-use-angular-di-system-to-properly-instantiate-it-2e2h)
 
-3. Brute-forcing an encrypted message from Enigma using the web worker API
+3. [Brute-forcing an encrypted message from Enigma using the web worker API](https://dev.to/maxime1992/brute-forcing-an-encrypted-message-from-enigma-using-the-web-worker-api-166b)
 
 # Table of contents
 
