@@ -21,6 +21,7 @@
       "@enigma/enigma-machine": ["libs/enigma/enigma-machine/src/index.ts"],
       "@enigma/enigma-bombe": ["libs/enigma/enigma-bombe/src/index.ts"],
       "@enigma/enigma-utility": ["libs/enigma/enigma-utility/src/index.ts"],
+      "@enigma/three-dimensions": ["libs/enigma/enigma-three-dimensions/src/index.ts"],
       "@common/rxjs-utility": ["libs/common/rxjs-utility/src/index.ts"],
       "@common/string-utility": ["libs/common/string-utility/src/index.ts"],
       "@common/object-utility": ["libs/common/object-utility/src/index.ts"],

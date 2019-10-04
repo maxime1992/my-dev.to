@@ -15,6 +15,10 @@ const routes: Routes = [
     loadChildren: () => import('./decrypt/decrypt.module').then(m => m.DecryptModule),
   },
   {
+    path: '3d',
+    loadChildren: () => import('./3d/three-dimensions.module').then(m => m.ThreeDimensionsModule),
+  },
+  {
     path: '**',
     redirectTo: 'encrypt',
   },

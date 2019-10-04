@@ -163,10 +163,7 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "libs/enigma/enigma-bombe/tsconfig.lib.json",
-              "libs/enigma/enigma-bombe/tsconfig.spec.json"
-            ],
+            "tsConfig": ["libs/enigma/enigma-bombe/tsconfig.lib.json", "libs/enigma/enigma-bombe/tsconfig.spec.json"],
             "exclude": ["**/node_modules/**", "!libs/enigma/enigma-bombe/**"]
           }
         },
@@ -225,10 +222,7 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "libs/common/rxjs-utility/tsconfig.lib.json",
-              "libs/common/rxjs-utility/tsconfig.spec.json"
-            ],
+            "tsConfig": ["libs/common/rxjs-utility/tsconfig.lib.json", "libs/common/rxjs-utility/tsconfig.spec.json"],
             "exclude": ["**/node_modules/**", "!libs/common/rxjs-utility/**"]
           }
         },
@@ -318,10 +312,7 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "libs/common/jest-utility/tsconfig.lib.json",
-              "libs/common/jest-utility/tsconfig.spec.json"
-            ],
+            "tsConfig": ["libs/common/jest-utility/tsconfig.lib.json", "libs/common/jest-utility/tsconfig.spec.json"],
             "exclude": ["**/node_modules/**", "!libs/common/jest-utility/**"]
           }
         },
@@ -349,10 +340,7 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "libs/common/type-utility/tsconfig.lib.json",
-              "libs/common/type-utility/tsconfig.spec.json"
-            ],
+            "tsConfig": ["libs/common/type-utility/tsconfig.lib.json", "libs/common/type-utility/tsconfig.spec.json"],
             "exclude": ["**/node_modules/**", "!libs/common/type-utility/**"]
           }
         },
@@ -362,6 +350,37 @@
             "jestConfig": "libs/common/type-utility/jest.config.js",
             "tsConfig": "libs/common/type-utility/tsconfig.spec.json",
             "setupFile": "libs/common/type-utility/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "styleext": "scss"
+        }
+      }
+    },
+    "enigma-enigma-three-dimensions": {
+      "projectType": "library",
+      "root": "libs/enigma/enigma-three-dimensions",
+      "sourceRoot": "libs/enigma/enigma-three-dimensions/src",
+      "prefix": "maxime1992",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/enigma/enigma-three-dimensions/tsconfig.lib.json",
+              "libs/enigma/enigma-three-dimensions/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/enigma/enigma-three-dimensions/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/enigma/enigma-three-dimensions/jest.config.js",
+            "tsConfig": "libs/enigma/enigma-three-dimensions/tsconfig.spec.json",
+            "setupFile": "libs/enigma/enigma-three-dimensions/src/test-setup.ts"
           }
         }
       },
