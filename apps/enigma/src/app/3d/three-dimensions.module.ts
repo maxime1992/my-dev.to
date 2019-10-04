@@ -1,8 +1,19 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { EnigmaThreeDimensionsModule } from '@enigma/three-dimensions';
+import { NgModule, Component } from '@angular/core';
+// import { EnigmaThreeDimensionsModule } from '@enigma/three-dimensions';
+import { RouterModule } from '@angular/router';
+
+// @Component({
+//   selector: 'tmp',
+//   template: '<router-outlet></router-outlet>',
+// })
+// class Tmp {}
 
 @NgModule({
-  imports: [EnigmaThreeDimensionsModule],
+  imports: [
+    // EnigmaThreeDimensionsModule,
+    RouterModule.forChild([
+      { path: '', loadChildren: () => import('@enigma/three-dimensions').then(m => m.EnigmaThreeDimensionsModule) },
+    ]),
+  ],
 })
 export class ThreeDimensionsModule {}

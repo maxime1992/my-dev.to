@@ -23,6 +23,8 @@ export class EnigmaRotorService {
     this.rotor = createBiMapFromAlphabet(rotorConfigSplit);
 
     this.setCurrentRingPosition(currentRingPosition);
+    console.log(this.rotor.leftToRight);
+
   }
 
   public setCurrentRingPosition(ringPosition: number): void {
