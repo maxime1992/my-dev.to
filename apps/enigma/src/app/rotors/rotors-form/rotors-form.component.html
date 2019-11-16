@@ -1,4 +1,4 @@
-<div [formGroup]="formGroup">
+<div [formGroup]="formGroup" [attr.data-ngx-sub-form-issue-93]="formGroup.valueChanges | async">
   <ng-container [formArrayName]="formControlNames.rotors">
     <span *ngFor="let rotor of formGroupControls.rotors.controls; let index = index">
       <mat-form-field>

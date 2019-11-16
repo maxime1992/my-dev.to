@@ -6358,10 +6358,10 @@ neo-async@^2.5.0, neo-async@^2.6.0:
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.1.tgz#ac27ada66167fa8849a6addd837f6b189ad2081c"
   integrity sha512-iyam8fBuCUpWeKPGpaNMetEocMt364qkCsfL9JuhjXX6dRnguRVOfk2GZaDpPjcOKiiXCPINZC1GczQ7iTq3Zw==
 
-ngx-sub-form@2.11.3:
-  version "2.11.3"
-  resolved "https://registry.yarnpkg.com/ngx-sub-form/-/ngx-sub-form-2.11.3.tgz#c3b5fc67b584d560d2129cf675383f5fa52b4fc4"
-  integrity sha512-dYJ1J3KKObr+BTytHnkZ1y6XuwEjaDVFtj41JThbYyU3kw3eubfBwSnCQHCd+JHX870aoMVTNUm6gYPKJIl0mg==
+ngx-sub-form@3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/ngx-sub-form/-/ngx-sub-form-3.0.2.tgz#cda80443616936b35fad58464b6b8a460a976c18"
+  integrity sha512-qYM4npIRbUv7zon1osvHqDLGZLdsYQtO4YBHmYHGBRrd4/eTIpRO4zhhF0XWs7pWtnngzsh9Sycl6f55lIT+Ow==
   dependencies:
     lodash-es "^4.17.0"
     tslib "^1.9.0"
