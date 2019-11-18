@@ -7,4 +7,5 @@ import { ThreeDimensionsComponent } from './three-dimensions/three-dimensions.co
   imports: [CommonModule, ThreeDimensionsRoutingModule],
   declarations: [ThreeDimensionsComponent],
 })
-export class EnigmaThreeDimensionsModule {}
+export class
+EnigmaThreeDimensionsModule {}
