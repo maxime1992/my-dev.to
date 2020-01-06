@@ -106,7 +106,7 @@ Example:
 ]
 ```
 
-There's no easy way to manage the creation of an article (yet?) but it's a quick / one time thing. Go to https://dev.to and click at the top on the "write a post" button. Write a title (that can be updated later) and press the "save changes" button. This way the article is not published yet and only available to you.
+There's no easy way to manage the creation of an article (yet?) but it's a quick / one time thing. Go to https://dev.to and click at the top on the "write a post" button. Write a title (that can be updated later) and press the "Save Draft" button. This way the article is not published yet and only available to you.
 
 As dev.to doesn't display the ID of a blog post on the page itself, I've made a small query to find it into the page. Open your browser console on the dev.to page of your article and paste the following:
 
