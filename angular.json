@@ -163,10 +163,7 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "libs/enigma/enigma-bombe/tsconfig.lib.json",
-              "libs/enigma/enigma-bombe/tsconfig.spec.json"
-            ],
+            "tsConfig": ["libs/enigma/enigma-bombe/tsconfig.lib.json", "libs/enigma/enigma-bombe/tsconfig.spec.json"],
             "exclude": ["**/node_modules/**", "!libs/enigma/enigma-bombe/**"]
           }
         },
@@ -225,10 +222,7 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "libs/common/rxjs-utility/tsconfig.lib.json",
-              "libs/common/rxjs-utility/tsconfig.spec.json"
-            ],
+            "tsConfig": ["libs/common/rxjs-utility/tsconfig.lib.json", "libs/common/rxjs-utility/tsconfig.spec.json"],
             "exclude": ["**/node_modules/**", "!libs/common/rxjs-utility/**"]
           }
         },
@@ -318,10 +312,7 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "libs/common/jest-utility/tsconfig.lib.json",
-              "libs/common/jest-utility/tsconfig.spec.json"
-            ],
+            "tsConfig": ["libs/common/jest-utility/tsconfig.lib.json", "libs/common/jest-utility/tsconfig.spec.json"],
             "exclude": ["**/node_modules/**", "!libs/common/jest-utility/**"]
           }
         },
@@ -349,10 +340,7 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "libs/common/type-utility/tsconfig.lib.json",
-              "libs/common/type-utility/tsconfig.spec.json"
-            ],
+            "tsConfig": ["libs/common/type-utility/tsconfig.lib.json", "libs/common/type-utility/tsconfig.spec.json"],
             "exclude": ["**/node_modules/**", "!libs/common/type-utility/**"]
           }
         },
@@ -368,6 +356,177 @@
       "schematics": {
         "@nrwl/angular:component": {
           "styleext": "scss"
+        }
+      }
+    },
+    "timers": {
+      "projectType": "library",
+      "root": "libs/timers",
+      "sourceRoot": "libs/timers/src",
+      "prefix": "maxime1992",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": ["libs/timers/tsconfig.lib.json", "libs/timers/tsconfig.spec.json"],
+            "exclude": ["**/node_modules/**", "!libs/timers/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/timers/jest.config.js",
+            "tsConfig": "libs/timers/tsconfig.spec.json",
+            "setupFile": "libs/timers/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "styleext": "scss"
+        }
+      }
+    },
+    "core": {
+      "projectType": "library",
+      "root": "libs/core",
+      "sourceRoot": "libs/core/src",
+      "prefix": "maxime1992",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": ["libs/core/tsconfig.lib.json", "libs/core/tsconfig.spec.json"],
+            "exclude": ["**/node_modules/**", "!libs/core/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/core/jest.config.js",
+            "tsConfig": "libs/core/tsconfig.spec.json",
+            "setupFile": "libs/core/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "styleext": "scss"
+        }
+      }
+    },
+    "timers-app": {
+      "projectType": "application",
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "apps/timers-app",
+      "sourceRoot": "apps/timers-app/src",
+      "prefix": "maxime1992",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/timers-app",
+            "index": "apps/timers-app/src/index.html",
+            "main": "apps/timers-app/src/main.ts",
+            "polyfills": "apps/timers-app/src/polyfills.ts",
+            "tsConfig": "apps/timers-app/tsconfig.app.json",
+            "aot": false,
+            "assets": ["apps/timers-app/src/favicon.ico", "apps/timers-app/src/assets"],
+            "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
+              "apps/timers-app/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/timers-app/src/environments/environment.ts",
+                  "with": "apps/timers-app/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "timers-app:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "timers-app:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "timers-app:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": ["apps/timers-app/tsconfig.app.json", "apps/timers-app/tsconfig.spec.json"],
+            "exclude": ["**/node_modules/**", "!apps/timers-app/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/timers-app/jest.config.js",
+            "tsConfig": "apps/timers-app/tsconfig.spec.json",
+            "setupFile": "apps/timers-app/src/test-setup.ts"
+          }
+        }
+      }
+    },
+    "timers-app-e2e": {
+      "root": "apps/timers-app-e2e",
+      "sourceRoot": "apps/timers-app-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/timers-app-e2e/cypress.json",
+            "tsConfig": "apps/timers-app-e2e/tsconfig.e2e.json",
+            "devServerTarget": "timers-app:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "timers-app:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": ["apps/timers-app-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!apps/timers-app-e2e/**"]
+          }
         }
       }
     }

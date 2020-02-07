@@ -1,0 +1,18 @@
+<button mat-fab class="add-timer" (click)="addTimer()">
+  <mat-icon>add</mat-icon>
+</button>
+
+<div class="timers-layout">
+  <mat-form-field class="update-interval">
+    <input matInput type="number" step="100" placeholder="Update interval on UI" [formControl]="timerIntervalFc" />
+  </mat-form-field>
+
+  <div class="timers-list">
+    <maxime1992-timer
+      *ngFor="let timer of (timers$ | async); trackBy: trackById"
+      [timer]="timer"
+      (toggleTimer)="toggleTimer($event)"
+      (removeTimer)="removeTimer($event)"
+    ></maxime1992-timer>
+  </div>
+</div>
