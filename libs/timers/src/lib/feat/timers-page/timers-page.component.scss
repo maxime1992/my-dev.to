@@ -1,0 +1,23 @@
+:host {
+  display: block;
+  margin: 20px;
+}
+
+.add-timer {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+}
+
+.update-interval {
+  margin-right: 16px;
+}
+
+.timers-layout {
+  display: flex;
+}
+
+.timers-list {
+  display: flex;
+  flex-direction: column;
+}

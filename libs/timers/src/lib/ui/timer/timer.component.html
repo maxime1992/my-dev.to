@@ -1,0 +1,24 @@
+<ng-container *ngIf="timer">
+  <span class="id">{{ timer.id }}</span>
+
+  <span class="time-elapsed-with-ms">
+    <span class="time-elapsed" data-time-elapsed [class.stopped]="timer.currentStatus === TimerStatus.STOPPED">
+      {{ timer.timeElapsedMs }}
+    </span>
+    ms
+  </span>
+
+  <button
+    mat-mini-fab
+    [color]="timer.currentStatus === TimerStatus.STOPPED ? '' : 'accent'"
+    class="play-pause"
+    (click)="toggleTimer.next(timer)"
+    data-play-pause-icon
+  >
+    <mat-icon>{{ timer.currentStatus === TimerStatus.STOPPED ? 'play_arrow' : 'pause' }}</mat-icon>
+  </button>
+
+  <button mat-mini-fab color="warn" (click)="removeTimer.next(timer)">
+    <mat-icon>delete</mat-icon>
+  </button>
+</ng-container>

@@ -37,6 +37,18 @@
     },
     "common-type-utility": {
       "tags": []
+    },
+    "timers": {
+      "tags": ["frontend"]
+    },
+    "core": {
+      "tags": ["core-browser"]
+    },
+    "timers-app-e2e": {
+      "tags": []
+    },
+    "timers-app": {
+      "tags": []
     }
   }
 }
