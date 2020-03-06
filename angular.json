@@ -217,7 +217,7 @@
       "projectType": "library",
       "root": "libs/common/rxjs-utility",
       "sourceRoot": "libs/common/rxjs-utility/src",
-      "prefix": "maxime1992",
+      "prefix": "mdt",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
@@ -245,7 +245,7 @@
       "projectType": "library",
       "root": "libs/common/string-utility",
       "sourceRoot": "libs/common/string-utility/src",
-      "prefix": "maxime1992",
+      "prefix": "mdt",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
@@ -276,7 +276,7 @@
       "projectType": "library",
       "root": "libs/common/object-utility",
       "sourceRoot": "libs/common/object-utility/src",
-      "prefix": "maxime1992",
+      "prefix": "mdt",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
@@ -307,7 +307,7 @@
       "projectType": "library",
       "root": "libs/common/jest-utility",
       "sourceRoot": "libs/common/jest-utility/src",
-      "prefix": "maxime1992",
+      "prefix": "mdt",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
@@ -335,7 +335,7 @@
       "projectType": "library",
       "root": "libs/common/type-utility",
       "sourceRoot": "libs/common/type-utility/src",
-      "prefix": "maxime1992",
+      "prefix": "mdt",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
@@ -363,7 +363,7 @@
       "projectType": "library",
       "root": "libs/timers",
       "sourceRoot": "libs/timers/src",
-      "prefix": "maxime1992",
+      "prefix": "mdt",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
@@ -391,7 +391,7 @@
       "projectType": "library",
       "root": "libs/core",
       "sourceRoot": "libs/core/src",
-      "prefix": "maxime1992",
+      "prefix": "mdt",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
@@ -424,7 +424,7 @@
       },
       "root": "apps/timers-app",
       "sourceRoot": "apps/timers-app/src",
-      "prefix": "maxime1992",
+      "prefix": "mdt",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",

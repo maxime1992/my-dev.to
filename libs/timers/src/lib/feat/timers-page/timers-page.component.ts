@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { UuidService } from '@maxime1992/core-browser';
+import { UuidService } from '@mdt/core-browser';
 import { Observable } from 'rxjs';
 import { startWith } from 'rxjs/operators';
 import { Timer } from '../../data/timer.interface';

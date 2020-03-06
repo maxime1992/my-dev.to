@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from 
 import { Timer } from '../../data/timer.interface';
 
 @Component({
-  selector: 'maxime1992-timer',
+  selector: 'mdt-timer',
   templateUrl: './timer.component.html',
   styleUrls: ['./timer.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

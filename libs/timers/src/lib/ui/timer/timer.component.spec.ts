@@ -22,7 +22,7 @@ describe('TimerComponent', () => {
   });
 
   it(`should not have a 'stopped' class if the timer is currently started`, () => {
-    spectator = createHost(`<maxime1992-timer [timer]="timer"></maxime1992-timer>`, {
+    spectator = createHost(`<mdt-timer [timer]="timer"></mdt-timer>`, {
       hostProps: {
         timer,
       },
@@ -32,7 +32,7 @@ describe('TimerComponent', () => {
   });
 
   it(`should have a 'stopped' class if the timer is currently stopped`, () => {
-    spectator = createHost(`<maxime1992-timer [timer]="timer"></maxime1992-timer>`, {
+    spectator = createHost(`<mdt-timer [timer]="timer"></mdt-timer>`, {
       hostProps: {
         timer: {
           ...timer,
@@ -45,7 +45,7 @@ describe('TimerComponent', () => {
   });
 
   it(`should have a pause icon if currently started`, () => {
-    spectator = createHost(`<maxime1992-timer [timer]="timer"></maxime1992-timer>`, {
+    spectator = createHost(`<mdt-timer [timer]="timer"></mdt-timer>`, {
       hostProps: {
         timer: {
           ...timer,
@@ -58,7 +58,7 @@ describe('TimerComponent', () => {
   });
 
   it(`should have a play icon if currently stopped`, () => {
-    spectator = createHost(`<maxime1992-timer [timer]="timer"></maxime1992-timer>`, {
+    spectator = createHost(`<mdt-timer [timer]="timer"></mdt-timer>`, {
       hostProps: {
         timer: {
           ...timer,
@@ -71,7 +71,7 @@ describe('TimerComponent', () => {
   });
 
   it(`should show the elapsed time in ms`, () => {
-    spectator = createHost(`<maxime1992-timer [timer]="timer"></maxime1992-timer>`, {
+    spectator = createHost(`<mdt-timer [timer]="timer"></mdt-timer>`, {
       hostProps: {
         timer: {
           ...timer,

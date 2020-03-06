@@ -26,8 +26,8 @@
       "@common/object-utility": ["libs/common/object-utility/src/index.ts"],
       "@common/jest-utility": ["libs/common/jest-utility/src/index.ts"],
       "@common/type-utility": ["libs/common/type-utility/src/index.ts"],
-      "@maxime1992/timers": ["libs/timers/src/index.ts"],
-      "@maxime1992/core-browser": ["libs/core/src/lib/browser/index.ts"]
+      "@mdt/timers": ["libs/timers/src/index.ts"],
+      "@mdt/core-browser": ["libs/core/src/lib/browser/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

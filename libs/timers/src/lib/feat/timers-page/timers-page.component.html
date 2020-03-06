@@ -8,11 +8,11 @@
   </mat-form-field>
 
   <div class="timers-list">
-    <maxime1992-timer
+    <mdt-timer
       *ngFor="let timer of (timers$ | async); trackBy: trackById"
       [timer]="timer"
       (toggleTimer)="toggleTimer($event)"
       (removeTimer)="removeTimer($event)"
-    ></maxime1992-timer>
+    ></mdt-timer>
   </div>
 </div>

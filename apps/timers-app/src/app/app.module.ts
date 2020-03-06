@@ -16,7 +16,7 @@ const MATERIAL_MODULES = [MatToolbarModule];
       [
         {
           path: '',
-          loadChildren: () => import('@maxime1992/timers').then(m => m.TimersModule),
+          loadChildren: () => import('@mdt/timers').then(m => m.TimersModule),
         },
       ],
       {

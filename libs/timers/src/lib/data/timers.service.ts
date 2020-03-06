@@ -81,13 +81,13 @@ export class TimersService {
     shareReplay({ bufferSize: 1, refCount: true }),
   );
 
-  public getTimersWithTimeElapsed(updateInterval: Observable<number>): Observable<Timer.TimerTimeElapsed[]> {
+  public getTimersWithTimeElapsed(updateInterval$: Observable<number>): Observable<Timer.TimerTimeElapsed[]> {
     return this.timers$.pipe(
       map(getTimersWithSumTimes),
       switchMap(timers =>
         !timers.length
           ? of([])
-          : updateInterval.pipe(
+          : updateInterval$.pipe(
               switchMap(timerInterval =>
                 !timers.length
                   ? of([])
