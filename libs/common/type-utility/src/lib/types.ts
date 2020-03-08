@@ -1,3 +1,5 @@
+// @todo use tsdef instead of this
+
 export type Nil = null | undefined;
 
 // this function lets us add type safety in our
@@ -31,3 +33,11 @@ export const unreachableCaseWrap = (value: never) => {};
 export class UnreachableCase {
   constructor(value: never) {}
 }
+
+export type Nullable<T> = T | null;
+
+export type NullableProps<T> = { [P in keyof T]: T[P] | null };
+
+export type Mutable<T> = {
+  -readonly [P in keyof T]: T[P];
+};
