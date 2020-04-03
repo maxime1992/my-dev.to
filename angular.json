@@ -529,6 +529,28 @@
           }
         }
       }
+    },
+    "microwave": {
+      "root": "libs/microwave",
+      "sourceRoot": "libs/microwave/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": ["libs/microwave/tsconfig.lib.json", "libs/microwave/tsconfig.spec.json"],
+            "exclude": ["**/node_modules/**", "!libs/microwave/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/microwave/jest.config.js",
+            "tsConfig": "libs/microwave/tsconfig.spec.json"
+          }
+        }
+      }
     }
   },
   "cli": {

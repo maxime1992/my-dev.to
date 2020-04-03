@@ -49,6 +49,9 @@
     },
     "timers-app": {
       "tags": []
+    },
+    "microwave": {
+      "tags": []
     }
   }
 }
