@@ -52,6 +52,15 @@
     },
     "microwave": {
       "tags": []
+    },
+    "microwave-3d": {
+      "tags": []
+    },
+    "microwave-app-e2e": {
+      "tags": []
+    },
+    "microwave-app": {
+      "tags": []
     }
   }
 }
