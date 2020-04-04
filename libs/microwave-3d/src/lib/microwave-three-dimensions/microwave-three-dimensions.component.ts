@@ -19,6 +19,7 @@ import {
 import '@babylonjs/loaders/glTF';
 import { from, of, interval, timer, Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
+import { AdvancedDynamicTexture, Button } from '@babylonjs/gui';
 
 @Component({
   selector: 'microwave-three-dimensions',
@@ -69,6 +70,28 @@ export class MicrowaveThreeDimensionsComponent implements AfterViewInit, OnDestr
         this.scene.stopAllAnimations();
       }
 
+      // --------------------------------------------
+      const plane = Mesh.CreatePlane('plane', 20, this.scene!);
+      plane.position.x = 82 + 80;
+      plane.position.y = 102 + 80;
+      plane.position.z = 98 + 80;
+      plane.
+
+      const advancedTexture = AdvancedDynamicTexture.CreateForMesh(plane);
+
+      const button1 = Button.CreateSimpleButton('but1', 'Click Me');
+      button1.width = 500;
+      button1.height = 50;
+      button1.color = 'white';
+      button1.fontSize = 50;
+      button1.background = 'green';
+      button1.onPointerUpObservable.add(function() {
+        alert('you did it!');
+      });
+      advancedTexture.addControl(button1);
+
+      // --------------------------------------------
+
       const box = MeshBuilder.CreateBox('box', { height: 17, width: 48, depth: 20 }, this.scene);
       box.position.x = 82;
       box.position.y = 102;
@@ -106,7 +129,6 @@ export class MicrowaveThreeDimensionsComponent implements AfterViewInit, OnDestr
         )
         .subscribe();
     });
-
 
     this.engine.runRenderLoop(() => {
       // tslint:disable-next-line: no-non-null-assertion
