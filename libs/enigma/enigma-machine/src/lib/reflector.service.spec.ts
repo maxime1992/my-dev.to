@@ -17,10 +17,8 @@ describe('ReflectorService', () => {
 
     const reflectorService: ReflectorService = new ReflectorService(reflectorConfig);
 
-    // tslint:disable-next-line:no-magic-numbers
     expect(reflectorService.goThroughFromRelativeIndex(0)).toEqual(25);
     expect(reflectorService.goThroughFromRelativeIndex(1)).toEqual(0);
-    // tslint:disable-next-line:no-magic-numbers
     expect(reflectorService.goThroughFromRelativeIndex(25)).toEqual(24);
   });
 });

@@ -43,7 +43,6 @@ describe(`EncryptComponent`, () => {
     dataEncryptInput.nativeElement.value = 'Hello this is a top secret message';
     dataEncryptInput.nativeElement.dispatchEvent(new Event('input'));
 
-    // tslint:disable-next-line: no-magic-numbers
     tick(10);
     fixture.detectChanges();
 

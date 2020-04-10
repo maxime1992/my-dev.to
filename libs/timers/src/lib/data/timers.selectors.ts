@@ -6,7 +6,6 @@ export const getOppositeStatus = (status: Timer.Status): Timer.Status =>
 export const getTimersWithSumTimes = (timers: Timer.AsObject[]): Timer.AsObjectResolved[] =>
   timers.map(timer => {
     const currentStatus: Timer.Status =
-      // tslint:disable-next-line: no-magic-numbers
       timer.statusUpdatesAt.length % 2 === 0 ? timer.startedWithStatus : getOppositeStatus(timer.startedWithStatus);
 
     const timeElapsedWhileStartedMs: number = timer.statusUpdatesAt.reduce(

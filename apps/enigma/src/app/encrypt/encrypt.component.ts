@@ -26,7 +26,6 @@ export class EncryptComponent {
 
   public encryptedText$ = combineLatest([
     this.clearTextValue$.pipe(
-      // tslint:disable-next-line: no-magic-numbers
       sampleTime(10),
       distinctUntilChanged(),
       filter(() => this.clearTextControl.valid),
