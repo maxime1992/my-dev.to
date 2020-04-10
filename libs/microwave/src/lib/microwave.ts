@@ -1,6 +1,6 @@
 import { chunk } from '@common/object-utility';
 import { UnreachableCase, unreachableCaseWrap } from '@common/type-utility';
-import { ConnectableObservable, Observable, of, Subject, timer, Timestamp } from 'rxjs';
+import { ConnectableObservable, Observable, of, timer, Timestamp } from 'rxjs';
 import {
   endWith,
   map,
@@ -31,14 +31,14 @@ interface MicrowaveInternalState {
 }
 
 // exposed/computed state
-interface MicrowaveState {
+export interface MicrowaveState {
   timePlannedMs: number;
   timeDoneMs: number;
   status: MicrowaveStatus;
 }
 
 const INITIAL_MICROWAVE_STATE: MicrowaveInternalState = {
-  timePlannedMs: 10000,
+  timePlannedMs: 0,
   onAndOffTimes: [],
   status: MicrowaveStatus.RESET,
 };
@@ -51,13 +51,10 @@ const MICROWAVE_RESET_STATE: MicrowaveState = {
 
 export interface Microwave {
   microwave$: Observable<MicrowaveState>;
-  actions$: Subject<MicrowaveAction>;
   cleanUp: () => void;
 }
 
-export const createMicrowave = (): Microwave => {
-  const actions$: Subject<MicrowaveAction> = new Subject();
-
+export const createMicrowave = (actions$: Observable<MicrowaveAction>): Microwave => {
   const microwaveState$: ConnectableObservable<MicrowaveInternalState> = actions$.pipe(
     startWith(Actions.reset()),
     rxjsTimestamp(),
@@ -73,7 +70,10 @@ export const createMicrowave = (): Microwave => {
           return {
             ...microwave,
             status: MicrowaveStatus.STOPPED,
-            onAndOffTimes: [...microwave.onAndOffTimes, timestamp],
+            onAndOffTimes:
+              microwave.status !== MicrowaveStatus.STARTED
+                ? microwave.onAndOffTimes
+                : [...microwave.onAndOffTimes, timestamp],
           };
         case EMicrowaveAction.RESET:
           return INITIAL_MICROWAVE_STATE;
@@ -98,18 +98,31 @@ export const createMicrowave = (): Microwave => {
 
       switch (status) {
         case MicrowaveStatus.RESET:
-          return of(MICROWAVE_RESET_STATE);
+          return of({
+            timePlannedMs: microwave.timePlannedMs,
+            status: MicrowaveStatus.RESET,
+            timeDoneMs: 0,
+          });
 
         case MicrowaveStatus.STOPPED: {
+          const timeDoneMs = computeTimeDoneMs(microwave.onAndOffTimes);
+
+          if (microwave.timePlannedMs === 0 || microwave.timePlannedMs - timeDoneMs <= 0) {
+            return of({
+              timePlannedMs: 0,
+              status: MicrowaveStatus.RESET,
+              timeDoneMs: 0,
+            });
+          }
+
           return of({
             timePlannedMs: microwave.timePlannedMs,
             status: MicrowaveStatus.STOPPED,
-            timeDoneMs: computeTimeDoneMs(microwave.onAndOffTimes),
+            timeDoneMs: timeDoneMs,
           });
         }
 
         case MicrowaveStatus.STARTED:
-          // tslint:disable-next-line: no-magic-numbers
           return timer(0, 1000).pipe(
             rxjsTimestamp(),
             map(({ timestamp }) => ({
@@ -137,7 +150,6 @@ export const createMicrowave = (): Microwave => {
 
   return {
     microwave$,
-    actions$,
     cleanUp: () => {
       microwaveStateSubscription.unsubscribe();
     },
