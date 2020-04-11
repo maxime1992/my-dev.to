@@ -73,7 +73,7 @@
         "ignore-pattern": "^_"
       }
     ],
-    "no-magic-numbers": true,
+    "no-magic-numbers": false,
     "only-arrow-functions": true,
     "curly": true,
     "no-invalid-this": true,
