@@ -12,7 +12,7 @@ import {
   takeWhile,
   timestamp as rxjsTimestamp,
 } from 'rxjs/operators';
-import { Actions, EMicrowaveAction, MicrowaveAction } from './microwave.actions';
+import { EMicrowaveAction, MicrowaveAction } from './microwave.actions';
 
 const computeTimeDoneMs = (onAndOffTimes: number[]) =>
   chunk(onAndOffTimes).reduce((timeElapsed, [on, off]) => timeElapsed + off - on, 0);
@@ -23,7 +23,7 @@ export enum MicrowaveStatus {
   RESET = 'Reset',
 }
 
-// state internal to the reducer
+// nternal state to the reducer
 interface MicrowaveInternalState {
   timePlannedMs: number;
   onAndOffTimes: number[];
@@ -54,88 +54,109 @@ export interface Microwave {
   cleanUp: () => void;
 }
 
-export const createMicrowave = (actions$: Observable<MicrowaveAction>): Microwave => {
-  const microwaveState$: ConnectableObservable<MicrowaveInternalState> = actions$.pipe(
-    startWith(Actions.reset()),
-    rxjsTimestamp(),
-    scan<Timestamp<MicrowaveAction>, MicrowaveInternalState>((microwave, { value: action, timestamp }) => {
-      switch (action.type) {
-        case EMicrowaveAction.START:
-          return {
-            ...microwave,
-            status: MicrowaveStatus.STARTED,
-            onAndOffTimes: [...microwave.onAndOffTimes, timestamp],
-          };
-        case EMicrowaveAction.STOP:
-          return {
-            ...microwave,
-            status: MicrowaveStatus.STOPPED,
-            onAndOffTimes:
-              microwave.status !== MicrowaveStatus.STARTED
-                ? microwave.onAndOffTimes
-                : [...microwave.onAndOffTimes, timestamp],
-          };
-        case EMicrowaveAction.RESET:
-          return INITIAL_MICROWAVE_STATE;
-        case EMicrowaveAction.ADD_TIME_MS: {
-          return {
-            ...microwave,
-            timePlannedMs: microwave.timePlannedMs + action.payload.timeMs,
-          };
-        }
-        default:
-          unreachableCaseWrap(action);
+const microwaveReducer = (
+  microwave: MicrowaveInternalState,
+  { value: action, timestamp }: Timestamp<MicrowaveAction>,
+): MicrowaveInternalState => {
+  switch (action.type) {
+    case EMicrowaveAction.START:
+      return {
+        ...microwave,
+        status: MicrowaveStatus.STARTED,
+        onAndOffTimes: [...microwave.onAndOffTimes, timestamp],
+      };
+    case EMicrowaveAction.STOP:
+      return {
+        ...microwave,
+        status: MicrowaveStatus.STOPPED,
+        onAndOffTimes:
+          microwave.status !== MicrowaveStatus.STARTED
+            ? microwave.onAndOffTimes
+            : [...microwave.onAndOffTimes, timestamp],
+      };
+    case EMicrowaveAction.RESET:
+      return INITIAL_MICROWAVE_STATE;
+    case EMicrowaveAction.ADD_TIME_MS: {
+      return {
+        ...microwave,
+        timePlannedMs: microwave.timePlannedMs + action.payload.timeMs,
+      };
+    }
+    default:
+      unreachableCaseWrap(action);
+  }
+  return microwave;
+};
+
+const microwaveSelector = (microwave: MicrowaveInternalState): MicrowaveState => {
+  switch (microwave.status) {
+    case MicrowaveStatus.RESET:
+      return {
+        timePlannedMs: microwave.timePlannedMs,
+        status: MicrowaveStatus.RESET,
+        timeDoneMs: 0,
+      };
+
+    case MicrowaveStatus.STOPPED: {
+      const timeDoneMs = computeTimeDoneMs(microwave.onAndOffTimes);
+
+      if (microwave.timePlannedMs === 0 || microwave.timePlannedMs - timeDoneMs <= 0) {
+        return {
+          timePlannedMs: 0,
+          status: MicrowaveStatus.RESET,
+          timeDoneMs: 0,
+        };
       }
 
-      return microwave;
-    }, INITIAL_MICROWAVE_STATE),
+      return {
+        timePlannedMs: microwave.timePlannedMs,
+        status: MicrowaveStatus.STOPPED,
+        timeDoneMs: timeDoneMs,
+      };
+    }
+
+    case MicrowaveStatus.STARTED:
+      return {
+        timePlannedMs: microwave.timePlannedMs,
+        status: MicrowaveStatus.STARTED,
+        timeDoneMs: computeTimeDoneMs(microwave.onAndOffTimes),
+      };
+
+    default:
+      throw new UnreachableCase(microwave.status);
+  }
+};
+
+export const createMicrowave = (action$: Observable<MicrowaveAction>): Microwave => {
+  const microwaveState$: ConnectableObservable<MicrowaveInternalState> = action$.pipe(
+    rxjsTimestamp(),
+    scan(microwaveReducer, INITIAL_MICROWAVE_STATE),
+    startWith(INITIAL_MICROWAVE_STATE),
     publishReplay(1),
   ) as ConnectableObservable<MicrowaveInternalState>;
 
   const microwave$: Observable<MicrowaveState> = microwaveState$.pipe(
     switchMap(microwave => {
-      const status: MicrowaveStatus = microwave.status;
-
-      switch (status) {
+      switch (microwave.status) {
         case MicrowaveStatus.RESET:
-          return of({
-            timePlannedMs: microwave.timePlannedMs,
-            status: MicrowaveStatus.RESET,
-            timeDoneMs: 0,
-          });
-
-        case MicrowaveStatus.STOPPED: {
-          const timeDoneMs = computeTimeDoneMs(microwave.onAndOffTimes);
-
-          if (microwave.timePlannedMs === 0 || microwave.timePlannedMs - timeDoneMs <= 0) {
-            return of({
-              timePlannedMs: 0,
-              status: MicrowaveStatus.RESET,
-              timeDoneMs: 0,
-            });
-          }
-
-          return of({
-            timePlannedMs: microwave.timePlannedMs,
-            status: MicrowaveStatus.STOPPED,
-            timeDoneMs: timeDoneMs,
-          });
-        }
+        case MicrowaveStatus.STOPPED:
+          return of(microwaveSelector(microwave));
 
         case MicrowaveStatus.STARTED:
           return timer(0, 1000).pipe(
             rxjsTimestamp(),
-            map(({ timestamp }) => ({
-              timePlannedMs: microwave.timePlannedMs,
-              status: MicrowaveStatus.STARTED,
-              timeDoneMs: computeTimeDoneMs([...microwave.onAndOffTimes, timestamp]),
-            })),
+            map(({ timestamp }) =>
+              microwaveSelector({
+                ...microwave,
+                onAndOffTimes: [...microwave.onAndOffTimes, timestamp],
+              }),
+            ),
             takeWhile(x => x.timeDoneMs < x.timePlannedMs),
             endWith(MICROWAVE_RESET_STATE),
           );
 
         default:
-          throw new UnreachableCase(status);
+          throw new UnreachableCase(microwave.status);
       }
     }),
     shareReplay({ bufferSize: 1, refCount: true }),
