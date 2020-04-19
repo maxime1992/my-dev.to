@@ -22,5 +22,9 @@
   {
     "id": 161221,
     "relativePathToArticle": "./blog-posts/angular-easily-extract-a-falsy-value-from-an-observable-using-the-async-pipe/angular-easily-extract-a-falsy-value-from-an-observable-using-the-async-pipe.md"
+  },
+  {
+    "id": 313025,
+    "relativePathToArticle": "./blog-posts/building-a-reactive-microwave-for-ryan-cavanaugh-with-rxjs/building-a-reactive-microwave-for-ryan-cavanaugh-with-rxjs.md"
   }
 ]
