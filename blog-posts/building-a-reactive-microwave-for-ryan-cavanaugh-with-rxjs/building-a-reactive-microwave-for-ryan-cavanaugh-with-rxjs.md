@@ -532,7 +532,7 @@ const INITIAL_MICROWAVE_STATE: MicrowaveInternalState = {
 };
 
 export const createMicrowave = (action$: Observable<MicrowaveAction>): MicrowaveState => {
-  const microwaveState$: Observable<MicrowaveInternalState> = actions$.pipe(
+  const microwaveState$: Observable<MicrowaveInternalState> = action$.pipe(
     timestamp(),
     scan(microwaveReducer, INITIAL_MICROWAVE_STATE),
     startWith(INITIAL_MICROWAVE_STATE),
