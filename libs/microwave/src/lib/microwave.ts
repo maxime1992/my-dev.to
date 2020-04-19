@@ -23,7 +23,7 @@ export enum MicrowaveStatus {
   RESET = 'Reset',
 }
 
-// nternal state to the reducer
+// internal state to the reducer
 interface MicrowaveInternalState {
   timePlannedMs: number;
   onAndOffTimes: number[];
