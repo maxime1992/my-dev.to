@@ -1,0 +1,7 @@
+<maxime1992-microwave
+  [microwave]="microwave$ | async"
+  (mwStart)="actions$.next(MicrowaveAction.start())"
+  (mwStop)="actions$.next(MicrowaveAction.stop())"
+  (mwReset)="actions$.next(MicrowaveAction.reset())"
+  (mwAddTimeMs)="actions$.next(MicrowaveAction.addTime($event))"
+></maxime1992-microwave>

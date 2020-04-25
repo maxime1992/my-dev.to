@@ -1,0 +1,27 @@
+<div *ngIf="microwave; else noMicrowave">
+  <p>Time planned: {{ microwave.timePlannedMs }}</p>
+  <p>Time done: {{ microwave.timeDoneMs }}</p>
+  <p>Remaining time: {{ microwave.timePlannedMs - microwave.timeDoneMs }}</p>
+  <p>Status: {{ microwave.status }}</p>
+
+  <div class="actions">
+    <div class="status">
+      <button (click)="mwStart.next()" [disabled]="!microwave.availableActions[EMicrowaveAction.START]">Start</button>
+      <button (click)="mwStop.next()" [disabled]="!microwave.availableActions[EMicrowaveAction.STOP]">Stop</button>
+      <button (click)="mwReset.next()" [disabled]="!microwave.availableActions[EMicrowaveAction.RESET]">Reset</button>
+    </div>
+
+    <div class="time">
+      <button (click)="mwAddTimeMs.next(10000)" [disabled]="!microwave.availableActions[EMicrowaveAction.ADD_TIME_MS]">
+        Add time (+10s)
+      </button>
+      <button (click)="mwAddTimeMs.next(60000)" [disabled]="!microwave.availableActions[EMicrowaveAction.ADD_TIME_MS]">
+        Add time (+60s)
+      </button>
+    </div>
+  </div>
+</div>
+
+<ng-template #noMicrowave>
+  Microwave not available
+</ng-template>
