@@ -156,6 +156,76 @@ describe(`Microwave`, () => {
     });
   });
 
+  it(`should be in reset status once the countdown reaches 0 and should remain in reset status if we add some time`, () => {
+    testScheduler.run(({ expectObservable, cold }) => {
+      setup(
+        cold('-a-b 999ms -c|', {
+          a: MicrowaveAction.addTime(1000),
+          b: MicrowaveAction.start(),
+          c: MicrowaveAction.addTime(5000),
+        }),
+      );
+
+      expectObservable(microwave$.pipe(take(5))).toBe('ab-c 999ms d(e|)', {
+        a: {
+          timePlannedMs: 0,
+          status: MicrowaveStatus.RESET,
+          timeDoneMs: 0,
+          availableActions: {
+            [EMicrowaveAction.START]: false,
+            [EMicrowaveAction.STOP]: false,
+            [EMicrowaveAction.RESET]: false,
+            [EMicrowaveAction.ADD_TIME_MS]: true,
+          },
+        },
+        b: {
+          timePlannedMs: 1000,
+          status: MicrowaveStatus.RESET,
+          timeDoneMs: 0,
+          availableActions: {
+            [EMicrowaveAction.START]: true,
+            [EMicrowaveAction.STOP]: false,
+            [EMicrowaveAction.RESET]: false,
+            [EMicrowaveAction.ADD_TIME_MS]: true,
+          },
+        },
+        c: {
+          timePlannedMs: 1000,
+          status: MicrowaveStatus.STARTED,
+          timeDoneMs: 0,
+          availableActions: {
+            [EMicrowaveAction.START]: false,
+            [EMicrowaveAction.STOP]: true,
+            [EMicrowaveAction.RESET]: true,
+            [EMicrowaveAction.ADD_TIME_MS]: true,
+          },
+        },
+        d: {
+          timePlannedMs: 0,
+          status: MicrowaveStatus.RESET,
+          timeDoneMs: 0,
+          availableActions: {
+            [EMicrowaveAction.START]: false,
+            [EMicrowaveAction.STOP]: false,
+            [EMicrowaveAction.RESET]: false,
+            [EMicrowaveAction.ADD_TIME_MS]: true,
+          },
+        },
+        e: {
+          timePlannedMs: 5000,
+          status: MicrowaveStatus.RESET,
+          timeDoneMs: 0,
+          availableActions: {
+            [EMicrowaveAction.START]: true,
+            [EMicrowaveAction.STOP]: false,
+            [EMicrowaveAction.RESET]: false,
+            [EMicrowaveAction.ADD_TIME_MS]: true,
+          },
+        },
+      });
+    });
+  });
+
   describe(`when adding some time the current status shouldn't change, only the time planned should`, () => {
     // following variable is not used, it's here only for the type safety
     // as we want to test all the statuses we use record to not forget any
