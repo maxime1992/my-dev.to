@@ -50,6 +50,10 @@
           {
             "sourceTag": "frontend",
             "onlyDependOnLibsWithTags": ["core-browser"]
+          },
+          {
+            "sourceTag": "sope:microwave-app",
+            "onlyDependOnLibsWithTags": ["sope:microwave"]
           }
         ]
       }

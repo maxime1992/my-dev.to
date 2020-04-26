@@ -2,7 +2,7 @@ import { Observable } from 'rxjs';
 import { first, take } from 'rxjs/operators';
 import { TestScheduler } from 'rxjs/testing';
 import { createMicrowave, Microwave, MicrowaveState, MicrowaveStatus } from './microwave';
-import { Actions, MicrowaveAction } from './microwave.actions';
+import { EMicrowaveAction, MicrowaveAction, OneOfMicrowaveAction } from './microwave.actions';
 
 describe(`Microwave`, () => {
   let testScheduler: TestScheduler;
@@ -15,7 +15,7 @@ describe(`Microwave`, () => {
     });
   });
 
-  const setup = (microWaveActions: Observable<MicrowaveAction>) => {
+  const setup = (microWaveActions: Observable<OneOfMicrowaveAction>) => {
     const m = createMicrowave(microWaveActions);
     microwave$ = m.microwave$;
     microwaveCleanUp = m.cleanUp;
@@ -34,6 +34,12 @@ describe(`Microwave`, () => {
           timePlannedMs: 0,
           status: MicrowaveStatus.RESET,
           timeDoneMs: 0,
+          availableActions: {
+            [EMicrowaveAction.START]: false,
+            [EMicrowaveAction.STOP]: false,
+            [EMicrowaveAction.RESET]: false,
+            [EMicrowaveAction.ADD_TIME_MS]: true,
+          },
         },
       });
     });
@@ -41,18 +47,30 @@ describe(`Microwave`, () => {
 
   it(`should emit the reset status if we try to start without adding any time first`, () => {
     testScheduler.run(({ expectObservable, cold }) => {
-      setup(cold('-a|', { a: Actions.start() }));
+      setup(cold('-a|', { a: MicrowaveAction.start() }));
 
       expectObservable(microwave$.pipe(take(2))).toBe('a(b|)', {
         a: {
           timePlannedMs: 0,
           status: MicrowaveStatus.RESET,
           timeDoneMs: 0,
+          availableActions: {
+            [EMicrowaveAction.START]: false,
+            [EMicrowaveAction.STOP]: false,
+            [EMicrowaveAction.RESET]: false,
+            [EMicrowaveAction.ADD_TIME_MS]: true,
+          },
         },
         b: {
           timePlannedMs: 0,
           status: MicrowaveStatus.RESET,
           timeDoneMs: 0,
+          availableActions: {
+            [EMicrowaveAction.START]: false,
+            [EMicrowaveAction.STOP]: false,
+            [EMicrowaveAction.RESET]: false,
+            [EMicrowaveAction.ADD_TIME_MS]: true,
+          },
         },
       });
     });
@@ -62,8 +80,8 @@ describe(`Microwave`, () => {
     testScheduler.run(({ expectObservable, cold }) => {
       setup(
         cold('-a-b|', {
-          a: Actions.addTime(3000),
-          b: Actions.start(),
+          a: MicrowaveAction.addTime(3000),
+          b: MicrowaveAction.start(),
         }),
       );
 
@@ -72,31 +90,137 @@ describe(`Microwave`, () => {
           timePlannedMs: 0,
           status: MicrowaveStatus.RESET,
           timeDoneMs: 0,
+          availableActions: {
+            [EMicrowaveAction.START]: false,
+            [EMicrowaveAction.STOP]: false,
+            [EMicrowaveAction.RESET]: false,
+            [EMicrowaveAction.ADD_TIME_MS]: true,
+          },
         },
         b: {
           timePlannedMs: 3000,
           status: MicrowaveStatus.RESET,
           timeDoneMs: 0,
+          availableActions: {
+            [EMicrowaveAction.START]: true,
+            [EMicrowaveAction.STOP]: false,
+            [EMicrowaveAction.RESET]: false,
+            [EMicrowaveAction.ADD_TIME_MS]: true,
+          },
         },
         c: {
           timePlannedMs: 3000,
           status: MicrowaveStatus.STARTED,
           timeDoneMs: 0,
+          availableActions: {
+            [EMicrowaveAction.START]: false,
+            [EMicrowaveAction.STOP]: true,
+            [EMicrowaveAction.RESET]: true,
+            [EMicrowaveAction.ADD_TIME_MS]: true,
+          },
         },
         d: {
           timePlannedMs: 3000,
           status: MicrowaveStatus.STARTED,
           timeDoneMs: 1000,
+          availableActions: {
+            [EMicrowaveAction.START]: false,
+            [EMicrowaveAction.STOP]: true,
+            [EMicrowaveAction.RESET]: true,
+            [EMicrowaveAction.ADD_TIME_MS]: true,
+          },
         },
         e: {
           timePlannedMs: 3000,
           status: MicrowaveStatus.STARTED,
           timeDoneMs: 2000,
+          availableActions: {
+            [EMicrowaveAction.START]: false,
+            [EMicrowaveAction.STOP]: true,
+            [EMicrowaveAction.RESET]: true,
+            [EMicrowaveAction.ADD_TIME_MS]: true,
+          },
         },
         f: {
           timePlannedMs: 0,
           status: MicrowaveStatus.RESET,
           timeDoneMs: 0,
+          availableActions: {
+            [EMicrowaveAction.START]: false,
+            [EMicrowaveAction.STOP]: false,
+            [EMicrowaveAction.RESET]: false,
+            [EMicrowaveAction.ADD_TIME_MS]: true,
+          },
+        },
+      });
+    });
+  });
+
+  it(`should be in reset status once the countdown reaches 0 and should remain in reset status if we add some time`, () => {
+    testScheduler.run(({ expectObservable, cold }) => {
+      setup(
+        cold('-a-b 999ms -c|', {
+          a: MicrowaveAction.addTime(1000),
+          b: MicrowaveAction.start(),
+          c: MicrowaveAction.addTime(5000),
+        }),
+      );
+
+      expectObservable(microwave$.pipe(take(5))).toBe('ab-c 999ms d(e|)', {
+        a: {
+          timePlannedMs: 0,
+          status: MicrowaveStatus.RESET,
+          timeDoneMs: 0,
+          availableActions: {
+            [EMicrowaveAction.START]: false,
+            [EMicrowaveAction.STOP]: false,
+            [EMicrowaveAction.RESET]: false,
+            [EMicrowaveAction.ADD_TIME_MS]: true,
+          },
+        },
+        b: {
+          timePlannedMs: 1000,
+          status: MicrowaveStatus.RESET,
+          timeDoneMs: 0,
+          availableActions: {
+            [EMicrowaveAction.START]: true,
+            [EMicrowaveAction.STOP]: false,
+            [EMicrowaveAction.RESET]: false,
+            [EMicrowaveAction.ADD_TIME_MS]: true,
+          },
+        },
+        c: {
+          timePlannedMs: 1000,
+          status: MicrowaveStatus.STARTED,
+          timeDoneMs: 0,
+          availableActions: {
+            [EMicrowaveAction.START]: false,
+            [EMicrowaveAction.STOP]: true,
+            [EMicrowaveAction.RESET]: true,
+            [EMicrowaveAction.ADD_TIME_MS]: true,
+          },
+        },
+        d: {
+          timePlannedMs: 0,
+          status: MicrowaveStatus.RESET,
+          timeDoneMs: 0,
+          availableActions: {
+            [EMicrowaveAction.START]: false,
+            [EMicrowaveAction.STOP]: false,
+            [EMicrowaveAction.RESET]: false,
+            [EMicrowaveAction.ADD_TIME_MS]: true,
+          },
+        },
+        e: {
+          timePlannedMs: 5000,
+          status: MicrowaveStatus.RESET,
+          timeDoneMs: 0,
+          availableActions: {
+            [EMicrowaveAction.START]: true,
+            [EMicrowaveAction.STOP]: false,
+            [EMicrowaveAction.RESET]: false,
+            [EMicrowaveAction.ADD_TIME_MS]: true,
+          },
         },
       });
     });
@@ -110,18 +234,30 @@ describe(`Microwave`, () => {
       [MicrowaveStatus.RESET]: test(`status RESET`, () => {
         testScheduler.run(({ expectObservable, cold }) => {
           // it already starts with the reset status
-          setup(cold('-a|', { a: Actions.addTime(3000) }));
+          setup(cold('-a|', { a: MicrowaveAction.addTime(3000) }));
 
           expectObservable(microwave$.pipe(take(2))).toBe('a(b|)', {
             a: {
               timePlannedMs: 0,
               status: MicrowaveStatus.RESET,
               timeDoneMs: 0,
+              availableActions: {
+                [EMicrowaveAction.START]: false,
+                [EMicrowaveAction.STOP]: false,
+                [EMicrowaveAction.RESET]: false,
+                [EMicrowaveAction.ADD_TIME_MS]: true,
+              },
             },
             b: {
               timePlannedMs: 3000,
               status: MicrowaveStatus.RESET,
               timeDoneMs: 0,
+              availableActions: {
+                [EMicrowaveAction.START]: true,
+                [EMicrowaveAction.STOP]: false,
+                [EMicrowaveAction.RESET]: false,
+                [EMicrowaveAction.ADD_TIME_MS]: true,
+              },
             },
           });
         });
@@ -129,28 +265,58 @@ describe(`Microwave`, () => {
       [MicrowaveStatus.STARTED]: test(`status STARTED`, () => {
         testScheduler.run(({ expectObservable, cold }) => {
           // note: we have to add some time before being able to start (which makes sense...)
-          setup(cold('-a-b-c|', { a: Actions.addTime(3000), b: Actions.start(), c: Actions.addTime(3000) }));
+          setup(
+            cold('-a-b-c|', {
+              a: MicrowaveAction.addTime(3000),
+              b: MicrowaveAction.start(),
+              c: MicrowaveAction.addTime(3000),
+            }),
+          );
 
           expectObservable(microwave$.pipe(take(4))).toBe('ab-c-(d|)', {
             a: {
               timePlannedMs: 0,
               status: MicrowaveStatus.RESET,
               timeDoneMs: 0,
+              availableActions: {
+                [EMicrowaveAction.START]: false,
+                [EMicrowaveAction.STOP]: false,
+                [EMicrowaveAction.RESET]: false,
+                [EMicrowaveAction.ADD_TIME_MS]: true,
+              },
             },
             b: {
               timePlannedMs: 3000,
               status: MicrowaveStatus.RESET,
               timeDoneMs: 0,
+              availableActions: {
+                [EMicrowaveAction.START]: true,
+                [EMicrowaveAction.STOP]: false,
+                [EMicrowaveAction.RESET]: false,
+                [EMicrowaveAction.ADD_TIME_MS]: true,
+              },
             },
             c: {
               timePlannedMs: 3000,
               status: MicrowaveStatus.STARTED,
               timeDoneMs: 0,
+              availableActions: {
+                [EMicrowaveAction.START]: false,
+                [EMicrowaveAction.STOP]: true,
+                [EMicrowaveAction.RESET]: true,
+                [EMicrowaveAction.ADD_TIME_MS]: true,
+              },
             },
             d: {
               timePlannedMs: 6000,
               status: MicrowaveStatus.STARTED,
               timeDoneMs: 2,
+              availableActions: {
+                [EMicrowaveAction.START]: false,
+                [EMicrowaveAction.STOP]: true,
+                [EMicrowaveAction.RESET]: true,
+                [EMicrowaveAction.ADD_TIME_MS]: true,
+              },
             },
           });
         });
@@ -162,10 +328,10 @@ describe(`Microwave`, () => {
           // would end up being RESET
           setup(
             cold('-a-b-c-d|', {
-              a: Actions.addTime(3000),
-              b: Actions.start(),
-              c: Actions.stop(),
-              d: Actions.addTime(3000),
+              a: MicrowaveAction.addTime(3000),
+              b: MicrowaveAction.start(),
+              c: MicrowaveAction.stop(),
+              d: MicrowaveAction.addTime(3000),
             }),
           );
 
@@ -174,26 +340,56 @@ describe(`Microwave`, () => {
               timePlannedMs: 0,
               status: MicrowaveStatus.RESET,
               timeDoneMs: 0,
+              availableActions: {
+                [EMicrowaveAction.START]: false,
+                [EMicrowaveAction.STOP]: false,
+                [EMicrowaveAction.RESET]: false,
+                [EMicrowaveAction.ADD_TIME_MS]: true,
+              },
             },
             b: {
               timePlannedMs: 3000,
               status: MicrowaveStatus.RESET,
               timeDoneMs: 0,
+              availableActions: {
+                [EMicrowaveAction.START]: true,
+                [EMicrowaveAction.STOP]: false,
+                [EMicrowaveAction.RESET]: false,
+                [EMicrowaveAction.ADD_TIME_MS]: true,
+              },
             },
             c: {
               timePlannedMs: 3000,
               status: MicrowaveStatus.STARTED,
               timeDoneMs: 0,
+              availableActions: {
+                [EMicrowaveAction.START]: false,
+                [EMicrowaveAction.STOP]: true,
+                [EMicrowaveAction.RESET]: true,
+                [EMicrowaveAction.ADD_TIME_MS]: true,
+              },
             },
             d: {
               timePlannedMs: 3000,
               status: MicrowaveStatus.STOPPED,
               timeDoneMs: 2,
+              availableActions: {
+                [EMicrowaveAction.START]: true,
+                [EMicrowaveAction.STOP]: false,
+                [EMicrowaveAction.RESET]: true,
+                [EMicrowaveAction.ADD_TIME_MS]: true,
+              },
             },
             e: {
               timePlannedMs: 6000,
               status: MicrowaveStatus.STOPPED,
               timeDoneMs: 2,
+              availableActions: {
+                [EMicrowaveAction.START]: true,
+                [EMicrowaveAction.STOP]: false,
+                [EMicrowaveAction.RESET]: true,
+                [EMicrowaveAction.ADD_TIME_MS]: true,
+              },
             },
           });
         });

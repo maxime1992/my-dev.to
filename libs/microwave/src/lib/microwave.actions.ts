@@ -22,9 +22,9 @@ export interface AddTimeAction {
   payload: { timeMs: number };
 }
 
-export type MicrowaveAction = StartAction | StopAction | ResetAction | AddTimeAction;
+export type OneOfMicrowaveAction = StartAction | StopAction | ResetAction | AddTimeAction;
 
-export namespace Actions {
+export namespace MicrowaveAction {
   export const start = (): StartAction => ({
     type: EMicrowaveAction.START,
   });
