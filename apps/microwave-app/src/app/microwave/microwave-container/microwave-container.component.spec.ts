@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { MicrowaveComponent } from '../microwave/microwave.component';
 import { MicrowaveContainerComponent } from './microwave-container.component';
 
 describe('MicrowaveContainerComponent', () => {
@@ -7,7 +8,7 @@ describe('MicrowaveContainerComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [MicrowaveContainerComponent],
+      declarations: [MicrowaveContainerComponent, MicrowaveComponent],
     }).compileComponents();
   }));
 

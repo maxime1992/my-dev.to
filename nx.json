@@ -51,13 +51,13 @@
       "tags": []
     },
     "microwave": {
-      "tags": []
+      "tags": ["sope:microwave"]
     },
     "microwave-app-e2e": {
       "tags": []
     },
     "microwave-app": {
-      "tags": []
+      "tags": ["sope:microwave-app"]
     }
   }
 }
