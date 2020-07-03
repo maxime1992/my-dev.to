@@ -775,6 +775,34 @@
           }
         }
       }
+    },
+    "time-s-up": {
+      "projectType": "library",
+      "root": "libs/time-s-up",
+      "sourceRoot": "libs/time-s-up/src",
+      "prefix": "maxime1992",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": ["libs/time-s-up/tsconfig.lib.json", "libs/time-s-up/tsconfig.spec.json"],
+            "exclude": ["**/node_modules/**", "!libs/time-s-up/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/time-s-up/jest.config.js",
+            "tsConfig": "libs/time-s-up/tsconfig.spec.json",
+            "setupFile": "libs/time-s-up/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "styleext": "scss"
+        }
+      }
     }
   },
   "cli": {

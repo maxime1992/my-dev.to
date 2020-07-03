@@ -64,6 +64,9 @@
     },
     "time-s-up-app": {
       "tags": []
+    },
+    "time-s-up": {
+      "tags": []
     }
   }
 }
