@@ -58,6 +58,12 @@
     },
     "microwave-app": {
       "tags": ["sope:microwave-app"]
+    },
+    "time-s-up-app-e2e": {
+      "tags": []
+    },
+    "time-s-up-app": {
+      "tags": []
     }
   }
 }

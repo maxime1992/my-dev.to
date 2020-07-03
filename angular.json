@@ -663,6 +663,118 @@
           }
         }
       }
+    },
+    "time-s-up-app": {
+      "projectType": "application",
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "apps/time-s-up-app",
+      "sourceRoot": "apps/time-s-up-app/src",
+      "prefix": "maxime1992",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/time-s-up-app",
+            "index": "apps/time-s-up-app/src/index.html",
+            "main": "apps/time-s-up-app/src/main.ts",
+            "polyfills": "apps/time-s-up-app/src/polyfills.ts",
+            "tsConfig": "apps/time-s-up-app/tsconfig.app.json",
+            "aot": false,
+            "assets": ["apps/time-s-up-app/src/favicon.ico", "apps/time-s-up-app/src/assets"],
+            "styles": ["apps/time-s-up-app/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/time-s-up-app/src/environments/environment.ts",
+                  "with": "apps/time-s-up-app/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "time-s-up-app:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "time-s-up-app:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "time-s-up-app:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": ["apps/time-s-up-app/tsconfig.app.json", "apps/time-s-up-app/tsconfig.spec.json"],
+            "exclude": ["**/node_modules/**", "!apps/time-s-up-app/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/time-s-up-app/jest.config.js",
+            "tsConfig": "apps/time-s-up-app/tsconfig.spec.json",
+            "setupFile": "apps/time-s-up-app/src/test-setup.ts"
+          }
+        }
+      }
+    },
+    "time-s-up-app-e2e": {
+      "root": "apps/time-s-up-app-e2e",
+      "sourceRoot": "apps/time-s-up-app-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/time-s-up-app-e2e/cypress.json",
+            "tsConfig": "apps/time-s-up-app-e2e/tsconfig.e2e.json",
+            "devServerTarget": "time-s-up-app:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "time-s-up-app:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": ["apps/time-s-up-app-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!apps/time-s-up-app-e2e/**"]
+          }
+        }
+      }
     }
   },
   "cli": {
