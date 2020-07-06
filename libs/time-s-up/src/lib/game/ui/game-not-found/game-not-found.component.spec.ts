@@ -8,9 +8,8 @@ describe('GameNotFoundComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GameNotFoundComponent ]
-    })
-    .compileComponents();
+      declarations: [GameNotFoundComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

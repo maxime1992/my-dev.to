@@ -88,6 +88,7 @@
     "prettier": "1.18.2",
     "ts-jest": "24.0.2",
     "ts-node": "8.3.0",
+    "tsdef": "0.0.13",
     "tslint": "5.19.0",
     "typescript": "3.4.5"
   }

@@ -8,9 +8,8 @@ describe('SummaryGameSleeveComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SummaryGameSleeveComponent ]
-    })
-    .compileComponents();
+      declarations: [SummaryGameSleeveComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

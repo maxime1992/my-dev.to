@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
+import { RouterEffects } from '@maxime1992/core-browser';
+import { TimeSUpModule } from '@maxime1992/time-s-up';
 import { EffectsModule } from '@ngrx/effects';
 import { routerReducer, StoreRouterConnectingModule } from '@ngrx/router-store';
 import { StoreModule } from '@ngrx/store';
@@ -22,8 +24,9 @@ import { AppComponent } from './app.component';
       maxAge: 50,
       logOnly: environment.production,
     }),
-    EffectsModule.forRoot([]),
+    EffectsModule.forRoot([RouterEffects]),
     StoreRouterConnectingModule.forRoot(),
+    TimeSUpModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
