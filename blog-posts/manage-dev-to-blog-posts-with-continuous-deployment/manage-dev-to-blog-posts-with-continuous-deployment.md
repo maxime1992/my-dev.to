@@ -34,7 +34,7 @@ No more than a few minutes. Probably 3 to 5 minutes top, from scratch to automat
 
 You can choose whether you want to integrate this workflow into an existing repository or using a **template** I've made to simplify the process of starting from scratch.
 
-In this blog post we will focus on getting started using the template but reading this you'll realise how easy it would be to integrate in your own worklow.
+In this blog post we will focus on getting started using the template but reading this you'll realise how easy it would be to integrate in your own workflow.
 
 Main steps:
 
@@ -68,6 +68,14 @@ Go to https://dev.to/settings/account and give a name to the token so you can re
 Keep the page open for now.
 
 ## 3. Pass that token to Travis
+
+**Edit: 8th of July 2020**
+
+[Beeman](https://dev.to/beeman) has written a great post on [dev.to](https://dev.to) to use [Github Actions](https://github.com/features/actions): {% link https://dev.to/beeman/automate-your-dev-posts-using-github-actions-4hp3 %}
+
+The main advantage of Github Actions over Travis is that you can get 2000mn of free time if the repo is private (which should be more than enough!).
+
+While we'll be focusing on how to use Travis as our CI, do check Beeman's article if you prefer to use Github Actions! =)
 
 Go to https://travis-ci.org/account/repositories
 
