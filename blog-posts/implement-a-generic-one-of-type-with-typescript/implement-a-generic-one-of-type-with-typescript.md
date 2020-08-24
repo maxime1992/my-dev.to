@@ -55,13 +55,15 @@ To keep things simple, let's start with only 2: 🐶, 🐺.
 type Animal = {
   id: string;
   name: string;
-} & {
-  dog: Dog | null;
-  wolf: null;
-} & {
-  dog: null;
-  wolf: Wolf | null;
-};
+} & (
+  | {
+      dog: Dog | null;
+      wolf: null;
+    }
+  | {
+      dog: null;
+      wolf: Wolf | null;
+    });
 
 interface Player {
   // ... same ...
@@ -74,27 +76,27 @@ This way we do express the fact that **the animal can either be a dog OR a wolf 
 type Animal = {
   id: string;
   name: string;
-} & {
+} & ({
   dog: Dog | null;
   wolf: null;
   eagle: null;
   mouse: null;
-} & {
+} | {
   dog:  null;
   wolf: Wolf | null;
   eagle: null;
   mouse: null;
-} & {
+} | {
   dog: Dog null;
   wolf: Wolf null;
   eagle: Eagle | null;
   mouse: null;
-} & {
+} | {
   dog: null;
   wolf: null;
   eagle: null;
   mouse: Mouse | null;
-};
+});
 
 interface Player {
   // ... same ...
