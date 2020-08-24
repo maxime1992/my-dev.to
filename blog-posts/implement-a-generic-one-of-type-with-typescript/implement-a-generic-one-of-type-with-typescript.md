@@ -1,5 +1,5 @@
 ---
-published: false
+published: true
 title: "Implement a generic oneOf type with Typescript"
 cover_image: "https://raw.githubusercontent.com/maxime1992/my-dev.to/master/blog-posts/implement-a-generic-one-of-type-with-typescript/assets/implement-a-generic-one-of-type-with-typescript-cover.png"
 description: "Implement a generic oneOf type with Typescript"
