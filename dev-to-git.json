@@ -26,5 +26,9 @@
   {
     "id": 313025,
     "relativePathToArticle": "./blog-posts/building-a-reactive-microwave-for-ryan-cavanaugh-with-rxjs/building-a-reactive-microwave-for-ryan-cavanaugh-with-rxjs.md"
+  },
+  {
+    "id": 428130,
+    "relativePathToArticle": "./blog-posts/implement-a-generic-one-of-type-with-typescript/implement-a-generic-one-of-type-with-typescript.md"
   }
 ]
