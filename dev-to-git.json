@@ -30,5 +30,9 @@
   {
     "id": 428130,
     "relativePathToArticle": "./blog-posts/implement-a-generic-one-of-type-with-typescript/implement-a-generic-one-of-type-with-typescript.md"
+  },
+  {
+    "id": 857880,
+    "relativePathToArticle": "./blog-posts/typescript-generics/typescript-generics.md"
   }
 ]
