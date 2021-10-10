@@ -54,7 +54,7 @@
     "dev-to-git": "1.4.8",
     "embedme": "1.17.1",
     "hammerjs": "2.0.8",
-    "lodash": "4.17.15",
+    "lodash": "4.17.21",
     "ngx-sub-form": "3.0.2",
     "observable-webworker": "3.2.3",
     "rxjs": "6.5.2",
