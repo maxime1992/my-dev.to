@@ -329,7 +329,7 @@ Here's the [Typescript Playground link](https://www.typescriptlang.org/play?ts=4
 
 # Conclusion
 
-I didn't think that referencing 2 generics between an object and it's keys (part 1) would work. But it does and for the best. The combination of that trick with template literals to extract the common bit of some properties is quite powerful and gives us robust typings on our functions to change a data structure into a fairly different one.
+I didn't think that referencing 2 generics between an object and its keys (part 1) would work. But it does and for the best. The combination of that trick with template literals to extract the common bit of some properties is quite powerful and gives us robust typings on our functions to change a data structure into a fairly different one.
 
 I just love Typescript ❤️✨. If you do as well and you found this article useful, let me know in the comments. I'd also be really interested to see some attempts/solutions from people who gave it a go!
 
