@@ -51,7 +51,7 @@
     "@nrwl/angular": "8.4.12",
     "@types/lodash": "4.14.137",
     "core-js": "3.2.1",
-    "dev-to-git": "1.4.8",
+    "dev-to-git": "1.4.10",
     "embedme": "1.17.1",
     "hammerjs": "2.0.8",
     "lodash": "4.17.15",
