@@ -1,5 +1,5 @@
 ---
-published: false
+published: true
 title: "Next level data privacy with easy free and secure self hosting at home"
 cover_image: "https://raw.githubusercontent.com/maxime1992/my-dev.to/master/blog-posts/next-level-data-privacy-with-easy-free-and-secure-self-hosting-at-home/assets/cover.png"
 description: ""
