@@ -18,3 +18,5 @@ Any issues not related to one of my blog post should be reported to the the temp
 * Enigma: Understand it, implement it, crack it
   - [Part I: Enigma machine, how does the famous encryption device work?](https://dev.to/maxime1992/enigma-machine-how-does-the-famous-encryption-device-work-5aon)
   - [Part II: Building an Enigma machine with only TypeScript and then use Angular DI system to properly instantiate it](https://dev.to/maxime1992/building-an-enigma-machine-with-only-typescript-and-then-use-angular-di-system-to-properly-instantiate-it-2e2h)
+
+- [Next level data privacy with easy free and secure self hosting at home](https://dev.to/maxime1992/next-level-data-privacy-with-easy-free-and-secure-self-hosting-at-home-2c84)
