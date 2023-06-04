@@ -16,6 +16,7 @@ With a machine running at your house, not in the cloud. Even if you've never don
 That said, if you prefer to apply all this on a server you rent to some provider, it'll work the exact same way. You'll just skip the chapter on the router configuration.
 
 _Let's clarify from the start what I mean by:_
+
 - _**Easy**: The first setup isn't necessarily easy (nor complicated). But it takes a bit of time. We'll go through it all together. Once it's done, adding new apps will take a few seconds or minutes based on how complex the docker strategy is (integrated database or separate container to run Postgres for example)_
 - _**Free**: You will not have to pay monthly or yearly bills for a server you rent online and a domain name because I'll explain how to setup everything locally using your desktop, laptop or a spare computer that you can keep open. You'd still have to pay for a machine if you don't have a spare one, as well as electricity to run it. That said, as a metric for this, my server has consumed ~60kwh in 6 months which makes it ~10kwh/month or ~2€/month._
 
@@ -26,6 +27,7 @@ _Let's clarify from the start what I mean by:_
 Have you ever wished to self host one of the +1000 brilliant open source project listed in [awesome-self](https://github.com/awesome-selfhosted/awesome-selfhosted) hosted? A project of your own? A school project? Or anything else that is web based? Sky _(or the RAM of your server)_ is the limit!
 
 If you're afraid of:
+
 - 🕵️‍♂️ Online solutions that have no respect for your **privacy**
 - 💸 Online hosting solutions where you're 100% in control of the server and apps, but it can be **expensive**
 - 🤷‍♂️ How to configure NGINX as it seems too **complicated**
@@ -36,6 +38,7 @@ Fear no more! In this blog post we'll be starting from scratch, all the way up t
 # What we will achieve
 
 Here's the high level breakdown of what we'll do:
+
 - Install and use **[Docker](https://www.docker.com)** + **[Docker Compose](https://docs.docker.com/compose)** in order to have **self contained applications**
 - Use **[DuckDNS](https://www.duckdns.org)** to create a **free domain name** that we can point to our public IP to have access to our apps from outside our home network _(note, you could skip this step and use your own domain name of course if you prefer to)_
 - Use **[SWAG](https://docs.linuxserver.io/general/swag)** to manage our NGINX server, SSL certificates and `fail2ban` to ban people trying to brute force our services
@@ -44,11 +47,13 @@ Here's the high level breakdown of what we'll do:
 - Access the default monitoring dashboard of SWAG from internet, behind our double authentication layer
 
 As a bonus and real life demo I'll soon write another **blog post for this serie**, where we'll add 3 brilliant applications:
+
 - **[Paperless-ngx](https://github.com/paperless-ngx/paperless-ngx)** to manage all your digital documents
 - **[Photoprism](https://github.com/photoprism/photoprism)** to manage all your pictures and videos
 - **[Kopia](https://github.com/kopia/kopia)** to backup all your data from all the containers
 
 At the end of this blog post, you will:
+
 - Be able to have all this stack up and running
 - Be in a position to add any other web app easily
 
@@ -73,12 +78,12 @@ Head over [DuckDNS](https://www.duckdns.org) website and log in with the provide
 
 ![Anonymized DuckDNS page example](./assets/anonymized-duck-dns-page-example.png 'Anonymized DuckDNS page example')
 
-
 Note that the token displayed in the middle of the page must be kept secret, never share it. We'll get back to it soon.
 
 In the domain input, type the domain name you wish to have pointing to your local setup. This will be the base of the public URL to access all your service. Something like `https://yourdomain.duckdns.org`.
 
 You will only need one as we'll be using sub domains so don't name it for a specific app. For example, with the 3 apps we'll be setting up in the next post, we'll end up with the following URLs:
+
 - `https://photoprism.yourdomain.duckdns.org`
 - `https://paperless.yourdomain.duckdns.org`
 - `https://kopia.yourdomain.duckdns.org`
@@ -105,7 +110,7 @@ sudo apt-get install -y \
      curl \
      gnupg \
      lsb-release
-     
+
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
 
 echo \
@@ -213,7 +218,7 @@ Time to start our first container!
 $ docker compose up -d
 ```
 
-It should pull the container if you don't have it already and you should see a message like this: 
+It should pull the container if you don't have it already and you should see a message like this:
 
 ```bash
 ✔ Container swag Started
@@ -263,18 +268,18 @@ Essentially, it'll let you put an (extra) **authentication layer 🔐 in front o
 Add the following service to our `docker-compose.yaml` file:
 
 ```yaml
-  # to add a user, add directly to `authelia/users_database.yml`
-  # then get the encrypted password with
-  # docker run --rm ghcr.io/authelia/authelia:4.34.6 authelia hash-password yourpassword
-  # https://www.linuxserver.io/blog/2020-08-26-setting-up-authelia#users_database-yml
-  authelia:
-    image: ghcr.io/authelia/authelia:4.34.6
-    container_name: authelia
-    env_file:
-      - common.env
-    volumes:
-      - ./authelia:/config
-    restart: unless-stopped
+# to add a user, add directly to `authelia/users_database.yml`
+# then get the encrypted password with
+# docker run --rm ghcr.io/authelia/authelia:4.34.6 authelia hash-password yourpassword
+# https://www.linuxserver.io/blog/2020-08-26-setting-up-authelia#users_database-yml
+authelia:
+  image: ghcr.io/authelia/authelia:4.34.6
+  container_name: authelia
+  env_file:
+    - common.env
+  volumes:
+    - ./authelia:/config
+  restart: unless-stopped
 ```
 
 Run `docker compose up -d` so that the Authelia container gets started as well.
@@ -302,7 +307,7 @@ server:
   port: 9091
   read_buffer_size: 4096
   write_buffer_size: 4096
-  path: "authelia"
+  path: 'authelia'
 log:
   level: info
   file_path: /config/logs/authelia.log
@@ -325,11 +330,11 @@ access_control:
   default_policy: deny
   rules:
     - domain:
-      - yourdomain.duckdns.org
-      - "*.yourdomain.duckdns.org"
+        - yourdomain.duckdns.org
+        - '*.yourdomain.duckdns.org'
       policy: two_factor
       subject:
-      - 'user:TODO_YOUR_AUTHELIA_USER_NAME_HERE'
+        - 'user:TODO_YOUR_AUTHELIA_USER_NAME_HERE'
 session:
   name: authelia_session
   secret: TODO_SOME_OTHER_RANDOM_SECRET_HERE
@@ -352,6 +357,7 @@ notifier:
 ```
 
 Update all the following:
+
 - `TODO_SOME_RANDOM_SECRET_HERE`
 - `TODO_YOUR_AUTHELIA_USER_NAME_HERE`
 - `TODO_SOME_OTHER_RANDOM_SECRET_HERE`
@@ -367,7 +373,7 @@ You should see a bunch of new files created in the `authelia` folder and `docker
 
 Last but not least, we need to add a user otherwise it'll be hard to log in!
 
-Launch the following command to encrypt your chosen password for Authelia: 
+Launch the following command to encrypt your chosen password for Authelia:
 
 ```bash
 $ docker run --rm authelia/authelia:latest authelia hash-password yourpassword
@@ -382,13 +388,13 @@ Edit this file with the following content:
 ```yaml
 users:
   your-user-name:
-    displayname: "your-user-name"
-    password: "Put the hashed password generated here starting with $argon2"
+    displayname: 'your-user-name'
+    password: 'Put the hashed password generated here starting with $argon2'
 ```
 
 Don't forget to change the username _(twice)_ to whatever you want and update the password with the one we just generated.
 
-Now that Authelia is configured, let's expose it through a given subdomain. For this, thanks to all the templates that SWAG has, it's really easy for most apps that we want to add! 
+Now that Authelia is configured, let's expose it through a given subdomain. For this, thanks to all the templates that SWAG has, it's really easy for most apps that we want to add!
 
 In this case, copy `swag/config/nginx/proxy-confs/authelia.subdomain.conf.sample` to `swag/config/nginx/site-confs` and rename `authelia.subdomain.conf.sample` to `authelia.subdomain.conf`.
 
@@ -410,9 +416,9 @@ It's obviously not true because we haven't setup any email provider but Authelia
 
 ```
 Date: 2023-06-02 23:13:28.051443925 +0200 CEST m=+216.364147029
-Recipient: 
+Recipient:
 Subject: Register your mobile
-Body: 
+Body:
 This email has been sent to you in order to validate your identity.
 If you did not initiate the process your credentials might have been compromised. You should reset your password and contact an administrator.
 
@@ -421,10 +427,9 @@ To setup your 2FA please visit the following URL: https://authelia.yourdomain.du
 Please contact an administrator if you did not initiate the process.
 ```
 
-Open up the link that's written and it'll show you a page with a QR code. 
+Open up the link that's written and it'll show you a page with a QR code.
 
 ![Authelia double authentification QR code](./assets/2FA-QR-code.jpg 'Authelia double authentification QR code')
-
 
 With your favourite 2FA authentication app, add it. For example you can use Google Authenticator.
 
@@ -441,6 +446,7 @@ Anyway, let's edit `dashboard.subdomain.conf`. All you have to do for every new 
 and uncomment the next line. **Make sure you do that on all occurrences of the comment**.
 
 There should be at least:
+
 - `include /config/nginx/authelia-server.conf`
 - `include /config/nginx/authelia-location.conf`
 
@@ -459,6 +465,7 @@ For your Authelia entry in your password manager, enter this:
 ```
 https:\/\/([1-9-a-z-]*)\.yourdomain\.duckdns\.org\/authelia
 ```
+
 For all your apps, enter this _(example with Paperless that we'll setup later)_:
 
 ```
@@ -476,3 +483,9 @@ If you're interested in more articles about Angular, RxJS, open source, self hos
 # Found a typo?
 
 If you've found a typo, a sentence that could be improved or anything else that should be updated on this blog post, you can access it through a git repository and make a pull request. Instead of posting a comment, please go directly to https://github.com/maxime1992/my-dev.to and open a new pull request with your changes. If you're interested how I manage my dev.to posts through git and CI, [read more here](https://dev.to/maxime1992/manage-your-dev-to-blog-posts-from-a-git-repo-and-use-continuous-deployment-to-auto-publish-update-them-143j).
+
+# Follow me
+
+| Dev.to                                                                                                                              | Github                                                                                                                                           | Twitter                                                                                                                                              | Reddit                                                                                                                                                    | Linkedin                                                                                                                                                              |
+| ----------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [![Dev](https://raw.githubusercontent.com/maxime1992/my-dev.to/master/shared-assets/dev-logo.png 'Dev')](https://dev.to/maxime1992) | [![Github](https://raw.githubusercontent.com/maxime1992/my-dev.to/master/shared-assets/github-logo.png 'Github')](https://github.com/maxime1992) | [![Twitter](https://raw.githubusercontent.com/maxime1992/my-dev.to/master/shared-assets/twitter-logo.png 'Twitter')](https://twitter.com/maxime1992) | [![Reddit](https://raw.githubusercontent.com/maxime1992/my-dev.to/master/shared-assets/reddit-logo.png 'Reddit')](https://www.reddit.com/user/maxime1992) | [![Linkedin](https://raw.githubusercontent.com/maxime1992/my-dev.to/master/shared-assets/linkedin-logo.png 'Linkedin')](https://www.linkedin.com/in/maximerobert1992) |
