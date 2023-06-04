@@ -8,6 +8,10 @@ series:
 canonical_url:
 ---
 
+**04/2023 UPDATE**: While the overall idea of the blog post remains unchanged and is still relevant, I no longer recommend to use Travis. Instead use Github Actions _(or if you're not using Github, any other CI runner of your choice)_. The [template repo](https://github.com/maxime1992/dev.to) has been updated to use Github Actions. Feel free to read this blog post to get the main idea but then head over to the [template repo](https://github.com/maxime1992/dev.to) for a more up to date step by step guide.
+
+---
+
 Have you ever wished that you had a monorepo (_\*1_ ) containing all of your dev.to posts on GitHub and once you merge an update into the master branch they would just automatically be updated on dev.to?
 
 _1) or multiple repositories, it doesn't matter :smiley:_
