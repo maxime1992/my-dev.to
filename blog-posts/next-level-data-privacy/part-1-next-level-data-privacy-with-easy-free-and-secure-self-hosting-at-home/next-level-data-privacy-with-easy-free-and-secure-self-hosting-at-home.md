@@ -1,7 +1,7 @@
 ---
 published: true
 title: "Next level data privacy with easy, free and secure self hosting at home"
-cover_image: "https://raw.githubusercontent.com/maxime1992/my-dev.to/master/blog-posts/next-level-data-privacy-with-easy-free-and-secure-self-hosting-at-home/assets/cover.png?bustCache=2"
+cover_image: "https://raw.githubusercontent.com/maxime1992/my-dev.to/master/blog-posts/next-level-data-privacy/part-1-next-level-data-privacy-with-easy-free-and-secure-self-hosting-at-home/assets/cover.png?bustCache=2"
 description: ""
 tags: docker, opensource, selfhosting, privacy
 series: "Self hosting and data privacy"
