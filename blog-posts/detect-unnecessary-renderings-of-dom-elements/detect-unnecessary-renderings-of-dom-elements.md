@@ -1,6 +1,6 @@
 ---
 published: true
-title: "How to detect unnecessary renderings of DOM elements in your web app to improve performances 🔥"
+title: "How to detect unnecessary renderings of DOM elements in your web app to improve performances"
 cover_image: "https://raw.githubusercontent.com/maxime1992/my-dev.to/master/blog-posts/detect-unnecessary-renderings-of-dom-elements/assets/cover.png"
 description: ""
 tags: webdev, html, javascript, tutorial
