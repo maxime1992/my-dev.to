@@ -1,7 +1,7 @@
 ---
-published: false
-title: "I had no idea Typescript generics were capable of doing that 🤯!"
-cover_image: "https://raw.githubusercontent.com/maxime1992/my-dev.to/master/blog-posts/typescript-generics/assets/cover.png"
+published: true
+title: 'I had no idea Typescript generics were capable of doing that 🤯!'
+cover_image: 'https://raw.githubusercontent.com/maxime1992/my-dev.to/master/blog-posts/typescript-generics/assets/cover.png'
 tags: typescript, types, generics
 ---
 
@@ -15,7 +15,7 @@ interface Order {
   id: string;
   name: string;
 
-  // some keys "grouped" by 3 
+  // some keys "grouped" by 3
   price1: number;
   price2: number;
   price3: number;
@@ -31,6 +31,7 @@ interface Order {
 ```
 
 _Notes:_
+
 - _Why is that API not exposing `prices`, `quantities` and `shippingDates` as arrays is beyond the point here. Let's just assume we consume an API that we cannot modify_
 - _This is just an example and the returned type could have way more properties like that, so we don't want to have to make the whole remapping manually_
 
@@ -41,6 +42,7 @@ While the backend may expose it this way for a good reason, in our case, on the 
 ## Part 1
 
 Build a `getGroupedValues` function which will have
+
 - Input 1: An object
 - Input 2: A key for one of the repeated properties. Example if we pass an `Order` as first argument, we could pass as second argument either `price`, `quantity` or `shippingDate`
 - Output: An array of the type matching the union of all the keys for that common one. Example with `Order`, if the second argument is `price` we'd expect as an output `number[]` but if it's `shippingDate` we'd expect `string[]`
@@ -88,7 +90,6 @@ const orderRemap: OrderRemap = {
 
 Instead, if the types are defined as such:
 
-
 ```ts
 interface OrderDetail {
   price: number;
@@ -100,7 +101,7 @@ interface OrderRemapGrouped {
   id: string;
   name: string;
 
-  orderDetails: OrderDetail[]
+  orderDetails: OrderDetail[];
 }
 ```
 
@@ -176,7 +177,7 @@ It feels like this could be exactly what we want!
 Fantastic! All done then! But wait... Typescript doesn't seem to be really happy here. On our return type:
 
 ```ts
-Obj[`${BaseKey}${Indices}`]
+Obj[`${BaseKey}${Indices}`];
 ```
 
 It says:
@@ -186,7 +187,7 @@ It says:
 And it looks legit. We're trying to access properties on a generic which doesn't extends anything (our `Obj` type).  
 But how can we keep this function generic and specify that our object will have keys that are composed of the base key and indices 🤔...
 
-Would 
+Would
 
 ```ts
 Obj extends Record<`${BaseKey}${Indices}`, any>
@@ -211,7 +212,7 @@ I knew that Typescript could handle recursion just fine, like if you define a li
 ```ts
 interface List {
   propA: number;
-  list?: List
+  list?: List;
 }
 
 const list: List = {
@@ -219,10 +220,10 @@ const list: List = {
   list: {
     propA: 2,
     list: {
-      propA: 3
-    }
-  }
-}
+      propA: 3,
+    },
+  },
+};
 ```
 
 But this? While I think it's amazing, I'm not sure how Typescript manage to settle on the type.
@@ -287,7 +288,7 @@ Here's the [Typescript Playground link](https://www.typescriptlang.org/play?ts=4
 
 While creating the API in part 1, we notice that we have to call the `getGroupedValues` function multiple times, pass a key, recreate the whole object for the remaining properties, etc. It's quite heavy and... Could be simpler!
 
-So now we'll see how to write a function which does all of this for us and groups the different properties based on their index: 
+So now we'll see how to write a function which does all of this for us and groups the different properties based on their index:
 
 ```ts
 const orderRemapGrouped: OrderRemapGrouped = groupProperties(order, 'orderDetails');
@@ -322,8 +323,7 @@ Record<NewKey, Array<{[key in Keys]: Obj[`${key}${Indices}`]}>>
 
 We add to the return one property, which will have the key passed as second parameter of the function (of type `NewKey`). That key, will have a value that will be an array of objects.
 
-These objects are going to be all the common keys (`price`, `quantity` and `shippingDate`), associated to the union type of all those properties. For example if we start with `price` we'll get the union type of `price1`, `price2`, `price3`  which is `number` as they're all numbers. And same for the others.
-
+These objects are going to be all the common keys (`price`, `quantity` and `shippingDate`), associated to the union type of all those properties. For example if we start with `price` we'll get the union type of `price1`, `price2`, `price3` which is `number` as they're all numbers. And same for the others.
 
 Here's the [Typescript Playground link](https://www.typescriptlang.org/play?ts=4.4.3#code/JYOwLgpgTgZghgYwgAgPJQCbWQbwLABQyyA9CcgM4D2AtigK4jACO9KA1hAJ4WHHAYAXJTBRQAcwDcfZCDh1hFUROkEZZSrQ7cKyAETioVegAcIGPcgBGXZAGZkMk2KQBGYSHo0r0VcWfASABMHl4+UH7IAUh2od6+hDKscODAYFzusmEJRMjJqekhWfERSfQpYGlcscXhqjIUABbAJiYSACJwkJlKYiBSDc2tHV0QRb0qgy1t-Z2QNRP9qgC+iQTpZsgAkiAYgRC6ALzIrsgAPshB5-b161ybAOJGpuYA0joAPAAqAHzIx19kBAAB6QXa6AAGABIcKAYNgAKrLGE7PZICjLCHIAD8yARyA8EAAbjlCBsUAAlA70AA2YH+yCexjMGHePA+nC4VBgaEw0B+klI5D00QglguenylXS4v0TWmI0glkAPBuASP21jBGAhKlQQMhDMyAApGMxQSoHD6oKwAKyBoIg4OQVIQVEwH2hODZGJRu32GIhABpkCkuD8g167WCMLomS9WZ9Ody0Daw8gAHIQADubMjDujIj64h+AAoZFQbRBtcIrdaAzIQFm2cIM9nuHWCABKas0NKWm1Bj1e5E4VF+zF-ABkTsrrowHxbbKDAEEoFA4FwPjgANqc5CgZBegC61ZtW49nOHo-RmMPyx+f3wuSgEDA9Cges8NJpwd0IcFGkzCAAHJn1kKh6WAGgTBpCA6FSfpkDARoUE1EBtWAXUg2teglGQGAqAQHCJGQXU9zAXQsBgUA0gwkBCFWNQCCwBAaTgUCXRAXDZ2gas+VKRiNBAcCIGERoqBJKBEOQ5AiTY4A4CsGDdDAKhKAgFAkJQOFoGfDBEPuCBCA43DnyOfVnhMY0qFNc0KGLbioCDICHPaF84GAGkKCAjtbg0URbA2YiIVMgA6LEVLUjTGi6ZAuXofUX2QCEBEDJK5DoVKIRctyPIoCFCA0OBdDEiTiKaKhM2U6TKOonU9STTT9LMXRM2aBBGj3XQlN0FiIDYtZBIqoNgB5OLkBK7Asr41ywHczysVIxr8K-CriJpUAUDioCv0isjlIMwQCvIZAVzXDdHw0YgohcETahyS7iClKo4jqI6rsoIYZnEOZbsWAYCA0O9CFC7LZtywggA) with all the code from above.
 
