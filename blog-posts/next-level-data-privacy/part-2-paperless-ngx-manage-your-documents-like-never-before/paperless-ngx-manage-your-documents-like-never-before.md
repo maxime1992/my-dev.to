@@ -1,7 +1,7 @@
 ---
 published: true
 title: "Paperless-ngx, manage your documents like never before"
-cover_image: "https://raw.githubusercontent.com/maxime1992/my-dev.to/master/blog-posts/next-level-data-privacy/part-2-paperless-ngx-manage-your-documents-like-never-before/assets/cover.png"
+cover_image: "https://raw.githubusercontent.com/maxime1992/my-dev.to/master/blog-posts/next-level-data-privacy/part-2-paperless-ngx-manage-your-documents-like-never-before/assets/cover.png?bustCache=1"
 description: ""
 tags: docker, opensource, selfhosting, privacy
 series: "Self hosting and data privacy"
