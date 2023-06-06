@@ -219,7 +219,7 @@ Happy document triaging!
 
 ---
 
-I hope you enjoyed this article, if you did let me know with a reaction on dev.to and eventually drop a comment. It's always nice to hear back from people who took the time to read an post 😄!
+I hope you enjoyed this article, if you did let me know with a reaction and eventually drop a comment. It's always nice to hear back from people who took the time to read a post 😄!
 
 If you're interested in more articles about Angular, RxJS, open source, self hosting, data privacy, feel free to hit the **follow button** for more. Thanks for reading!
 
