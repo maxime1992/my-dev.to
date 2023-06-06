@@ -1,5 +1,5 @@
 ---
-published: false
+published: true
 title: "The holy grail of note-taking: Owned data available offline, efficient methodology and peer to peer encrypted sync across all your devices"
 cover_image: "https://raw.githubusercontent.com/maxime1992/my-dev.to/master/blog-posts/the-holy-grail-of-note-taking/assets/cover.png"
 description: "Take the control back on your notes and your data privacy"
