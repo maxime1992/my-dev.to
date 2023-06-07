@@ -10,7 +10,7 @@ canonical_url:
 
 # Disclaimer
 
-I have learnt very quickly that opiniated articles can get any random stranger with a different opinion to challenge you to death behind his keyboard because you're not enjoying the same things as he does. Therefore I'm going to start this article with a note: **This blog post is strongly opiniated**. I'm sharing what I like, in case it can be helpful to some. If you've got a different point of view, if you use a different software, if you use a different methodology, **don't be offended**. Simply share a comment with your opinion explaining why you prefer something different. We don't have to all agree and having multiple feedback will always help others as long as it's constructive. Without further ado, let's get started 🙂!
+_I have learnt very quickly that opiniated articles can get any random stranger with a different opinion to challenge you to death behind his keyboard because you're not enjoying the same things as he does. Therefore I'm going to start this article with a note: **This blog post is strongly opiniated**. I'm sharing what I like, in case it can be helpful to some. If you've got a different point of view, if you use a different software, if you use a different methodology, **don't be offended**. Simply share a comment with your opinion explaining why you prefer something different. We don't have to all agree and having multiple feedback will always help others as long as it's constructive. Without further ado, let's get started 🙂!_
 
 # Intro
 
@@ -36,7 +36,7 @@ Welcome to the rabbit hole 🐇.
 
 ## Note-taking software
 
-I've always been taking notes. Loads of notes. Not super organized, not very thought through, but at least, I had something. About a year ago, I decided it was time to investigate into better solution as my number of notes started to grow up and it was all becoming a mess.
+I've always been taking notes. Loads of notes. Not super organized, not very thought through, but at least, I had something. About a year ago, I decided it was time to investigate into a better solution as my number of notes started to grow up and it was all becoming a mess.
 
 With data privacy as the key factor, I was looking for a local application, that'd not be in charge of hosting my data and which was using a standard format: **Markdown**.
 
@@ -50,7 +50,7 @@ Here's how it looks _(yes they do respect developers, there's a dark theme)_:
 
 ![Obsidian home page](./assets/obsidian-home-page.png 'Obsidian home page')
 
-🍒 on the cake, it's been built to be super modular and **supports plugins**. Because of the huge community, there's nearly 1000 community plugins available when I'm writing those lines. 988 to be exact.
+🍒 on the cake, it's been built to be super modular and **supports plugins**. Because of the huge community, there's nearly **1000 community plugins** available when I'm writing those lines. 988 to be exact.
 
 What I like about Obsidian:
 
@@ -68,8 +68,11 @@ What I like about Obsidian:
   - **Prettier format**. I prefer to use this instead of the linter mentioned above as Prettier has a huge community and is strongly opiniated
   - **Reading time**. To know how long I'm going to bore you with my articles
   - **Tag wrangler**. To manage existing tags, for example rename them. It detects all the tags in a smart way instead of just doing a string comparison which could affect some text as well if you were to make a global search and replace
+  - **Obsidian Git**. I'll talk later on how to sync your notes on different devices but be aware of this plugin that can be useful as well
 
 Whatever OS you're using, just go to the [download page](https://obsidian.md/download) and pick the one you want.
+
+Before moving on, I have to say that I have a wish for Obsidian: **May it become open source one day**. I know the data remains in the users' hands but if Obsidian was to open its code, I feel like it could become a lot stronger than it already is. You can find out more [here](https://www.reddit.com/r/ObsidianMD/comments/tv6uql/is_obsidian_open_source).
 
 Now that we've got the note-taking software, do we just start creating all of our notes as usual?
 
@@ -119,11 +122,11 @@ The name is quite self explanatory. Here are some examples that could go in ther
 
 I've got `Family`, `Games`, `House`, `IT`, `Medias`, `Travels`.
 
-Some of these folders sounds like they could be in "projects" or "areas of responsibility" but I could have the same folder name in those. Here it's really for notes that are not project of responsibility related. General information notes. For examples, I've got "House work" in "Projects" but also "Areas of responsibility" and here "House". In the first one, I put really important house work like renovating the house before for next winter. In the second one, I put some active projects like replacing a few things not working etc. As for here, in resources I put general knowledge like reference of different equipments so I don't have to look for them all the time when I need an info, what I think is important to look for if I ever move to another house, etc.
+Some of these folders sounds like they could be in "projects" or "areas of responsibility" but I could have the same folder name in those. Here it's really for notes that are not "projects" or "areas of responsibility" related. General information notes. For examples, I've got "House work" in "Projects" but also "Areas of responsibility" and here "House". In the first one, I put really important house work like renovating the house before for next winter. In the second one, I put some active projects like replacing a few things not working etc. As for here, in resources I put general knowledge like references of different equipments so I don't have to look for them all the time when I need an info, what I think is important to look for if I ever move to another house, etc.
 
 ### Archives
 
-For this one, I like to have one sub folder per year, and for each year one sub folder for each of the PARA points. Then I just move notes that are not relevant to me anymore from the other 3 folders to here. If I ever need them back, I can find them, if I don't there's not taking mental energy in the 3 main folders and I can remain focused while looking for something else.
+For this one, I like to have one sub folder per year, and for each year one sub folder for each of the PARA points. Then I just move notes that are not relevant to me anymore from the other 3 folders to here. If I ever need them back, I can find them, if I don't, they're not shifting my focus away while looking in the 3 main folders.
 
 ---
 
@@ -133,7 +136,9 @@ This method can easily be applied along the way and if you wish to give it a go 
 
 We've got our Obsdian app setup, we know how to organise our notes. The last question remaining is how to synchronise our notes across several devices, for example between a laptop, a desktop and a phone.
 
-For this, I've been using an open source equivalent of Dropbox that is called [Syncthing](https://syncthing.net). I invite you to read on their main page what they offer but essentially it's here for secure data exchange between devices, privately.
+While this is not the solution I'm going to present, be aware that Obsidian offers its own solution for this, it's called [Sync](https://obsidian.md/sync). It's not free, but may be a good way to support the development of Obsidian as well!
+
+Personally, I've been using an open source equivalent of Dropbox that is called [Syncthing](https://syncthing.net). I invite you to read on their main page what they offer but essentially it's here for secure data exchange between devices, privately.
 
 Syncthing is available on all the different OS, you can check the [download page](https://syncthing.net/downloads). If you wish to use it from a server as well, you can install it easily with Docker _(either from [LinuxServer package](https://hub.docker.com/r/linuxserver/syncthing) or the [official one](https://hub.docker.com/r/syncthing/syncthing))._
 
@@ -169,7 +174,7 @@ There's then a tab "Sharing" in which you can select which device you want to sh
 
 If you care about data privacy, this could be a solid way to have your notes in sync across several devices without sharing all your data with a big corp. They're also going to be always available, even offline as once the sync is done, your notes are on your device.
 
-As explained, this is how I do things for now, but I'd be delighted to hear more from you and especially which note-taking app is your favourite and why. Who knows, we may all discover the next best app thanks to 1 comment.
+As explained, this is how I do things for now, but **I'd be delighted to hear more from you and especially which note-taking app is your favourite and why**. Who knows, we may all discover the next best app thanks to 1 comment.
 
 Thanks for reading!
 
