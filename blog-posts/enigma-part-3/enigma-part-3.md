@@ -374,7 +374,7 @@ A lot is going down here! Let's look at it piece by piece:
 changeDetection: ChangeDetectionStrategy.OnPush,
 ```
 
-:point_up: As we're going to work in a reactive way and only display values in the view using the `async` pipe, it's safe to use `ChangeDetectionStrategy.OnPush` for better performances.
+:point_up: As we're going to work in a reactive way and only display values in the view using the `async` pipe, it's safe to use `ChangeDetectionStrategy.OnPush` for better performance.
 
 ```ts
 public encryptedTextControl: FormControl = new FormControl('', containsOnlyAlphabetLetters({ acceptSpace: true }));

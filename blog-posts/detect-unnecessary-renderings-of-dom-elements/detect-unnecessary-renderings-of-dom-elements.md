@@ -1,6 +1,6 @@
 ---
 published: true
-title: "How to detect unnecessary renderings of DOM elements in your web app to improve performances"
+title: "How to detect unnecessary renderings of DOM elements in your web app to improve performance"
 cover_image: "https://raw.githubusercontent.com/maxime1992/my-dev.to/master/blog-posts/detect-unnecessary-renderings-of-dom-elements/assets/cover.png"
 description: ""
 tags: webdev, html, javascript, tutorial
@@ -12,7 +12,7 @@ _The code examples I'm giving is using Angular but it's only a very low amount o
 
 # Intro
 
-Unnecessary repaints in a web app can have a critical impact on performances.
+Unnecessary repaints in a web app can have a critical impact on performance.
 
 While you may be developing it on a high end device, you may not even notice. But a user running it on a lower end device may definitely.
 
