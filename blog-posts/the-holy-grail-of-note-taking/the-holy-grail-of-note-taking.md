@@ -170,6 +170,11 @@ Like the one containing your Obsidian vault with all your notes for example _(or
 
 There's then a tab "Sharing" in which you can select which device you want to share this folder with. What's really nice about this is that **you can have more than 2 devices in sync for the same folder**. Meaning that you can increase the chance of having them always up to date because the sync is done in all the direction whenever the devices are online.
 
+⚠️ **Important** ⚠️
+
+As noted by [_bouche_bag_ on Reddit](https://www.reddit.com/r/Syncthing/comments/1434gu7/comment/jn8punm/?context=3), Syncthing is here synchronise files across devices but **does not replace a backup strategy**.  
+I plan on making an article about [Kopia](https://kopia.io) to explain how to make regular backups of your data easily but meanwhile you can look into it yourself if you want. It's definitely not the only solution out there, just an idea. Feel free to compare with other backup softwares.
+
 # Conclusion
 
 If you care about data privacy, this could be a solid way to have your notes in sync across several devices without sharing all your data with a big corp. They're also going to be always available, even offline as once the sync is done, your notes are on your device.
