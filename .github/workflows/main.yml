@@ -26,14 +26,14 @@ jobs:
         run: yarn run format:check --all
       - name: Affected
         run: yarn run affected:test --all
-      - name: Build
-        run: yarn run affected:build --all --prod --base-href https://maxime1992.github.io/my-dev.to/enigma/
-      - name: Deploy
-        if: contains('refs/heads/master', github.ref)
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist/apps
+      # - name: Build
+      #   run: yarn run affected:build --all --prod --base-href https://maxime1992.github.io/my-dev.to/enigma/
+      # - name: Deploy
+      #   if: contains('refs/heads/master', github.ref)
+      #   uses: peaceiris/actions-gh-pages@v3
+      #   with:
+      #     github_token: ${{ secrets.GITHUB_TOKEN }}
+      #     publish_dir: ./dist/apps
       - name: Devto
         env:
           DEV_TO_GIT_TOKEN: ${{ secrets.DEV_TO_GIT_TOKEN }}
