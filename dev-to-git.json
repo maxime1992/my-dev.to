@@ -58,5 +58,9 @@
   {
     "id": 1494060,
     "relativePathToArticle": "./blog-posts/the-holy-grail-of-note-taking/the-holy-grail-of-note-taking.md"
+  },
+  {
+    "id": 1498507,
+    "relativePathToArticle": "./blog-posts/rxjs-advanced-challenge-to-build-a-reactive-split-flap-display/rxjs-advanced-challenge-to-build-a-reactive-split-flap-display.md"
   }
 ]
