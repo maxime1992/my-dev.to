@@ -1,10 +1,10 @@
 ---
 published: true
 title: "RxJS: Advanced challenge to build a reactive split-flap display"
-cover_image: "https://raw.githubusercontent.com/maxime1992/my-dev.to/master/blog-posts/rxjs-advanced-challenge-to-build-a-reactive-split-flap-display/assets/cover.png"
+cover_image: "https://raw.githubusercontent.com/maxime1992/my-dev.to/master/blog-posts/reactive-split-flap-display/rxjs-advanced-challenge-to-build-a-reactive-split-flap-display/assets/cover.png?bustCache=1"
 description: ""
 tags: javascript, rxjs, webdev, frontend
-series:
+series: "Reactive split-flap display"
 canonical_url:
 ---
 
@@ -48,7 +48,7 @@ Before we get started on this, lets define the expected result:
 
 Example of an expected output:
 
-!['Flip-flat example'](./assets/welcome-to-dev-to-flip-flat-board.gif)
+!['Split-flap example'](./assets/welcome-to-dev-to-split-flap-board.gif)
 
 # Challenging you!
 
@@ -106,7 +106,7 @@ Before we dig into the specifics, let's contemplate for a second the beauty and 
 
 !['Contemplating our code'](./assets/contemplating.png)
 
-Keep in mind that the **14 lines of code** above are capable of displaying a string just like a split-flat board, with animations _(delay applied separately on each letter)_, keep the current state and if the text changes, start changing the letters from exactly where we are to the new position. It also manages correctly if we try to apply a text and change to a different one **while the first one is still running, without resetting from scratch** and picking up exactly where it is 🔥. RxJS is truly a thing of beauty.
+Keep in mind that the **14 lines of code** above are capable of displaying a string just like a split-flap board, with animations _(delay applied separately on each letter)_, keep the current state and if the text changes, start changing the letters from exactly where we are to the new position. It also manages correctly if we try to apply a text and change to a different one **while the first one is still running, without resetting from scratch** and picking up exactly where it is 🔥. RxJS is truly a thing of beauty.
 
 The first thing we use is our input. It's a simple `Subject` that we can `next` into whenever we want. This could be bound to an input text for example.
 
