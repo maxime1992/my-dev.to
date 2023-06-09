@@ -1,5 +1,5 @@
 ---
-published: false
+published: true
 title: "RxJS: Advanced challenge to build a reactive split-flap display"
 cover_image: "https://raw.githubusercontent.com/maxime1992/my-dev.to/master/blog-posts/rxjs-advanced-challenge-to-build-a-reactive-split-flap-display/assets/cover.png"
 description: ""
