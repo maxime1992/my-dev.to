@@ -396,7 +396,7 @@ Don't forget to change the username _(twice)_ to whatever you want and update th
 
 Now that Authelia is configured, let's expose it through a given subdomain. For this, thanks to all the templates that SWAG has, it's really easy for most apps that we want to add!
 
-In this case, copy `swag/config/nginx/proxy-confs/authelia.subdomain.conf.sample` to `swag/config/nginx/site-confs` and rename `authelia.subdomain.conf.sample` to `authelia.subdomain.conf`.
+In this case, rename`swag/config/nginx/proxy-confs/authelia.subdomain.conf.sample` to `authelia.subdomain.conf`.
 
 Restart both services with `docker compose down && docker compose up -d` then go to https://authelia.yourdomain.duckdns.org and...
 
@@ -435,7 +435,7 @@ With your favourite 2FA authentication app, add it. For example you can use Goog
 
 Brilliant! We've got Authelia and 2FA setup 🔥!
 
-But wait, our dashboard at https://dashboard.yourdomain.duckdns.org is still not protected. Let's edit `swag/config/nginx/proxy-confs/dashboard.subdomain.conf` but first: Note that, usually the `proxy-confs` contains all the templates and for the apps you want to expose, you copy one the corresponding template to the `site-confs` folder next to it. In this case the dashboard template is here by default for some reason, feel free to move it to `site-confs` instead!
+But wait, our dashboard at https://dashboard.yourdomain.duckdns.org is still not protected. Let's edit `swag/config/nginx/proxy-confs/dashboard.subdomain.conf` but first: Note that, usually the `proxy-confs` contains all the templates and for the apps you want to expose, you rename the file to remove the `.sample`. In this case the dashboard template is here by default! 
 
 Anyway, let's edit `dashboard.subdomain.conf`. All you have to do for every new `.conf` file that you use to expose a new service, is to check for the lines with a comment
 
@@ -453,6 +453,8 @@ There should be at least:
 In this case, there are 5 lines to uncomment ⚠️!
 
 Now reload both services: `docker compose down && docker compose up -d` and head over your dashboard. It should not be accessible directly and you shall see the Authelia authentication page.
+
+If you get a 403 Forbidden error, you may need to adjust your allowed IP addresses in `dashboard.subdomain.conf`.
 
 ---
 
