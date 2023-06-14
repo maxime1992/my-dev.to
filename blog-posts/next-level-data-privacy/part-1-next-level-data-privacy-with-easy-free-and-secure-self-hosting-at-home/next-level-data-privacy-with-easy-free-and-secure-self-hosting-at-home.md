@@ -396,7 +396,7 @@ Don't forget to change the username _(twice)_ to whatever you want and update th
 
 Now that Authelia is configured, let's expose it through a given subdomain. For this, thanks to all the templates that SWAG has, it's really easy for most apps that we want to add!
 
-In this case, rename`swag/config/nginx/proxy-confs/authelia.subdomain.conf.sample` to `authelia.subdomain.conf`.
+In this case, rename `swag/config/nginx/proxy-confs/authelia.subdomain.conf.sample` to `authelia.subdomain.conf`.
 
 Restart both services with `docker compose down && docker compose up -d` then go to https://authelia.yourdomain.duckdns.org and...
 
