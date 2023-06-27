@@ -41,3 +41,9 @@ Any issues not related to one of my blog posts should be reported either to the 
   - [Part II: Paperless-ngx, manage your documents like never before](https://dev.to/maxime1992/paperless-ngx-manage-your-documents-like-never-before-2a3n)
 
 - [The holy grail of note-taking: Private data, efficient methodology and P2P encrypted sync across all your devices](https://dev.to/maxime1992/the-holy-grail-of-note-taking-private-data-efficient-methodology-and-p2p-encrypted-sync-across-all-your-devices-1ih3)
+
+- [The holy grail of note-taking: Private data, efficient methodology and P2P encrypted sync across all your devices](https://dev.to/maxime1992/the-holy-grail-of-note-taking-private-data-efficient-methodology-and-p2p-encrypted-sync-across-all-your-devices-1ih3)
+
+* Reactive split-flap display
+  - [Part I: RxJS advanced challenge to build a reactive split-flap display](https://dev.to/maxime1992/rxjs-advanced-challenge-to-build-a-reactive-split-flap-display-1ej)
+  - [Part II: Build a reactive split-flap display with Angular](https://dev.to/maxime1992/build-a-reactive-split-flap-display-with-angular-kne)
