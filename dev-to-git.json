@@ -66,5 +66,9 @@
   {
     "id": 1498891,
     "relativePathToArticle": "./blog-posts/reactive-split-flap-display/build-a-reactive-split-flap-display-with-angular/build-a-reactive-split-flap-display-with-angular.md"
+  },
+  {
+    "id": 1519361,
+    "relativePathToArticle": "./blog-posts/angular-create-grouped-app-initializer-queue/angular-create-grouped-app-initializer-queue.md"
   }
 ]
