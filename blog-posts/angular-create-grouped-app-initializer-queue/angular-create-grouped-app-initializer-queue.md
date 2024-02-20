@@ -186,12 +186,10 @@ Thanks to RxJS, instantiating all the providers of a queue sequentially is a bre
 !['The feeling'](./assets/the-feeling.jpg 'The feeling')
 
 ```typescript
-const tasksByQueue$ = Object.entries(tasksByQueue).map(([_, tasks]: [string, Array<Observable<any>>]) =>
+const tasksByQueue$ = Object.values(tasksByQueue).map((tasks: Array<Observable<any>) =>
   concat(...tasks),
 );
 ```
-
-Note that we don't use `Object.values` on purpose here as it'd simply cancel all of our previous work to group tasks by queue and put all the tasks into a single array. Instead we use `Object.entries` to make sure we loop once per queue, and for 1 queue, we `concat` all the related tasks.
 
 ### Start all the queues simultaneously
 
