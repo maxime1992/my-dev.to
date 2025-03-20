@@ -92,9 +92,9 @@ After:
     value1: value1$ | async,
     value2: value2$ | async,
     value3: value3$ | async
-  }"
+  } as data"
 >
-  {{ value1 }} {{ value2 }} {{ value3 }}
+  {{ data.value1 }} {{ data.value2 }} {{ data.value3 }}
 </div>
 ```
 
